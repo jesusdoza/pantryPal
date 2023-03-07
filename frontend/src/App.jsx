@@ -15,6 +15,7 @@ function App() {
         <NavBar />
       </header>
       <main>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />

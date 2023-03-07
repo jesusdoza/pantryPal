@@ -15,8 +15,9 @@ const NavBar = () => {
         <NavLink to='/home' activeclassname='active'>Home</NavLink>
         <NavLink to='/search'>Search</NavLink>
         <NavLink to='/saved'>Saved</NavLink>
-        <NavLink to='/profile'>Profile</NavLink>
         <NavLink to='/signup'>SignUp</NavLink>
+        <NavLink to='/profile'>Profile</NavLink>
+        <NavLink to='/logout'>Logout</NavLink>
       </div>
     </Nav>
 
