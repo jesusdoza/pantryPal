@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Card = styled.card`
+export const Card = styled.section`
 
 display: flex;
 justify-content: space-between;
@@ -12,7 +12,6 @@ align-items: center;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-
 }
 
 .save:hover {
@@ -21,7 +20,6 @@ align-items: center;
 
 nav .navigation {
   justify-content: space-around;
-
 }
 
 button {
