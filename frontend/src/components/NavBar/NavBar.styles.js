@@ -23,6 +23,12 @@ nav .navigation {
 
 }
 
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
