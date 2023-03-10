@@ -5,6 +5,20 @@ import { Card } from './RecipeCard.styles.js';
 
 const RecipeCard = () => {
 
+  const listItems = recipes.map(recipe =>
+    <li key={recipe.id}>
+      <img
+        src={getImageUrl(recipe)}
+        alt={recipe.name}
+      />
+      <p>
+        <h2>{recipe.name}</h2>
+        <br />
+        {recipe.instructions}
+      </p>
+    </li>
+  );
+
   return (
 
     <Card>
