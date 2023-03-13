@@ -12,7 +12,6 @@ align-items: center;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-
 }
 
 .logo:hover {
@@ -22,6 +21,12 @@ align-items: center;
 nav .navigation {
   justify-content: space-around;
 
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
 }
 
 button {
