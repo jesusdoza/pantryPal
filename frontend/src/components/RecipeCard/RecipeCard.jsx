@@ -1,23 +1,9 @@
-import React from 'react';
 import { Card } from './RecipeCard.styles.js';
 
 
 
 const RecipeCard = () => {
 
-  const listItems = recipes.map(recipe =>
-    <li key={recipe.id}>
-      <img
-        src={getImageUrl(recipe)}
-        alt={recipe.name}
-      />
-      <p>
-        <h2>{recipe.name}</h2>
-        <br />
-        {recipe.instructions}
-      </p>
-    </li>
-  );
 
   return (
 
@@ -25,7 +11,7 @@ const RecipeCard = () => {
       <div className="container">
         <img
           src="https://images.unsplash.com/photo-1549589237-9e70b6be4da8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=925&q=80"
-          alt="Pancake"
+          alt="Cupcake"
         />
         <div className="card_body">
           <h1>Caramel Cake Cupcakes</h1>
