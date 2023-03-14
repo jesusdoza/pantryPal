@@ -1,8 +1,11 @@
 import { Card } from './RecipeCard.styles.js';
 
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
-const RecipeCard = () => {
+
+const RecipeCard = (recipe) => {
 
 
   return (
@@ -10,18 +13,18 @@ const RecipeCard = () => {
     <Card>
       <div className="container">
         <img
-          src="https://images.unsplash.com/photo-1549589237-9e70b6be4da8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=925&q=80"
-          alt="Cupcake"
+          src={recipe.image}
+          alt={recipe.title}
         />
         <div className="card_body">
-          <h1>Caramel Cake Cupcakes</h1>
-          <div className="card_star">
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-          </div>
+          <h1>{recipe.title}</h1>
+          {/* <div className="card_star">
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+          </div> */}
           <p>
             Recipe description goes here.
           </p>
@@ -54,5 +57,6 @@ const RecipeCard = () => {
   )
 
 };
+
 
 export default RecipeCard;
