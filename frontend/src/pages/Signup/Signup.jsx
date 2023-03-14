@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Signup.styles";
-
+import { useNavigate } from "react-router-dom";
 export default function Signup() {
     const usernameRef = useRef("");
     const passwordRef = useRef("");
@@ -21,6 +21,8 @@ export default function Signup() {
     const [usernameError, setUsernameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+
+    const navigate = useNavigate();
 
     ///EMAIL TEST
     function emailFormatValid(emailStr) {
@@ -66,16 +68,30 @@ export default function Signup() {
             return;
         }
 
-        //check if the passwords match before sending
-        const result = await fetch("http://localhost:4000/api/signup", {
-            method: "post",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email,
-                username,
-                password,
-            }),
-        });
+        try {
+            //check if the passwords match before sending
+            const response = await fetch("http://localhost:4000/api/signup", {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email,
+                    username,
+                    password,
+                }),
+            });
+
+            //error was not status 201 get status text and throw error
+            if (response.status != 201) {
+                throw Error(response.statusText);
+            }
+
+            const data = await response.json();
+            navigate("/search");
+        } catch (error) {
+            //display error to user
+            setErrorFlag(true);
+            setErrorDesc([error.message]);
+        }
     }
 
     return (
