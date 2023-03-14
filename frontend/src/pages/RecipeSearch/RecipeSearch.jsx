@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect} from 'react'
 import { StyledRecipeSearch } from './RecipeSearch.styles'
 import axios from 'axios';
+import RecipeCard from '../../components/RecipeCard/RecipeCard';
 
 
 export default function RecipeSearch() {
@@ -12,7 +13,6 @@ export default function RecipeSearch() {
 
     async function handleSubmit() {
         try {
-            debugger;
             const result = await axios.get('http://localhost:4000/api/searchbyingredient', {
                 params: {
                     ingredients: ingredients
