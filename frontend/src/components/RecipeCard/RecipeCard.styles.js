@@ -20,7 +20,7 @@ body {
 .container {
  background-color: #fff;
  position: relative;
- width: 50%;
+ width: 85%;
  display: grid;
  grid-template-columns: 300px 600px;
  border-radius: 5px;
