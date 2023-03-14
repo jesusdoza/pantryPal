@@ -48,7 +48,7 @@ const RecipeCard = (recipe) => {
           </div>
 
 
-          <button className="btn">save recipe <i className="fa fa-arrow-right"></i></button>
+          <button className="btn">save recipe</button>
         </div>
       </div>
 
