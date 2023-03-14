@@ -17,6 +17,7 @@ function App() {
         <NavBar />
       </header>
       <main>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<RecipeSearch />} />
