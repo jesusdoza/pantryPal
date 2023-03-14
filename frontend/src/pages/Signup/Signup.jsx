@@ -69,7 +69,6 @@ export default function Signup() {
         }
 
         try {
-            //check if the passwords match before sending
             const response = await fetch("http://localhost:4000/api/signup", {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
@@ -82,7 +81,7 @@ export default function Signup() {
 
             //error was not status 201 get status text and throw error
             if (response.status != 201) {
-                throw Error(response.statusText);
+                throw Error(`server response error ${response.statusText}`);
             }
 
             const data = await response.json();
