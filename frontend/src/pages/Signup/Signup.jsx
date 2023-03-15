@@ -68,6 +68,7 @@ export default function Signup() {
             return;
         }
 
+        ///sign up user
         try {
             const response = await fetch("http://localhost:4000/api/signup", {
                 method: "post",
@@ -79,18 +80,43 @@ export default function Signup() {
                 }),
             });
 
-            //error was not status 201 get status text and throw error
+            ///error was not status 201 get status text and throw error
             if (response.status != 201) {
                 throw Error(`server response error ${response.statusText}`);
             }
-            //todo if status is 201 then send login info to login route and save JWT token
-            const data = await response.json();
-            navigate("/search");
         } catch (error) {
             //display error to user
             setErrorFlag(true);
             setErrorDesc([error.message]);
+            return;
         }
+
+        ///login in user
+        try {
+            const response = await fetch("http://localhost:4000/api/login", {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                localStorage.setItem("JWT", data.token);
+            } else {
+                throw Error(response.statusText);
+            }
+        } catch (error) {
+            ///display error to user
+            setErrorFlag(true);
+            setErrorDesc([error.message]);
+            return;
+        }
+
+        ///redirect user upon successfull login
+        navigate("/search");
     }
 
     return (
