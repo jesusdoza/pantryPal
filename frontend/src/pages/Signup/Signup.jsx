@@ -38,6 +38,7 @@ export default function Signup() {
         let errors = [];
 
         //check email exists and is valid format
+        // if (!emailFormatValid(email) && email) {
         if (!emailFormatValid(email) && email) {
             setEmailError(true);
             errors.push("email format invalid");
@@ -143,6 +144,7 @@ export default function Signup() {
                             id="email"
                             type="text"
                             placeholder="Email@email.com"
+                            required
                         />
                         {emailError && <span className="error-marker">*</span>}
                     </div>
