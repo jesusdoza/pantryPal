@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect} from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { StyledRecipeSearch } from './RecipeSearch.styles'
 import axios from 'axios';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
@@ -7,7 +7,7 @@ import RecipeCard from '../../components/RecipeCard/RecipeCard';
 export default function RecipeSearch() {
     // State for Ingredient
     const [ingredients, setIngredients] = useState("");
-    const [ recipeList, setRecipeList ] = useState([]);
+    const [recipeList, setRecipeList] = useState([]);
     // List of Ingredients
     const ingredientRef = useRef("");
 
@@ -19,32 +19,32 @@ export default function RecipeSearch() {
                 }
             });
 
-            if(result?.data) {
+            if (result?.data) {
                 setRecipeList(result.data);
             }
 
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
 
     return (
-    <StyledRecipeSearch>
-        <div className='title'>
-            <h1>Recipe Search</h1>
-        </div>
+        <StyledRecipeSearch>
+            <div className='title'>
+                <h1>Recipe Search</h1>
+            </div>
             <div className='search'>
-                <form 
+                <form
                     action='#'
                     onSubmit={() => {
-                    handleSubmit();
+                        handleSubmit();
                     }}>
-                    <input 
+                    <input
                         ref={ingredientRef}
                         onChange={(event) => setIngredients(event.target.value)}
-                        id= "ingregients"
+                        id="ingregients"
                         value={ingredients}
-                        type="text" 
+                        type="text"
                         placeholder='What are you in the mood for?'
                     />
                     <button>Search</button>
@@ -53,7 +53,7 @@ export default function RecipeSearch() {
             </div>
 
             <div>
-                { ingredients }
+                {ingredients}
             </div>
 
             <div className='filter'>
@@ -63,15 +63,15 @@ export default function RecipeSearch() {
                 </form>
             </div>
 
-        <div className='searchResults'>
-            <h2>Results go here...</h2>
+            <div className='searchResults'>
+                <h2>Results go here...</h2>
 
-            {/* testing recipeList results */}
-            { recipeList ? recipeList.map(recipe => (
-                <div> {recipe.title}</div>
-            )): null }
+                {/* testing recipeList results */}
+                {recipeList ? recipeList.map(recipe => (
+                    <RecipeCard recipe={recipe}></RecipeCard>
+                )) : null}
 
-        </div>
-    </StyledRecipeSearch>
+            </div>
+        </StyledRecipeSearch>
     )
 } 
