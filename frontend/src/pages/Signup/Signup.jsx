@@ -83,7 +83,7 @@ export default function Signup() {
             if (response.status != 201) {
                 throw Error(`server response error ${response.statusText}`);
             }
-
+            //todo if status is 201 then send login info to login route and save JWT token
             const data = await response.json();
             navigate("/search");
         } catch (error) {
