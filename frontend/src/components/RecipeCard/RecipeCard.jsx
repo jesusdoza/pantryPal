@@ -4,7 +4,7 @@ import { Card } from './RecipeCard.styles.js';
 
 const RecipeCard = (recipe) => {
 
-
+  debugger;
   return (
 
     <Card>
