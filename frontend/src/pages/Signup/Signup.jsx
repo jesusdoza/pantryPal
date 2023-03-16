@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Signup.styles";
-
+import { useNavigate } from "react-router-dom";
 export default function Signup() {
     const usernameRef = useRef("");
     const passwordRef = useRef("");
@@ -22,6 +22,8 @@ export default function Signup() {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
+    const navigate = useNavigate();
+
     ///EMAIL TEST
     function emailFormatValid(emailStr) {
         const emailRegex = new RegExp(
@@ -36,6 +38,7 @@ export default function Signup() {
         let errors = [];
 
         //check email exists and is valid format
+        // if (!emailFormatValid(email) && email) {
         if (!emailFormatValid(email) && email) {
             setEmailError(true);
             errors.push("email format invalid");
@@ -66,16 +69,55 @@ export default function Signup() {
             return;
         }
 
-        //check if the passwords match before sending
-        const result = await fetch("http://localhost:4000/api/signup", {
-            method: "post",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email,
-                username,
-                password,
-            }),
-        });
+        ///sign up user
+        try {
+            const response = await fetch("http://localhost:4000/api/signup", {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email,
+                    username,
+                    password,
+                }),
+            });
+
+            ///error was not status 201 get status text and throw error
+            if (response.status != 201) {
+                throw Error(`server response error ${response.statusText}`);
+            }
+        } catch (error) {
+            //display error to user
+            setErrorFlag(true);
+            setErrorDesc([error.message]);
+            return;
+        }
+
+        ///login in user
+        try {
+            const response = await fetch("http://localhost:4000/api/login", {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                localStorage.setItem("JWT", data.token);
+            } else {
+                throw Error(response.statusText);
+            }
+        } catch (error) {
+            ///display error to user
+            setErrorFlag(true);
+            setErrorDesc([error.message]);
+            return;
+        }
+
+        ///redirect user upon successfull login
+        navigate("/search");
     }
 
     return (
@@ -102,6 +144,7 @@ export default function Signup() {
                             id="email"
                             type="text"
                             placeholder="Email@email.com"
+                            required
                         />
                         {emailError && <span className="error-marker">*</span>}
                     </div>
