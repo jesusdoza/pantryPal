@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     {
         id: 640352,
         title: "Cranberry Apple Crisp",
