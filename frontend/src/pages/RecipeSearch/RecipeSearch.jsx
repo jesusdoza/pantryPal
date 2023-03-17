@@ -67,9 +67,9 @@ export default function RecipeSearch() {
                 <h2>Results go here...</h2>
 
                 {/* testing recipeList results */}
-                {recipeList ? recipeList.map(recipe => (
+                {recipeList ? recipeList.map(recipe => {
                     <RecipeCard recipe={recipe}></RecipeCard>
-                )) : null}
+                }) : null}
 
             </div>
         </StyledRecipeSearch>
