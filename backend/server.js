@@ -1,8 +1,8 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const routes = require('./routes');
-const cors = require('cors');
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const routes = require("./routes");
+const cors = require("cors");
 
 // create express app server
 const app = express();
@@ -16,16 +16,24 @@ app.use((req, res, next) => {
     next();
 });
 
-// grabs all of the different routes that are attached to the express router in the routes.js file 
-app.use('/api', routes); 
-
+// grabs all of the different routes that are attached to the express router in the routes.js file
+app.use("/api", routes);
 
 //connect to db
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    // listen for requests - PORT defined in .env file
-    app.listen(process.env.PORT, () => {
-        console.log(`🚀 Connected to DB & server ready at http://localhost:${process.env.PORT}`);
+mongoose
+    .connect(process.env.MONGO_URI, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        autoIndex: true,
+    })
+    .then(() => {
+        // listen for requests - PORT defined in .env file
+        app.listen(process.env.PORT, () => {
+            console.log(
+                `🚀 Connected to DB & server ready at http://localhost:${process.env.PORT}`
+            );
+        });
+    })
+    .catch((error) => {
+        console.log(error);
     });
-}).catch((error) => {
-    console.log(error);
-})
