@@ -1,12 +1,8 @@
 import { Card } from './RecipeCard.styles.js';
 
-
-
 const RecipeCard = (recipe) => {
 
-
   return (
-
     <Card>
       <div className="container">
         <img
@@ -15,6 +11,7 @@ const RecipeCard = (recipe) => {
         />
         <div className="card_body">
           <h1>{recipe.title}</h1>
+
           <p>
             {recipe.summary}
             Credit: {recipe.creditText}
@@ -41,13 +38,9 @@ const RecipeCard = (recipe) => {
               <p className='tag'>{recipe.ingredients}</p>
             </div>
           </div>
-
-
           <button className="btn" src={recipe.sourceUrl}>Try it!</button>
         </div>
       </div>
-
-
     </Card>
   )
 

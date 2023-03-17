@@ -6,8 +6,11 @@ import RecipeCard from '../../components/RecipeCard/RecipeCard';
 
 export default function RecipeSearch() {
     // State for Ingredient
+
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
+    const [error, setError] = useState(false);
+
     // List of Ingredients
     const ingredientRef = useRef("");
 
@@ -20,11 +23,23 @@ export default function RecipeSearch() {
             });
 
             if (result?.data) {
+                setError(false);
                 setRecipeList(result.data);
             }
+            
+            const recipeIdList = result.data.map(recipe => recipe.id)
+
+
+            const recipeInstructions = await axios.get('http://localhost:4000/api/recipeinformation', {
+                params: {
+                    recipeIdList: recipeIdList
+                }
+            })
+            
 
         } catch (err) {
             console.log(err);
+            setError(true);
         }
     }
 
@@ -64,12 +79,13 @@ export default function RecipeSearch() {
             </div>
 
             <div className='searchResults'>
-                <h2>Results go here...</h2>
 
-                {/* testing recipeList results */}
-                {recipeList ? recipeList.map(recipe => {
-                    <RecipeCard recipe={recipe}></RecipeCard>
-                }) : null}
+                { recipeList.length > 0 ? recipeList.map(recipe => (
+                    <RecipeCard key={recipe.id} recipe={recipe} />
+                )) : 
+                error ? <h3> An error has occured, please try searching again. </h3>
+                 : <h3> Search for Ingredients to show Recipe Results. </h3>
+                }
 
             </div>
         </StyledRecipeSearch>

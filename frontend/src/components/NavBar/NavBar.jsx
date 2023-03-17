@@ -12,7 +12,7 @@ const NavBar = () => {
         <img className="logo" src={Spoon} alt="spoon app logo"></img>
       </div>
       <div className="navigation">
-        <NavLink to='/home' activeclassname='active'>Home</NavLink>
+        <NavLink to='/' activeclassname='active'>Home</NavLink>
         <NavLink to='/search'>Search</NavLink>
         <NavLink to='/saved'>Saved</NavLink>
         <NavLink to='/signup'>SignUp</NavLink>
