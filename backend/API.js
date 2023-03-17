@@ -29,6 +29,14 @@ module.exports = {
             return error;
         }  
     },
+    getRecipeInstructions: async(recipeId) => {
+        try {
+            const results = await axios.get(`https://api.spoonacular.com/recipes/informationBulk?ids=${recipeId}&apiKey=${process.env.API_KEY}`)
+            return results.data
+        } catch(error) {
+            return error;
+        }
+    },
     getSimilarRecipes: async(req, res) => {
         try {
             const res = await fetch(`https://api.spoonacular.com/recipes/{id}/similar?apiKey=${process.env.API_KEY}`)

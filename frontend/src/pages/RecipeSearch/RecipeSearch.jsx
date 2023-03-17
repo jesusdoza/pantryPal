@@ -6,6 +6,7 @@ import RecipeCard from '../../components/RecipeCard/RecipeCard';
 
 export default function RecipeSearch() {
     // State for Ingredient
+
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
     const [error, setError] = useState(false);
@@ -25,6 +26,16 @@ export default function RecipeSearch() {
                 setError(false);
                 setRecipeList(result.data);
             }
+            
+            const recipeIdList = result.data.map(recipe => recipe.id)
+
+
+            const recipeInstructions = await axios.get('http://localhost:4000/api/recipeinformation', {
+                params: {
+                    recipeIdList: recipeIdList
+                }
+            })
+            
 
         } catch (err) {
             console.log(err);

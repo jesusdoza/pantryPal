@@ -27,6 +27,21 @@ router.get("/searchbyingredient", async (req, res) => {
     }
 });
 
+router.get("/recipeinformation", async (req, res) => {
+    const recipeId = req.query.recipeIdList;
+    console.log(recipeId);
+
+    try {
+        const recipeInfo = await API.getRecipeInstructions(recipeId)
+        res.status(200).json(recipeInfo)
+        console.log(recipeInfo);
+    } catch(error) {
+        res.status(400).json({
+            err: error,
+        });
+    }
+});
+
 router.post('/signup', createUser);
 
 router.post('/login', login);
