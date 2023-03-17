@@ -1,15 +1,9 @@
 import { Card } from './RecipeCard.styles.js';
 
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faStar } from '@fortawesome/free-solid-svg-icons';
-
-
 
 const RecipeCard = (recipe) => {
 
-
   return (
-
     <Card>
       <div className="container">
         <img
@@ -17,6 +11,7 @@ const RecipeCard = (recipe) => {
           alt={recipe.title}
         />
         <div className="card_body">
+
           <h1>{recipe.title}</h1>
           {/* <div className="card_star">
             <FontAwesomeIcon icon={faStar} />
@@ -25,34 +20,38 @@ const RecipeCard = (recipe) => {
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
           </div> */}
+
           <p>
-            Recipe description goes here.
+            {recipe.summary}
+            Credit: {recipe.creditText}
           </p>
           <div className="card_footer">
             <div className="card_footer_container">
-              <h2>Prep:</h2>
-              <p>30 min</p>
+              <h2>Dish type:</h2>
+              <p> {recipe.dishTypes}</p>
+            </div>
+            <div className="card_footer_container">
+              <h2>Servings:</h2>
+              <p> {recipe.servings}</p>
             </div>
             <div className="card_footer_container">
               <h2>Total Time</h2>
-              <p>40 min</p>
+              <p>{recipe.readyInMinutes}</p>
             </div>
             <div className="card_footer_container">
               <h2>Tags</h2>
-              <p className='tag'>Keto</p>
+              <p className='tag'>{recipe.dietary}</p>
             </div>
             <div className="card_footer_container">
               <h2>Has searched ingredients:</h2>
-              <p className='tag'>flour, eggs, sugar, salt, butter</p>
+              <p className='tag'>{recipe.ingredients}</p>
             </div>
           </div>
 
+          <button className="btn" src={recipe.sourceUrl}>Try it!</button>
 
-          <button className="btn">save recipe</button>
         </div>
       </div>
-
-
     </Card>
   )
 
