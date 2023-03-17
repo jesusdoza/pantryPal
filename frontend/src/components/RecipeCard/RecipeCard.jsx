@@ -14,14 +14,7 @@ const RecipeCard = (recipe) => {
           alt={recipe.title}
         />
         <div className="card_body">
-          <h1>Caramel Cake Cupcakes</h1>
-          {/* <div className="card_star">
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-          </div> */}
+          <h1>{recipe.title}</h1>
           <p>
             {recipe.summary}
             Credit: {recipe.creditText}
