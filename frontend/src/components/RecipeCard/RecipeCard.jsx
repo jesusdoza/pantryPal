@@ -11,16 +11,7 @@ const RecipeCard = (recipe) => {
           alt={recipe.title}
         />
         <div className="card_body">
-
           <h1>{recipe.title}</h1>
-          {/* <div className="card_star">
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-          </div> */}
-
           <p>
             {recipe.summary}
             Credit: {recipe.creditText}

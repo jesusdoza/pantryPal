@@ -79,6 +79,7 @@ export default function RecipeSearch() {
             </div>
 
             <div className='searchResults'>
+
                 { recipeList.length > 0 ? recipeList.map(recipe => (
                     <RecipeCard key={recipe.id} recipe={recipe} />
                 )) : 
