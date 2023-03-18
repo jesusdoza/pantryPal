@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Signup.styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 export default function Signup() {
     const usernameRef = useRef("");
     const passwordRef = useRef("");
@@ -125,7 +125,8 @@ export default function Signup() {
             <section className="form-sect">
                 <form
                     action="#"
-                    onSubmit={() => {
+                    onSubmit={(event) => {
+                        event.preventDefault();
                         handleSignUp();
                     }}>
                     <div className="title">
@@ -230,9 +231,9 @@ export default function Signup() {
             </section>
 
             <div className="btn goto-btn">
-                <a href="">
+                <Link to="/login">
                     Already signed<br></br>up login here
-                </a>
+                </Link>
             </div>
         </StyledSignup>
     );
