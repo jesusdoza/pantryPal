@@ -1,5 +1,6 @@
 import { Card } from './RecipeCard.styles.js';
 
+
 const RecipeCard = (recipe) => {
 
   return (
@@ -10,7 +11,16 @@ const RecipeCard = (recipe) => {
           alt={recipe.title}
         />
         <div className="card_body">
-          <h1>Caramel Cake Cupcakes</h1>
+
+          <h1>{recipe.title}</h1>
+          {/* <div className="card_star">
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+          </div> */}
+
           <p>
             {recipe.summary}
             Credit: {recipe.creditText}
@@ -37,12 +47,15 @@ const RecipeCard = (recipe) => {
               <p className='tag'>{recipe.ingredients}</p>
             </div>
           </div>
+
           <button className="btn" src={recipe.sourceUrl}>Try it!</button>
+
         </div>
       </div>
     </Card>
   )
 
 };
+
 
 export default RecipeCard;
