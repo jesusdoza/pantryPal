@@ -1,8 +1,9 @@
 import { Card } from './RecipeCard.styles.js';
 
 
-const RecipeCard = (recipe) => {
-
+const RecipeCard = ({ recipe }) => {
+  console.log('this is recipe', recipe)
+  console.log('this is image', recipe.image)
   return (
     <Card>
       <div className="container">
