@@ -4,6 +4,7 @@ import axios from 'axios';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import searchSample from '../../recipeSearchSample';
 import bulkSample from '../../recipeBulkInfoSample';
+import combine from './combinedSearch';
 
 export default function RecipeSearch() {
     // State for Ingredient
@@ -108,20 +109,3 @@ export default function RecipeSearch() {
 
 
 
-function combine(recipeSearch, bulkInfo) {
-    let combinedObjs = [];
-    recipeSearch.forEach((recipe) => {
-        const id = recipe.id;
-
-        for (let i = 0; i < bulkInfo.length; i++) {
-            if (bulkInfo[i].id === id) {
-                combinedObjs.push({ ...recipe, ...bulkInfo[i] })
-            }
-        }//primagen frontendmaster.com
-        //javascriptinfo.com
-
-
-    })
-    // console.log(combinedObjs)
-    return combinedObjs
-}
