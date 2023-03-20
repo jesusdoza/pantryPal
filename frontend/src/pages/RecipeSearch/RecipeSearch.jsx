@@ -2,6 +2,10 @@ import React, { useRef, useState, useEffect } from 'react'
 import { StyledRecipeSearch } from './RecipeSearch.styles'
 import axios from 'axios';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import { CombinedRecipeData } from './CombinedRecipeData';
+
+import searchSample from '../../recipeSearchSample'
+import bulkSample from '../../recipeBulkInfoSample'
 
 
 export default function RecipeSearch() {
@@ -16,6 +20,7 @@ export default function RecipeSearch() {
 
     async function handleSubmit() {
         try {
+
             const result = await axios.get('http://localhost:4000/api/searchbyingredient', {
                 params: {
                     ingredients: ingredients
@@ -24,17 +29,21 @@ export default function RecipeSearch() {
 
             if (result?.data) {
                 setError(false);
-                setRecipeList(result.data);
             }
             
+            //used for bulk info api call
             const recipeIdList = result.data.map(recipe => recipe.id)
-
 
             const recipeInstructions = await axios.get('http://localhost:4000/api/recipeinformation', {
                 params: {
                     recipeIdList: recipeIdList
                 }
             })
+            
+
+            //combining both api calls data
+            let combined = CombinedRecipeData(result.data,recipeInstructions.data)
+            setRecipeList(combined)
             
 
         } catch (err) {
