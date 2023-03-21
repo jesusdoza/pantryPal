@@ -82,10 +82,8 @@ export default function RecipeSearch() {
             <div>{ingredients}</div>
 
             <div className="filter">
-                <span>Filter</span>
-                <form action="">
-                    <label htmlFor=""></label>
-                </form>
+                <h2>Filters</h2>
+                <Filter recipeListArr={recipeList} />
             </div>
 
             <div className="searchResults">
@@ -103,8 +101,21 @@ export default function RecipeSearch() {
     );
 }
 
-function filterRecipes({ recipeListArr }) {
+function filterRecipeList(recipeListArr, filters) {
+    //todo implement filters and return new recipe list according to filters
+    return recipeListArr;
+}
+
+//=====================================
+//FILTER COMPONENT
+//
+function Filter({ recipeListArr }) {
+    if (!recipeListArr) {
+        return <div>no filters available</div>;
+    }
     let dietOptions = new Set();
+    let otherOptionsAvailable = new Set();
+
     let otherOptions = [
         "cheap",
         "dairyFree",
@@ -114,33 +125,34 @@ function filterRecipes({ recipeListArr }) {
         "veryPopular",
         "veryHealthy",
     ];
-    let otherOptionsAvailable = new Set();
 
-    //check recipe list filters
+    //check recipe list and add all recipes diets filters the text string one
     recipeListArr.forEach((recipe) => {
-        //add diets to set
+        //extract diets from recipe
         let dietStr = recipe.diets[0].split(" ");
         dietStr.forEach((categoryStr) => {
             dietOptions.add(categoryStr);
         });
 
-        //add other options to set
+        //extract other options from recipe the BOOLEANs
         otherOptions.forEach((item) => {
             if (recipe[item]) otherOptionsAvailable.add(item);
         });
     });
 
+    //all diet options and other options extracted from recipe list
     let dietOptionsArr = Array.from(dietOptions.values());
     let otherOptionsAvailableArr = Array.from(otherOptionsAvailable.values());
+
     return (
         <>
             <h2>Dietary options</h2>
             <section>
                 {dietOptionsArr.length > 0 ? (
-                    <ul>
+                    <ul className="filter-options">
                         {dietOptionsArr.map((item, index) => {
                             return (
-                                <li key={index + item}>
+                                <li className="btn" key={index + item}>
                                     <span>{item}</span>
                                 </li>
                             );
@@ -152,7 +164,15 @@ function filterRecipes({ recipeListArr }) {
             </section>
             <section>
                 <h2>other options</h2>
-                <ul>{otherOptionsAvailableArr}</ul>
+                <ul className="filter-options">
+                    {otherOptionsAvailableArr.map((option) => {
+                        return (
+                            <li className="btn">
+                                <span>{option}</span>
+                            </li>
+                        );
+                    })}
+                </ul>
             </section>
         </>
     );
