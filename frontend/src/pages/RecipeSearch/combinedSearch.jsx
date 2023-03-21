@@ -8,11 +8,8 @@ export default function combine(recipeSearch, bulkInfo) {
       if (bulkInfo[i].id === id) {
         combinedObjs.push({ ...recipe, ...bulkInfo[i] })
       }
-    }//primagen frontendmaster.com
-    //javascriptinfo.com
-
-
+    }
   })
-  // console.log(combinedObjs)
+  
   return combinedObjs
 }
