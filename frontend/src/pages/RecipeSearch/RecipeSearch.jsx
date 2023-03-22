@@ -155,24 +155,18 @@ function applyFilter(recipeListArr, recipeFilters, otherOptions) {
         filteredList = recipeListArr.filter((recipe) => {
             let recipeCategories = recipe.diets;
 
-            // loop throug recipe filters
+            // loop through recipe filters
             for (let i = 0; i < recipeFilters.length; i++) {
                 let currentFilter = recipeFilters[i];
-
                 // recipe fails to include all filters
                 if (!recipeCategories.includes(currentFilter)) {
                     return false;
                 }
-
-                //all filters where found
-                return true;
             }
-
             //todo check booleans against already filtered list
-            return false;
+            return true;
         });
     }
-    console.log(filteredList);
     return filteredList;
 }
 
