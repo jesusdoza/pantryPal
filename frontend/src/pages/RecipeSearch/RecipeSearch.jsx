@@ -12,24 +12,38 @@ export default function RecipeSearch() {
 
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
+    const [filteredRecipeList, setFilteredRecipeList] = useState([]);
     const [dietFilter, setDietFilter] = useState([]);
+
     const [error, setError] = useState(false);
+
+    useEffect(() => {
+        console.log("diet filter changed");
+        if (dietFilter.length > 0) {
+            let filtered = filterRecipeList(recipeList, dietFilter);
+            setFilteredRecipeList(filtered);
+        }
+        setFilteredRecipeList(recipeList);
+    }, [dietFilter]);
 
     // List of Ingredients
     const ingredientRef = useRef("");
 
     async function handleSubmit() {
         try {
-            // const result = await axios.get(
-            //     "http://localhost:4000/api/searchbyingredient",
-            //     {
-            //         params: {
-            //             ingredients: ingredients,
-            //         },
-            //     }
-            // );
+            const result = await axios.get(
+                "http://localhost:4000/api/searchbyingredient",
+                {
+                    params: {
+                        ingredients: ingredients,
+                    },
+                }
+            );
 
-            const result = { data: searchSample };
+            //!test remove
+            // const result = { data: searchSample };
+            //!test remove
+
             if (result?.data) {
                 setError(false);
             }
@@ -37,27 +51,30 @@ export default function RecipeSearch() {
             //used for bulk info api call
             const recipeIdList = result.data.map((recipe) => recipe.id);
 
-            // const recipeInstructions = await axios.get(
-            //     "http://localhost:4000/api/recipeinformation",
-            //     {
-            //         params: {
-            //             recipeIdList: recipeIdList,
-            //         },
-            //     }
-            // );
+            const recipeInstructions = await axios.get(
+                "http://localhost:4000/api/recipeinformation",
+                {
+                    params: {
+                        recipeIdList: recipeIdList,
+                    },
+                }
+            );
 
-            const recipeInstructions = { data: bulkSample };
+            //! test remove
+            // const recipeInstructions = { data: bulkSample };
+            //! test remove
             //combining both api calls data
             let combined = CombinedRecipeData(
                 result.data,
                 recipeInstructions.data
             );
+            setRecipeList(combined);
 
-            console.log("combined", combined);
+            //todo FILTER OPERATION
             ///Filter operation on recipes
-            let filteredRecipes = filterRecipeList(combined, dietFilter);
+            // let filteredRecipes = filterRecipeList(recipeList, dietFilter);
 
-            setRecipeList(filteredRecipes);
+            //todo FILTER OPERATION
         } catch (err) {
             console.log(err);
             setError(true);
@@ -98,8 +115,8 @@ export default function RecipeSearch() {
             </div>
 
             <div className="searchResults">
-                {recipeList.length > 0 ? (
-                    recipeList.map((recipe) => (
+                {filteredRecipeList.length > 0 ? (
+                    filteredRecipeList.map((recipe) => (
                         <RecipeCard key={recipe.id} recipe={recipe} />
                     ))
                 ) : error ? (
@@ -115,27 +132,38 @@ export default function RecipeSearch() {
 /// FILTER *****************************************
 
 //todo filter recipes by checking diets string array and boolean values
-function filterRecipeList(recipeListArr, filter) {
+function filterRecipeList(recipeListArr, recipeFilters, otherOptions) {
     //filter.diets = string []
     //filter.otherOptions = String []  but will be checked against booleans
+    console.log("filter", recipeFilters.length);
+    let filteredList = recipeListArr;
 
-    //todo check the recipe.diets string array contains atleast one option from filter
-    //todo check if any booleans category values are in the other options filter are true in recipe
-
-    if (!filter || !filter.diets || filter.otherOptions) {
+    if ((!recipeFilters && !otherOptions) || recipeFilters.length <= 0) {
         console.log("no filters");
         return recipeListArr;
     }
 
-    const filteredList = recipeListArr.filter((recipe) => {
-        if (filter.includes(recipe.id)) {
-            console.log("recipe : ", recipe.id, "passed");
-            return true;
-        }
+    if (recipeFilters.length > 0) {
+        filteredList = recipeListArr.filter((recipe) => {
+            //todo check diets property on recipe matches filter
+            let recipeDiets = recipe.diets;
 
-        console.log("recipe : ", recipe.id, "failed");
-        return false;
-    });
+            for (let i = 0; i < recipeDiets.length; i++) {
+                //recipe fails to have all filters
+                if (!recipeFilters.includes(recipeDiets[i])) {
+                    console.log(recipe.id, "failed", recipeDiets[i]);
+                    return false;
+                }
+
+                //all filters where found
+                return true;
+            }
+
+            //todo check booleans
+            console.log("recipe : ", recipe.id, "failed");
+            return false;
+        });
+    }
 
     return filteredList;
 }
@@ -185,8 +213,8 @@ function FilterList({ recipeListArr, setDietFilter }) {
     function addRemoveDietFilter(str) {
         setDietFilter((state) => {
             if (state.includes(str)) {
-                console.log(state);
-                console.log("filter already in selected", str);
+                // console.log(state);
+                // console.log("filter already in selected", str);
                 return state.filter((category) => category !== str);
             }
             return [...state, str];
@@ -207,7 +235,7 @@ function FilterList({ recipeListArr, setDietFilter }) {
                                         addRemoveDietFilter(item);
                                     }}
                                     className="btn"
-                                    key={index + item}>
+                                    key={index + item + 1}>
                                     <span>{item}</span>
                                 </li>
                             );
@@ -222,7 +250,7 @@ function FilterList({ recipeListArr, setDietFilter }) {
                 <ul className="filter-options">
                     {otherOptionsAvailableArr.map((option, index) => {
                         return (
-                            <li key={option + index} className="btn">
+                            <li key={option + index + 2} className="btn">
                                 <span>{option}</span>
                             </li>
                         );
