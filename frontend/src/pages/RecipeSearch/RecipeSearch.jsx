@@ -20,12 +20,12 @@ export default function RecipeSearch() {
     useEffect(() => {
         console.log("diet filter changed", filteredRecipeList);
         if (dietFilter.length > 0) {
-            console.log("something to filter");
-            let filtered = filterRecipeList(recipeList, dietFilter);
+            // console.log("something to filter");
+            let filtered = applyFilter(recipeList, dietFilter);
             setFilteredRecipeList(filtered);
             return;
         }
-        console.log("nothing to filter");
+        // console.log("nothing to filter");
         setFilteredRecipeList(recipeList);
     }, [dietFilter]);
 
@@ -80,7 +80,7 @@ export default function RecipeSearch() {
 
             //todo FILTER OPERATION
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             setError(true);
         }
     }
@@ -133,29 +133,30 @@ export default function RecipeSearch() {
     );
 }
 
-/// FILTER *****************************************
-
-//todo filter recipes by checking diets string array and boolean values
-function filterRecipeList(recipeListArr, recipeFilters, otherOptions) {
+/// APPLY FILTER *****************************************
+function applyFilter(recipeListArr, recipeFilters, otherOptions) {
     //filter.diets = string []
     //filter.otherOptions = String []  but will be checked against booleans
     console.log("filter", recipeFilters.length);
     let filteredList = recipeListArr;
 
+    //no filters at all or recipe filters array is empty
     if ((!recipeFilters && !otherOptions) || recipeFilters.length <= 0) {
         console.log("no filters");
         return recipeListArr;
     }
 
+    //recipe filters have been added
     if (recipeFilters.length > 0) {
         filteredList = recipeListArr.filter((recipe) => {
-            //todo check diets property on recipe matches filter
-            let recipeDiets = recipe.diets;
+            let recipeCategories = recipe.diets;
 
-            for (let i = 0; i < recipeDiets.length; i++) {
-                //recipe fails to have all filters
-                if (!recipeFilters.includes(recipeDiets[i])) {
-                    console.log(recipe.id, "failed", recipeDiets[i]);
+            // loop throug recipe filters
+            for (let i = 0; i < recipeFilters.length; i++) {
+                let currentFilter = recipeFilters[i];
+
+                // recipe fails to include all filters
+                if (!recipeCategories.includes(currentFilter)) {
                     return false;
                 }
 
@@ -163,8 +164,7 @@ function filterRecipeList(recipeListArr, recipeFilters, otherOptions) {
                 return true;
             }
 
-            //todo check booleans
-            console.log("recipe : ", recipe.id, "failed");
+            //todo check booleans against already filtered list
             return false;
         });
     }
@@ -197,6 +197,8 @@ function FilterList({ recipeListArr, setDietFilter }) {
     recipeListArr.forEach((recipe) => {
         //extract diets from recipe
         let dietArr = recipe.diets;
+        // console.log("diets :", dietArr);
+
         if (dietArr.length > 0) {
             dietArr.forEach((categoryStr) => {
                 dietOptions.add(categoryStr);
