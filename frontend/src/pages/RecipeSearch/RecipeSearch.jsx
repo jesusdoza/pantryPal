@@ -4,15 +4,15 @@ import axios from "axios";
 import RecipeCard from "../../components/RecipeCard/RecipeCard";
 import { CombinedRecipeData } from "./CombinedRecipeData";
 
-// import searchSample from "../../recipeSearchSample";
-// import bulkSample from "../../recipeBulkInfoSample";
+import searchSample from "../../recipeSearchSample";
+import bulkSample from "../../recipeBulkInfoSample";
 
 export default function RecipeSearch() {
     // State for Ingredient
 
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
-    const [filter, setFilter] = useState(null);
+    const [dietFilter, setDietFilter] = useState([]);
     const [error, setError] = useState(false);
 
     // List of Ingredients
@@ -20,16 +20,16 @@ export default function RecipeSearch() {
 
     async function handleSubmit() {
         try {
-            const result = await axios.get(
-                "http://localhost:4000/api/searchbyingredient",
-                {
-                    params: {
-                        ingredients: ingredients,
-                    },
-                }
-            );
+            // const result = await axios.get(
+            //     "http://localhost:4000/api/searchbyingredient",
+            //     {
+            //         params: {
+            //             ingredients: ingredients,
+            //         },
+            //     }
+            // );
 
-            console.log(result);
+            const result = { data: searchSample };
             if (result?.data) {
                 setError(false);
             }
@@ -37,15 +37,16 @@ export default function RecipeSearch() {
             //used for bulk info api call
             const recipeIdList = result.data.map((recipe) => recipe.id);
 
-            const recipeInstructions = await axios.get(
-                "http://localhost:4000/api/recipeinformation",
-                {
-                    params: {
-                        recipeIdList: recipeIdList,
-                    },
-                }
-            );
+            // const recipeInstructions = await axios.get(
+            //     "http://localhost:4000/api/recipeinformation",
+            //     {
+            //         params: {
+            //             recipeIdList: recipeIdList,
+            //         },
+            //     }
+            // );
 
+            const recipeInstructions = { data: bulkSample };
             //combining both api calls data
             let combined = CombinedRecipeData(
                 result.data,
@@ -54,7 +55,7 @@ export default function RecipeSearch() {
 
             console.log("combined", combined);
             ///Filter operation on recipes
-            let filteredRecipes = filterRecipeList(combined, filter);
+            let filteredRecipes = filterRecipeList(combined, dietFilter);
 
             setRecipeList(filteredRecipes);
         } catch (err) {
@@ -89,8 +90,11 @@ export default function RecipeSearch() {
             <div>{ingredients}</div>
 
             <div className="filter">
-                <h2>Filters</h2>
-                <Filter recipeListArr={recipeList} />
+                <h2>Filters selected: {dietFilter}</h2>
+                <FilterList
+                    recipeListArr={recipeList}
+                    setDietFilter={setDietFilter}
+                />
             </div>
 
             <div className="searchResults">
@@ -108,7 +112,9 @@ export default function RecipeSearch() {
     );
 }
 
-//todo filter recipes by id allowed
+/// FILTER *****************************************
+
+//todo filter recipes by checking diets string array and boolean values
 function filterRecipeList(recipeListArr, filter) {
     //filter.diets = string []
     //filter.otherOptions = String []  but will be checked against booleans
@@ -137,7 +143,7 @@ function filterRecipeList(recipeListArr, filter) {
 //=====================================
 //FILTER COMPONENT
 //
-function Filter({ recipeListArr }) {
+function FilterList({ recipeListArr, setDietFilter }) {
     //todo props what filters do i display extract that to its own funciton
     if (!recipeListArr) {
         return <div>no filters available</div>;
@@ -172,9 +178,21 @@ function Filter({ recipeListArr }) {
     });
 
     //all diet options and other options extracted from recipe list
-
     let dietOptionsArr = Array.from(dietOptions.values());
     let otherOptionsAvailableArr = Array.from(otherOptionsAvailable.values());
+
+    ///REMOVE OR ADD DIET FILTER
+    function addRemoveDietFilter(str) {
+        setDietFilter((state) => {
+            if (state.includes(str)) {
+                console.log(state);
+                console.log("filter already in selected", str);
+                return state.filter((category) => category !== str);
+            }
+            return [...state, str];
+        });
+    }
+    function addRemoveOtherOptionFilter(str) {}
 
     return (
         <>
@@ -184,7 +202,12 @@ function Filter({ recipeListArr }) {
                     <ul className="filter-options">
                         {dietOptionsArr.map((item, index) => {
                             return (
-                                <li className="btn" key={index + item}>
+                                <li
+                                    onClick={() => {
+                                        addRemoveDietFilter(item);
+                                    }}
+                                    className="btn"
+                                    key={index + item}>
                                     <span>{item}</span>
                                 </li>
                             );
