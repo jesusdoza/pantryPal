@@ -18,11 +18,14 @@ export default function RecipeSearch() {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        console.log("diet filter changed");
+        console.log("diet filter changed", filteredRecipeList);
         if (dietFilter.length > 0) {
+            console.log("something to filter");
             let filtered = filterRecipeList(recipeList, dietFilter);
             setFilteredRecipeList(filtered);
+            return;
         }
+        console.log("nothing to filter");
         setFilteredRecipeList(recipeList);
     }, [dietFilter]);
 
@@ -69,6 +72,7 @@ export default function RecipeSearch() {
                 recipeInstructions.data
             );
             setRecipeList(combined);
+            setFilteredRecipeList(combined);
 
             //todo FILTER OPERATION
             ///Filter operation on recipes
