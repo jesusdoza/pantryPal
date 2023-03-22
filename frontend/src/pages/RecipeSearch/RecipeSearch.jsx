@@ -4,14 +4,15 @@ import axios from "axios";
 import RecipeCard from "../../components/RecipeCard/RecipeCard";
 import { CombinedRecipeData } from "./CombinedRecipeData";
 
-import searchSample from "../../recipeSearchSample";
-import bulkSample from "../../recipeBulkInfoSample";
+// import searchSample from "../../recipeSearchSample";
+// import bulkSample from "../../recipeBulkInfoSample";
 
 export default function RecipeSearch() {
     // State for Ingredient
 
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
+    const [filter, setFilter] = useState(null);
     const [error, setError] = useState(false);
 
     // List of Ingredients
@@ -28,6 +29,7 @@ export default function RecipeSearch() {
                 }
             );
 
+            console.log(result);
             if (result?.data) {
                 setError(false);
             }
@@ -49,7 +51,12 @@ export default function RecipeSearch() {
                 result.data,
                 recipeInstructions.data
             );
-            setRecipeList(combined);
+
+            console.log("combined", combined);
+            ///Filter operation on recipes
+            let filteredRecipes = filterRecipeList(combined, filter);
+
+            setRecipeList(filteredRecipes);
         } catch (err) {
             console.log(err);
             setError(true);
@@ -101,15 +108,33 @@ export default function RecipeSearch() {
     );
 }
 
-function filterRecipeList(recipeListArr, filters) {
+//todo filter recipes by id allowed
+function filterRecipeList(recipeListArr, filter) {
     //todo implement filters and return new recipe list according to filters
-    return recipeListArr;
+
+    if (!filter || !filter.diets || filter.otherOptions) {
+        console.log("no filters");
+        return recipeListArr;
+    }
+
+    const filteredList = recipeListArr.filter((recipe) => {
+        if (filter.includes(recipe.id)) {
+            console.log("recipe : ", recipe.id, "passed");
+            return true;
+        }
+
+        console.log("recipe : ", recipe.id, "failed");
+        return false;
+    });
+
+    return filteredList;
 }
 
 //=====================================
 //FILTER COMPONENT
 //
 function Filter({ recipeListArr }) {
+    //todo props what filters do i display extract that to its own funciton
     if (!recipeListArr) {
         return <div>no filters available</div>;
     }
@@ -129,10 +154,12 @@ function Filter({ recipeListArr }) {
     //check recipe list and add all recipes diets filters the text string one
     recipeListArr.forEach((recipe) => {
         //extract diets from recipe
-        let dietStr = recipe.diets[0].split(" ");
-        dietStr.forEach((categoryStr) => {
-            dietOptions.add(categoryStr);
-        });
+        let dietArr = recipe.diets;
+        if (dietArr.length > 0) {
+            dietArr.forEach((categoryStr) => {
+                dietOptions.add(categoryStr);
+            });
+        }
 
         //extract other options from recipe the BOOLEANs
         otherOptions.forEach((item) => {
@@ -165,9 +192,9 @@ function Filter({ recipeListArr }) {
             <section>
                 <h2>other options</h2>
                 <ul className="filter-options">
-                    {otherOptionsAvailableArr.map((option) => {
+                    {otherOptionsAvailableArr.map((option, index) => {
                         return (
-                            <li className="btn">
+                            <li key={option + index} className="btn">
                                 <span>{option}</span>
                             </li>
                         );
