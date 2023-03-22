@@ -110,7 +110,11 @@ export default function RecipeSearch() {
 
 //todo filter recipes by id allowed
 function filterRecipeList(recipeListArr, filter) {
-    //todo implement filters and return new recipe list according to filters
+    //filter.diets = string []
+    //filter.otherOptions = String []  but will be checked against booleans
+
+    //todo check the recipe.diets string array contains atleast one option from filter
+    //todo check if any booleans category values are in the other options filter are true in recipe
 
     if (!filter || !filter.diets || filter.otherOptions) {
         console.log("no filters");
@@ -168,6 +172,7 @@ function Filter({ recipeListArr }) {
     });
 
     //all diet options and other options extracted from recipe list
+
     let dietOptionsArr = Array.from(dietOptions.values());
     let otherOptionsAvailableArr = Array.from(otherOptionsAvailable.values());
 
