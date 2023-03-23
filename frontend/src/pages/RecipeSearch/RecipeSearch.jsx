@@ -108,19 +108,10 @@ export default function RecipeSearch() {
             <div>{ingredients}</div>
 
             <div className="filter">
-                <h2>Filters selected: </h2>
-                <ul>
-                    {dietFilter.map((filter, index) => {
-                        return (
-                            <li key={index + filter} className="btn-filter">
-                                {filter}
-                            </li>
-                        );
-                    })}
-                </ul>
                 <FilterList
                     recipeListArr={recipeList}
                     setDietFilter={setDietFilter}
+                    dietFilter={dietFilter}
                 />
             </div>
 
@@ -173,7 +164,7 @@ function applyFilter(recipeListArr, recipeFilters, otherOptions) {
 //=====================================
 //FILTER COMPONENT
 //
-function FilterList({ recipeListArr, setDietFilter }) {
+function FilterList({ recipeListArr, setDietFilter, dietFilter }) {
     //todo props what filters do i display extract that to its own funciton
     if (!recipeListArr) {
         return <div>no filters available</div>;
@@ -213,7 +204,7 @@ function FilterList({ recipeListArr, setDietFilter }) {
     let otherOptionsAvailableArr = Array.from(otherOptionsAvailable.values());
 
     ///REMOVE OR ADD DIET FILTER
-    function addRemoveDietFilter(str) {
+    function addDietFilter(str) {
         setDietFilter((state) => {
             if (state.includes(str)) {
                 return state.filter((category) => category !== str);
@@ -221,19 +212,41 @@ function FilterList({ recipeListArr, setDietFilter }) {
             return [...state, str];
         });
     }
-    function addRemoveOtherOptionFilter(str) {}
+    function removeFilter(str) {
+        setDietFilter((state) => {
+            return state.filter((category) => category !== str);
+        });
+    }
+    function addOtherOptionFilter(str) {}
 
     return (
         <>
-            <h2>Dietary options</h2>
             <section>
+                <h2>selected filters: </h2>
+                <ul>
+                    {dietFilter.map((item, index) => {
+                        return (
+                            <li
+                                key={index + item}
+                                onClick={() => {
+                                    removeFilter(item);
+                                }}
+                                className="btn-filter">
+                                {item}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </section>
+            <section>
+                <h2>Dietary options</h2>
                 {dietOptionsArr.length > 0 ? (
                     <ul className="filter-options">
                         {dietOptionsArr.map((item, index) => {
                             return (
                                 <li
                                     onClick={() => {
-                                        addRemoveDietFilter(item);
+                                        addDietFilter(item);
                                     }}
                                     className="btn"
                                     key={index + item + 1}>
