@@ -14,13 +14,14 @@ export default function RecipeSearch() {
     const [recipeList, setRecipeList] = useState([]);
     const [filteredRecipeList, setFilteredRecipeList] = useState([]);
     const [dietFilter, setDietFilter] = useState([]);
+    const [categoryFilter, setCategoryFilter] = useState([]);
 
     const [error, setError] = useState(false);
 
     //FILTER RESULTS
     useEffect(() => {
         if (dietFilter.length > 0) {
-            let filtered = applyFilter(recipeList, dietFilter);
+            let filtered = applyFilter(recipeList, dietFilter, categoryFilter);
             setFilteredRecipeList(filtered);
             return;
         }
@@ -112,6 +113,8 @@ export default function RecipeSearch() {
                     recipeListArr={recipeList}
                     setDietFilter={setDietFilter}
                     dietFilter={dietFilter}
+                    setCategoryFilter={setCategoryFilter}
+                    categoryFilter={categoryFilter}
                 />
             </div>
 
@@ -131,17 +134,20 @@ export default function RecipeSearch() {
 }
 
 /// APPLY FILTER *****************************************
-function applyFilter(recipeListArr, recipeFilters, otherOptions) {
-    //filter.diets = string []
-    //filter.otherOptions = String []  but will be checked against booleans
+function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
+    //recipefilters = string []
+    //categoryFilters = String []  but will be checked against booleans
     let filteredList = recipeListArr;
 
     //no filters at all or recipe filters array is empty
-    if ((!recipeFilters && !otherOptions) || recipeFilters.length <= 0) {
+    if (
+        (!recipeFilters && !categoryFilters) ||
+        (recipeFilters.length <= 0 && categoryFilters.length <= 0)
+    ) {
         return recipeListArr;
     }
 
-    //recipe filters have been added
+    //recipe filters have been added to filter by
     if (recipeFilters.length > 0) {
         filteredList = recipeListArr.filter((recipe) => {
             let recipeCategories = recipe.diets;
@@ -158,13 +164,23 @@ function applyFilter(recipeListArr, recipeFilters, otherOptions) {
             return true;
         });
     }
+
+    //other options have been added to filter by and update filtered list
+    if (categoryFilters.length > 0) return filteredList;
+
     return filteredList;
 }
 
 //=====================================
 //FILTER COMPONENT
 //
-function FilterList({ recipeListArr, setDietFilter, dietFilter }) {
+function FilterList({
+    recipeListArr,
+    setDietFilter,
+    dietFilter,
+    setCategoryFilter,
+    categoryFilter,
+}) {
     //todo props what filters do i display extract that to its own funciton
     if (!recipeListArr) {
         return <div>no filters available</div>;
@@ -212,12 +228,25 @@ function FilterList({ recipeListArr, setDietFilter, dietFilter }) {
             return [...state, str];
         });
     }
-    function removeFilter(str) {
+    function removeDietFilter(str) {
         setDietFilter((state) => {
             return state.filter((category) => category !== str);
         });
     }
-    function addOtherOptionFilter(str) {}
+    function addCategoryFilter(str) {
+        console.log(str);
+        setCategoryFilter((state) => {
+            if (state.includes(str)) {
+                return state.filter((category) => category !== str);
+            }
+            return [...state, str];
+        });
+    }
+    function removeCategoryFilter(str) {
+        setCategoryFilter((state) => {
+            return state.filter((category) => category !== str);
+        });
+    }
 
     return (
         <>
@@ -229,7 +258,7 @@ function FilterList({ recipeListArr, setDietFilter, dietFilter }) {
                             <li
                                 key={index + item}
                                 onClick={() => {
-                                    removeFilter(item);
+                                    removeDietFilter(item);
                                 }}
                                 className="btn-filter">
                                 {item}
@@ -237,6 +266,21 @@ function FilterList({ recipeListArr, setDietFilter, dietFilter }) {
                         );
                     })}
                 </ul>
+            </section>
+            <section>
+                <h2>Category filters</h2>
+                {categoryFilter.map((category, index) => {
+                    return (
+                        <li
+                            key={index + category}
+                            onClick={() => {
+                                removeCategoryFilter(category);
+                            }}
+                            className="btn-filter">
+                            {category}
+                        </li>
+                    );
+                })}
             </section>
             <section>
                 <h2>Dietary options</h2>
@@ -260,11 +304,16 @@ function FilterList({ recipeListArr, setDietFilter, dietFilter }) {
                 )}
             </section>
             <section>
-                <h2>other options</h2>
+                <h2>Categories</h2>
                 <ul className="filter-options">
                     {otherOptionsAvailableArr.map((option, index) => {
                         return (
-                            <li key={option + index + 2} className="btn">
+                            <li
+                                onClick={() => {
+                                    addCategoryFilter(option);
+                                }}
+                                key={option + index + 2}
+                                className="btn">
                                 <span>{option}</span>
                             </li>
                         );
