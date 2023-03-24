@@ -147,7 +147,7 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
         return recipeListArr;
     }
 
-    //recipe filters have been added to filter by
+    //process recipes through diets filters
     if (recipeFilters.length > 0) {
         filteredList = recipeListArr.filter((recipe) => {
             let recipeCategories = recipe.diets;
@@ -160,12 +160,13 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
                     return false;
                 }
             }
-            //todo check booleans against already filtered list
             return true;
         });
     }
 
     //other options have been added to filter by and update filtered list
+    //todo check booleans categories filters
+    //process recipes through categories
     if (categoryFilters.length > 0) return filteredList;
 
     return filteredList;
