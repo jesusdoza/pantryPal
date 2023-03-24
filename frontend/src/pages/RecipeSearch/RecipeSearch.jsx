@@ -22,14 +22,14 @@ export default function RecipeSearch() {
 
     //FILTER RESULTS
     useEffect(() => {
-        if (dietFilter.length > 0) {
+        if (dietFilter.length > 0 || categoryFilter.length > 0) {
             let filtered = applyFilter(recipeList, dietFilter, categoryFilter);
             setFilteredRecipeList(filtered);
             return;
         }
 
         setFilteredRecipeList(recipeList);
-    }, [dietFilter]);
+    }, [dietFilter, categoryFilter]);
 
     // List of Ingredients
     const ingredientRef = useRef("");
@@ -94,7 +94,8 @@ export default function RecipeSearch() {
             <div className="search">
                 <form
                     action="#"
-                    onSubmit={() => {
+                    onSubmit={(event) => {
+                        event.preventDefault();
                         handleSubmit();
                     }}>
                     <input
@@ -108,30 +109,45 @@ export default function RecipeSearch() {
                     <button>Search</button>
                 </form>
             </div>
-
-            <div>{ingredients}</div>
-
-            <div className="filter">
-                <FilterList
-                    recipeListArr={recipeList}
-                    setDietFilter={setDietFilter}
-                    dietFilter={dietFilter}
-                    setCategoryFilter={setCategoryFilter}
-                    categoryFilter={categoryFilter}
-                />
-            </div>
-
-            <div className="searchResults">
-                {filteredRecipeList.length > 0 ? (
-                    filteredRecipeList.map((recipe) => (
-                        <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))
-                ) : error ? (
-                    <h3> An error has occured, please try searching again. </h3>
-                ) : (
-                    <h3> Search for Ingredients to show Recipe Results. </h3>
-                )}
-            </div>
+            <section className="recipes-display">
+                <div className="filter">
+                    <FilterList
+                        recipeListArr={recipeList}
+                        setDietFilter={setDietFilter}
+                        dietFilter={dietFilter}
+                        setCategoryFilter={setCategoryFilter}
+                        categoryFilter={categoryFilter}
+                    />
+                </div>
+                <section className="searchresults-container">
+                    <div className="searchResults">
+                        <ul>
+                            {filteredRecipeList.length > 0 ? (
+                                filteredRecipeList.map((recipe) => (
+                                    <li>
+                                        <RecipeCard
+                                            key={recipe.id}
+                                            recipe={recipe}
+                                        />
+                                    </li>
+                                ))
+                            ) : error ? (
+                                <h3>
+                                    {" "}
+                                    An error has occured, please try searching
+                                    again.{" "}
+                                </h3>
+                            ) : (
+                                <h3>
+                                    {" "}
+                                    Search for Ingredients to show Recipe
+                                    Results.{" "}
+                                </h3>
+                            )}
+                        </ul>
+                    </div>
+                </section>
+            </section>
         </StyledRecipeSearch>
     );
 }
@@ -167,10 +183,18 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
         });
     }
 
-    //other options have been added to filter by and update filtered list
-    //todo check booleans categories filters
-    //process recipes through categories
-    if (categoryFilters.length > 0) return filteredList;
+    //process recipes through categories by checking recipe specific boolean properties
+    if (categoryFilters.length > 0) {
+        filteredList = filteredList.filter((recipe) => {
+            for (let i = 0; i < categoryFilters.length; i++) {
+                if (!recipe[categoryFilters[i]]) {
+                    return false;
+                }
+            }
+            return true;
+        });
+        return filteredList;
+    }
 
     return filteredList;
 }
@@ -194,12 +218,10 @@ function FilterList({
 
     let otherOptions = [
         "cheap",
-        "dairyFree",
-        "glutenFree",
-        "vegan",
-        "vegetarian",
         "veryPopular",
         "veryHealthy",
+        "sustainable",
+        "lowFodmap",
     ];
 
     //check recipe list and add all recipes diets filters the text string one
@@ -226,9 +248,11 @@ function FilterList({
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
         setDietFilter((state) => {
+            //already in the filter remove it
             if (state.includes(str)) {
                 return state.filter((category) => category !== str);
             }
+            //add to filter
             return [...state, str];
         });
     }
@@ -238,7 +262,6 @@ function FilterList({
         });
     }
     function addCategoryFilter(str) {
-        console.log(str);
         setCategoryFilter((state) => {
             if (state.includes(str)) {
                 return state.filter((category) => category !== str);
@@ -254,38 +277,47 @@ function FilterList({
 
     return (
         <>
-            <section>
-                <h2>selected filters: </h2>
-                <ul>
-                    {dietFilter.map((item, index) => {
+            {dietFilter.length > 0 ? (
+                <section>
+                    <h2>selected filters: </h2>
+                    <ul>
+                        {dietFilter.map((item, index) => {
+                            return (
+                                <li
+                                    key={index + item}
+                                    onClick={() => {
+                                        removeDietFilter(item);
+                                    }}
+                                    className="btn-filter">
+                                    {item}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </section>
+            ) : (
+                <section></section>
+            )}
+
+            {categoryFilter.length > 0 ? (
+                <section>
+                    <h2>Category filters</h2>
+                    {categoryFilter.map((category, index) => {
                         return (
                             <li
-                                key={index + item}
+                                key={index + category}
                                 onClick={() => {
-                                    removeDietFilter(item);
+                                    removeCategoryFilter(category);
                                 }}
                                 className="btn-filter">
-                                {item}
+                                {category}
                             </li>
                         );
                     })}
-                </ul>
-            </section>
-            <section>
-                <h2>Category filters</h2>
-                {categoryFilter.map((category, index) => {
-                    return (
-                        <li
-                            key={index + category}
-                            onClick={() => {
-                                removeCategoryFilter(category);
-                            }}
-                            className="btn-filter">
-                            {category}
-                        </li>
-                    );
-                })}
-            </section>
+                </section>
+            ) : (
+                <section></section>
+            )}
             <section>
                 <h2>Dietary options</h2>
                 {dietOptionsArr.length > 0 ? (
