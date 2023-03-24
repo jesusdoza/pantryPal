@@ -154,8 +154,6 @@ export default function RecipeSearch() {
 
 /// APPLY FILTER *****************************************
 function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
-    //recipefilters = string []
-    //categoryFilters = String []  but will be checked against booleans
     let filteredList = recipeListArr;
 
     //no filters at all or recipe filters array is empty
@@ -184,6 +182,7 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
     }
 
     //process recipes through categories by checking recipe specific boolean properties
+    // and update filteredList
     if (categoryFilters.length > 0) {
         filteredList = filteredList.filter((recipe) => {
             for (let i = 0; i < categoryFilters.length; i++) {
@@ -193,7 +192,6 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
             }
             return true;
         });
-        return filteredList;
     }
 
     return filteredList;
