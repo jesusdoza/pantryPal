@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 export const Card = styled.section`
 
-
-
 margin: 20px;
 padding: 0;
 box-sizing: border-box;
@@ -21,8 +19,8 @@ body {
  background-color: #fff;
  position: relative;
  width: 85%;
- display: grid;
- grid-template-columns: 300px 600px;
+ display: flex;
+ 
  border-radius: 5px;
  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.356);
  img {
@@ -53,7 +51,7 @@ body {
  }
 }
 .card_body {
- padding: 40px 40px 0;
+ padding: 20px 40px 0;
  h1 {
   color: #351897;
   font-weight: 400;
@@ -68,9 +66,9 @@ body {
  }
  .card_footer {
   display: flex;
-  margin: 20px 0 10px;
+  margin: 10px 0 10px;
   .card_footer_container {
-   margin-right: 40px;
+   margin-right: 10px;
   }
   h2 {
    margin-bottom: 5px;
