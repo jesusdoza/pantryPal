@@ -76,11 +76,7 @@ export default function RecipeSearch() {
             );
             setRecipeList(combined);
             setFilteredRecipeList(combined);
-
-            //todo FILTER OPERATION
-            ///Filter operation on recipes
-            // let filteredRecipes = filterRecipeList(recipeList, dietFilter);
-            //todo FILTER OPERATION
+            setSearchSpinner(false);
         } catch (err) {
             setError(true);
         }
@@ -122,9 +118,11 @@ export default function RecipeSearch() {
                 <section className="searchresults-container">
                     <div className="searchResults">
                         <ul>
-                            {filteredRecipeList.length > 0 ? (
+                            {searchSpinner ? (
+                                <SearchSpinner />
+                            ) : filteredRecipeList.length > 0 ? (
                                 filteredRecipeList.map((recipe) => (
-                                    <li>
+                                    <li key={recipe.id}>
                                         <RecipeCard
                                             key={recipe.id}
                                             recipe={recipe}
