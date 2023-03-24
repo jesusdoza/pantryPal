@@ -2,7 +2,11 @@ import React, { useRef, useState, useEffect } from 'react'
 import { StyledRecipeSearch } from './RecipeSearch.styles'
 import axios from 'axios';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import SearchSpinner from '../../components/SearchSpinner/SearchSpinner';
+import { CombinedRecipeData } from './CombinedRecipeData';
 
+import searchSample from '../../recipeSearchSample'
+import bulkSample from '../../recipeBulkInfoSample'
 
 const RecipeSearch = () => {
     // State for Ingredient
@@ -10,12 +14,14 @@ const RecipeSearch = () => {
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
     const [error, setError] = useState(false);
+    const [searchSpinner, setSearchSpinner] = useState(false)
 
     // List of Ingredients
     const ingredientRef = useRef("");
 
     async function handleSubmit() {
         try {
+            setSearchSpinner(true)
             const result = await axios.get('http://localhost:4000/api/searchbyingredient', {
                 params: {
                     ingredients: ingredients
@@ -24,11 +30,10 @@ const RecipeSearch = () => {
 
             if (result?.data) {
                 setError(false);
-                setRecipeList(result.data);
             }
             
+            //used for bulk info api call
             const recipeIdList = result.data.map(recipe => recipe.id)
-
 
             const recipeInstructions = await axios.get('http://localhost:4000/api/recipeinformation', {
                 params: {
@@ -36,6 +41,12 @@ const RecipeSearch = () => {
                 }
             })
             
+
+            //combining both api calls data
+            let combined = CombinedRecipeData(result.data,recipeInstructions.data)
+            setRecipeList(combined)
+            setSearchSpinner(false)
+
 
         } catch (err) {
             console.log(err);
@@ -47,6 +58,8 @@ const RecipeSearch = () => {
         <StyledRecipeSearch>
             <div className='title'>
                 <h1>Recipe Search</h1>
+                
+  
             </div>
             <div className='search'>
                 <form
@@ -79,17 +92,16 @@ const RecipeSearch = () => {
             </div>
 
             <div className='searchResults'>
+                {searchSpinner ? <SearchSpinner /> :  recipeList.length > 0 ? recipeList.map(recipe => (
 
-                { recipeList.length > 0 ? recipeList.map(recipe => (
                     <RecipeCard key={recipe.id} recipe={recipe} />
-                )) : 
-                error ? <h3> An error has occured, please try searching again. </h3>
-                 : <h3> Search for Ingredients to show Recipe Results. </h3>
+                )) :
+                    error ? <h3> An error has occured, please try searching again. </h3>
+                        : <h3> Search for Ingredients to show Recipe Results. </h3>
                 }
-
+                
             </div>
+                
         </StyledRecipeSearch>
     )
-} 
 
-export default RecipeSearch;
