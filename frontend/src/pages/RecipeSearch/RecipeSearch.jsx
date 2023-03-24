@@ -4,7 +4,7 @@ import axios from 'axios';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 
 
-export default function RecipeSearch() {
+const RecipeSearch = () => {
     // State for Ingredient
 
     const [ingredients, setIngredients] = useState("");
@@ -91,3 +91,5 @@ export default function RecipeSearch() {
         </StyledRecipeSearch>
     )
 } 
+
+export default RecipeSearch;
