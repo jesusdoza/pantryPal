@@ -1,8 +1,9 @@
 import { Card } from './RecipeCard.styles.js';
 
 
-const RecipeCard = (recipe) => {
 
+const RecipeCard = ({ recipe }) => {
+ 
   return (
     <Card>
       <div className="container">
@@ -32,10 +33,6 @@ const RecipeCard = (recipe) => {
             <div className="card_footer_container">
               <h2>Tags</h2>
               <p className='tag'>{recipe.dietary}</p>
-            </div>
-            <div className="card_footer_container">
-              <h2>Has searched ingredients:</h2>
-              <p className='tag'>{recipe.ingredients}</p>
             </div>
           </div>
 

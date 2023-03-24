@@ -7,7 +7,6 @@ import { CombinedRecipeData } from './CombinedRecipeData';
 import searchSample from '../../recipeSearchSample'
 import bulkSample from '../../recipeBulkInfoSample'
 
-
 export default function RecipeSearch() {
     // State for Ingredient
 
@@ -89,14 +88,17 @@ export default function RecipeSearch() {
 
             <div className='searchResults'>
 
-                { recipeList.length > 0 ? recipeList.map(recipe => (
+                {recipeList.length > 0 ? recipeList.map(recipe => (
                     <RecipeCard key={recipe.id} recipe={recipe} />
-                )) : 
-                error ? <h3> An error has occured, please try searching again. </h3>
-                 : <h3> Search for Ingredients to show Recipe Results. </h3>
+                )) :
+                    error ? <h3> An error has occured, please try searching again. </h3>
+                        : <h3> Search for Ingredients to show Recipe Results. </h3>
                 }
 
             </div>
         </StyledRecipeSearch>
     )
-} 
+}
+
+
+
