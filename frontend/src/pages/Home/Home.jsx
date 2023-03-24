@@ -5,7 +5,7 @@ import RecipeCard from '../../components/RecipeCard/RecipeCard'
 const Home = () => {
   return (
     <div>
-      <RecipeCard />
+      <h1> HOME </h1>
     </div>
   )
 }

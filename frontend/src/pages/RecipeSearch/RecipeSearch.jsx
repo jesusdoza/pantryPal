@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { StyledRecipeSearch } from "./RecipeSearch.styles";
 import axios from "axios";
 import RecipeCard from "../../components/RecipeCard/RecipeCard";
+import SearchSpinner from "../../components/SearchSpinner/SearchSpinner";
 import { CombinedRecipeData } from "./CombinedRecipeData";
 
 import searchSample from "../../recipeSearchSample";
@@ -17,6 +18,7 @@ export default function RecipeSearch() {
     const [categoryFilter, setCategoryFilter] = useState([]);
 
     const [error, setError] = useState(false);
+    const [searchSpinner, setSearchSpinner] = useState(false);
 
     //FILTER RESULTS
     useEffect(() => {
@@ -34,6 +36,7 @@ export default function RecipeSearch() {
 
     async function handleSubmit() {
         try {
+            setSearchSpinner(true);
             const result = await axios.get(
                 "http://localhost:4000/api/searchbyingredient",
                 {
