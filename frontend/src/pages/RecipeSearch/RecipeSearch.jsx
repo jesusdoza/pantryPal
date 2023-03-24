@@ -108,7 +108,7 @@ export default function RecipeSearch() {
             <section className="recipes-display">
                 <div className="filter">
                     <FilterList
-                        recipeListArr={recipeList}
+                        recipeListArr={filteredRecipeList}
                         setDietFilter={setDietFilter}
                         dietFilter={dietFilter}
                         setCategoryFilter={setCategoryFilter}
