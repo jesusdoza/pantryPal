@@ -46,7 +46,7 @@ export const StyledRecipeSearch = styled.section`
         justify-content: center;
         align-items: center;
     }
-
+    /* 
     //FILTER SECTION
     & .filter {
         border: 1px solid #242424;
@@ -87,5 +87,5 @@ export const StyledRecipeSearch = styled.section`
     & .btn:hover {
         cursor: pointer;
         background-color: #28bee4;
-    }
+    } */
 `;
