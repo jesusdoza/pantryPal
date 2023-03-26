@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import Signup from './pages/Signup/Signup';
 import RecipeSearch from './pages/RecipeSearch/RecipeSearch';
 import Login from './pages/Login/Login';
+import MealPlanner from './pages/mealPlanner/mealPlanner';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/search" element={<RecipeSearch />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/mealPlanner" element={<MealPlanner />} />
           <Route path="/*" element={<h1>404 no page</h1>} />
 
         </Routes>

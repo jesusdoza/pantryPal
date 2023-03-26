@@ -28,6 +28,7 @@ const NavBar = () => {
           <>
             <NavLink to="/search">Search</NavLink>
             <NavLink to="/saved">Saved</NavLink>
+            <NavLink to="/mealPlanner">Meal Planner</NavLink>
             <NavLink to="/profile">Profile</NavLink>
             <NavLink to="/login" onClick={handleLogout}>Logout</NavLink>
           </>
