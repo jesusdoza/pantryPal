@@ -12,9 +12,9 @@ export function FilterList({
         return <div>no filters available</div>;
     }
     let dietOptions = new Set();
-    let otherOptionsAvailable = new Set();
+    let categoryOptionsAvailable = new Set();
 
-    let otherOptions = [
+    let categoryOptions = [
         "cheap",
         "veryPopular",
         "veryHealthy",
@@ -28,20 +28,27 @@ export function FilterList({
         let dietArr = recipe.diets;
 
         if (dietArr.length > 0) {
-            dietArr.forEach((categoryStr) => {
-                dietOptions.add(categoryStr);
+            dietArr.forEach((dietStr) => {
+                //category not already selected
+                if (!dietFilter.includes(dietStr)) {
+                    dietOptions.add(dietStr);
+                }
             });
         }
 
         //extract other options from recipe the BOOLEANs
-        otherOptions.forEach((item) => {
-            if (recipe[item]) otherOptionsAvailable.add(item);
+        categoryOptions.forEach((category) => {
+            if (recipe[category] && !categoryFilter.includes(category)) {
+                categoryOptionsAvailable.add(category);
+            }
         });
     });
 
     //all diet options and other options extracted from recipe list
     let dietOptionsArr = Array.from(dietOptions.values());
-    let otherOptionsAvailableArr = Array.from(otherOptionsAvailable.values());
+    let otherOptionsAvailableArr = Array.from(
+        categoryOptionsAvailable.values()
+    );
 
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
