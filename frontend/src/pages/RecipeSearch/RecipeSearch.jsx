@@ -9,7 +9,7 @@ import { FilterList } from "../../components/FilterList/FilterList";
 import searchSample from "../../recipeSearchSample";
 import bulkSample from "../../recipeBulkInfoSample";
 
-const RecipeSearch = () => {
+export default function RecipeSearch() {
     // State for Ingredient
 
     const [ingredients, setIngredients] = useState("");
@@ -149,7 +149,7 @@ const RecipeSearch = () => {
             </section>
         </StyledRecipeSearch>
     );
-};
+}
 
 /// APPLY FILTER *****************************************
 function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
