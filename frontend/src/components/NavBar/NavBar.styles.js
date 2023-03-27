@@ -2,12 +2,15 @@ import styled from 'styled-components';
 
 export const Nav = styled.nav`
 
+font-family: 'Roboto', sans-serif;
+font-weight: 500;
+font-size: 2rem;
 display: flex;
 justify-content: space-between;
 align-items: center;
 
 .logo {
-  height: 6em;
+  height: 6rem;
   width: 100px;
   padding: 1.5em;
   will-change: filter;
@@ -18,36 +21,23 @@ align-items: center;
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-nav .navigation {
-  justify-content: space-around;
+ul {
+  display: inline-box;
+  width: 60%;
+  max-width: 60%;
+  list-style-type: none;
+}
 
+ul li {
+  margin: 0 1rem;
+  padding: 10px;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  display: flex;
+  justify-content: space-around;
+  color: #90ac14;
+  text-decoration: none;
 }
 
 `;

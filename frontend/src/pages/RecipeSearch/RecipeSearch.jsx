@@ -31,7 +31,7 @@ const RecipeSearch = () => {
             if (result?.data) {
                 setError(false);
             }
-            
+
             //used for bulk info api call
             const recipeIdList = result.data.map(recipe => recipe.id)
 
@@ -40,10 +40,10 @@ const RecipeSearch = () => {
                     recipeIdList: recipeIdList
                 }
             })
-            
+
 
             //combining both api calls data
-            let combined = CombinedRecipeData(result.data,recipeInstructions.data)
+            let combined = CombinedRecipeData(result.data, recipeInstructions.data)
             setRecipeList(combined)
             setSearchSpinner(false)
 
@@ -58,8 +58,8 @@ const RecipeSearch = () => {
         <StyledRecipeSearch>
             <div className='title'>
                 <h1>Recipe Search</h1>
-                
-  
+
+
             </div>
             <div className='search'>
                 <form
@@ -92,16 +92,18 @@ const RecipeSearch = () => {
             </div>
 
             <div className='searchResults'>
-                {searchSpinner ? <SearchSpinner /> :  recipeList.length > 0 ? recipeList.map(recipe => (
+                {searchSpinner ? <SearchSpinner /> : recipeList.length > 0 ? recipeList.map(recipe => (
 
                     <RecipeCard key={recipe.id} recipe={recipe} />
                 )) :
                     error ? <h3> An error has occured, please try searching again. </h3>
                         : <h3> Search for Ingredients to show Recipe Results. </h3>
                 }
-                
+
             </div>
-                
+
         </StyledRecipeSearch>
     )
+}
 
+export default RecipeSearch;
