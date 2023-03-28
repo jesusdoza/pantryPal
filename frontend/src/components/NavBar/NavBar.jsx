@@ -12,32 +12,48 @@ const NavBar = () => {
     navigate("/login");
   };
 
-  
+
 
   return (
     <Nav>
       <div>
         <img className="logo" src={Spoon} alt="spoon app logo"></img>
       </div>
-      <div className="navigation">
-        <NavLink to="/" activeclassname="active">
-          Home
-        </NavLink>
-
+      <ul className="navigation">
+        <li>
+          <NavLink className="page" to="/" activeclassname="active">
+            Home
+          </NavLink>
+        </li>
         {isLoggedIn ? (
           <>
-            <NavLink to="/search">Search</NavLink>
-            <NavLink to="/saved">Saved</NavLink>
-            <NavLink to="/profile">Profile</NavLink>
-            <NavLink to="/login" onClick={handleLogout}>Logout</NavLink>
+            <li>
+              <NavLink className="page" to="/search">Search</NavLink>
+            </li>
+            <li>
+              <NavLink className="page" to="/saved">Saved</NavLink>
+            </li>
+            <li>
+              <NavLink className="page" to="/mealPlanner">Meal Planner</NavLink>
+            </li>
+            <li>
+              <NavLink className="page" to="/profile">Profile</NavLink>
+            </li>
+            <li>
+              <NavLink className="page" to="/login" onClick={handleLogout}>Logout</NavLink>
+            </li>
           </>
         ) : (
           <>
-            <NavLink to="/signup">SignUp</NavLink>
-            <NavLink to="/login">Login</NavLink>
+            <li>
+              <NavLink className="page" to="/signup">SignUp</NavLink>
+            </li>
+            <li>
+              <NavLink className="page" to="/login">Login</NavLink>
+            </li>
           </>
         )}
-      </div>
+      </ul>
     </Nav>
   );
 };

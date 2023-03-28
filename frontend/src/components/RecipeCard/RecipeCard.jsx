@@ -1,10 +1,45 @@
 import { Card } from './RecipeCard.styles.js';
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
+const handleSave = () => {
+  const loggedInData = Cookies.getJSON("loggedIn");
+  const username = loggedInData ? loggedInData.username : null;
+  console.log(username)
+  if (!username) {
+    alert("Please log in to save the recipe.");
+    return;
+  }
+
+  fetch("http://localhost:4000/api/save-recipe", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ recipe }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("Recipe saved successfully!");
+      } else {
+        throw new Error("Failed to save the recipe.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to save the recipe.");
+    });
+};
 
 
 const RecipeCard = ({ recipe }) => {
- 
+  const removeHTMLTagsAndFilterText = (str) => {
+    const cleanedText = str.replace(/<\/?[^>]+(>|$)/g, '');
+    const cleanedText1 = cleanedText.split('If you like this recipe')[0];
+    const filteredText = cleanedText1.replace('Credit:','');    
+    return filteredText;
+  };
+
   return (
     <Card>
       <div className="container">
@@ -15,7 +50,7 @@ const RecipeCard = ({ recipe }) => {
         <div className="card_body">
           <h1>{recipe.title}</h1>
           <p>
-            {recipe.summary}
+            {removeHTMLTagsAndFilterText(recipe.summary)}
             Credit: {recipe.creditText}
           </p>
           <div className="card_footer">
@@ -41,6 +76,7 @@ const RecipeCard = ({ recipe }) => {
           <Link to="/details" state={{ recipe: recipe }} className="btn link">
           Try it!
           </Link>
+          <button className="save_btn" onClick={handleSave}>Save it!</button>
 
         </div>
       </div>

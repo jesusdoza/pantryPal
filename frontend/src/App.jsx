@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import Home from './pages/Home/Home';
@@ -8,6 +7,7 @@ import RecipeSearch from './pages/RecipeSearch/RecipeSearch';
 
 import Login from './pages/Login/Login';
 import RecipeDetails from './pages/RecipeDetails/RecipeDetails';
+import MealPlanner from './pages/mealPlanner/mealPlanner';
 
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
           <Route path="/details" element={<RecipeDetails />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/mealPlanner" element={<MealPlanner />} />
           <Route path="/*" element={<h1>404 no page</h1>} />
 
         </Routes>

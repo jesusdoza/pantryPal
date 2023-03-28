@@ -2,7 +2,7 @@ const express = require("express");
 const { send } = require("process");
 const API = require("./API");
 const router = express.Router();
-const { createUser, login } = require('./controllers/userController.js');
+const { createUser, login, getMealPlanner, saveRecipe } = require('./controllers/userController.js');
 
 
 router.get("/searchbyingredient", async (req, res) => {
@@ -55,5 +55,23 @@ router.get('/', (req, res) => {
     }
 });
 
+router.post('/getMealPlanner', async (req, res) => {
+  try {
+    const { numberOfDays, dietType, dailyCalories } = req.body;
+    await getMealPlanner(numberOfDays, dietType, dailyCalories
+        ).then(mealPlan => {
+            console.log('Meal plan:', mealPlan);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(mealPlan);
+        });
+    
+
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Error getting meal plan' });
+  }
+});
+
+router.post("/api/save-recipe", saveRecipe);
 
 module.exports = router;
