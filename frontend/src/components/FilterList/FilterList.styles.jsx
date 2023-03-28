@@ -26,7 +26,7 @@ export const Filter = styled.section`
         padding: 5px 0;
         border-radius: 10px;
         text-align: center;
-        background-color: #1694b4;
+        background-color: #40abc6;
         color: #e7e7e7;
         margin: 2% 0;
         box-shadow: 3px 1px 5px black;
@@ -41,7 +41,7 @@ export const Filter = styled.section`
     }
     & .btn-filter:hover {
         cursor: pointer;
-        background-color: #1ee47e;
+        background-color: #1fc36e;
     }
     & .btn:hover {
         cursor: pointer;
