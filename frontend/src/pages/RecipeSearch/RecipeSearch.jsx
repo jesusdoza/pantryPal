@@ -71,6 +71,7 @@ export default function RecipeSearch() {
             // const recipeInstructions = { data: bulkSample };
             //! test remove
             //combining both api calls data
+
             let combined = CombinedRecipeData(
                 result.data,
                 recipeInstructions.data
@@ -78,6 +79,7 @@ export default function RecipeSearch() {
             setRecipeList(combined);
             setFilteredRecipeList(combined);
             setSearchSpinner(false);
+
         } catch (err) {
             setError(true);
         }
@@ -87,6 +89,7 @@ export default function RecipeSearch() {
         <StyledRecipeSearch>
             <div className="title">
                 <h1>Recipe Search</h1>
+
             </div>
             <div className="search">
                 <form
@@ -195,3 +198,4 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
 
     return filteredList;
 }
+

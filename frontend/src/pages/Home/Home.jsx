@@ -1,12 +1,15 @@
 import React from 'react';
-import RecipeCard from '../../components/RecipeCard/RecipeCard'
 
 
 const Home = () => {
   return (
+
     <div>
-      <h1> HOME </h1>
+      <h1> Pantry Pal </h1>
+      <h2> Find your recipe </h2>
+      <h3> Login or Signup to begin </h3>
     </div>
+
   )
 }
 
