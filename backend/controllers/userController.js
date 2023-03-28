@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel.js');
+const Recipe = require("../models/recipeModel.js");
+
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
@@ -19,7 +21,11 @@ const createUser = async (req, res) => {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error.code === 11000) {
+      res.status(401).json({ message: 'Username already exists' });
+    } else {
+      res.status(400).json({ message: error.message });
+    }
   }
 };
 
@@ -97,8 +103,18 @@ Please note that the "TotalCalories" field should be close to the daily calorie 
   }
 }
 
+const saveRecipe = async (req, res) => {
+  const { username } = req.cookies.loggedIn;
+  console.log(username)
+  const recipe = new Recipe({
+    ...req.body.recipe,
+    username,
+  });
+}
+
 module.exports = {
     createUser,
     login,
-    getMealPlanner
+    getMealPlanner,
+    saveRecipe
 }

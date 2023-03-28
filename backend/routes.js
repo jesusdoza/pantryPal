@@ -2,7 +2,7 @@ const express = require("express");
 const { send } = require("process");
 const API = require("./API");
 const router = express.Router();
-const { createUser, login,getMealPlanner } = require('./controllers/userController.js');
+const { createUser, login, getMealPlanner, saveRecipe } = require('./controllers/userController.js');
 
 
 router.get("/searchbyingredient", async (req, res) => {
@@ -72,6 +72,6 @@ router.post('/getMealPlanner', async (req, res) => {
   }
 });
 
-
+router.post("/api/save-recipe", saveRecipe);
 
 module.exports = router;
