@@ -44,7 +44,7 @@ export const StyledRecipeSearch = styled.section`
     
     .recipes-display{
         display:grid;
-        grid-template-columns: 1fr 6fr;
+        grid-template-columns: 1fr 7fr;
 
         .filter-container{
             margin-top:20px;
