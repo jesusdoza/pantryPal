@@ -81,6 +81,9 @@ export default function Signup() {
                 }),
             });
 
+            if (response.status == 401) {
+                throw Error(`Username and/or Email already exists`);
+            }
             ///error was not status 201 get status text and throw error
             if (response.status != 201) {
                 throw Error(`server response error ${response.statusText}`);
