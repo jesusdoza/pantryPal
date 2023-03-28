@@ -2,17 +2,21 @@
 import React, { useState } from 'react';
 import fetchMealPlanner from './apiCall.js';
 import { StyledMealPlanner } from './mealPlanner.styles.jsx';
+import SearchSpinner from "../../components/SearchSpinner/SearchSpinner";
 
 function MealPlannerComponent() {
+  const [searchSpinner, setSearchSpinner] = useState(false);
   const [numberOfDays, setNumberOfDays] = useState(1);
   const [dietType, setDietType] = useState('None');
   const [dailyCalories, setDailyCalories] = useState('');
   const [mealPlan, setMealPlan] = useState(null);
 
   const handleSubmit = async (event) => {
+    setSearchSpinner(true);
     event.preventDefault();
     const fetchedMealPlan = await fetchMealPlanner(numberOfDays, dietType, parseInt(dailyCalories));
     setMealPlan(fetchedMealPlan);
+    setSearchSpinner(false);
   };
 
   return (
@@ -55,6 +59,7 @@ function MealPlannerComponent() {
         />
 
         <button type="submit">Get Meal Plan</button>
+        {searchSpinner ? <SearchSpinner /> : null}
       </form>
 
     {mealPlan && (

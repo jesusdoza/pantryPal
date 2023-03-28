@@ -31,7 +31,7 @@ function LoginScreen() {
       })
       .then((data) => {
         console.log("Login successful:", data);
-        Cookies.set("loggedIn", data.token);
+        Cookies.set("loggedIn", { token: data.token, username: username });
         window.location.href = "/search";
       })
       .catch((error) => {
