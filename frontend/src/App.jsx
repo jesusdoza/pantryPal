@@ -6,11 +6,10 @@ import Signup from './pages/Signup/Signup';
 import RecipeSearch from './pages/RecipeSearch/RecipeSearch';
 import Login from './pages/Login/Login';
 import MealPlanner from './pages/mealPlanner/mealPlanner';
+import { GlobalStyle } from './GlobalStyles';
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
       <header>
@@ -25,8 +24,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/mealPlanner" element={<MealPlanner />} />
           <Route path="/*" element={<h1>404 no page</h1>} />
-
         </Routes>
+
+        <GlobalStyle /> 
       </main>
     </div>
   )
