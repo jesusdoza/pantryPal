@@ -9,9 +9,14 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 
+img {
+  height: auto;
+  width: auto;
+}
+
 .logo {
-  height: 6rem;
-  width: 100px;
+  height: 200px;
+  width: 205px;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
