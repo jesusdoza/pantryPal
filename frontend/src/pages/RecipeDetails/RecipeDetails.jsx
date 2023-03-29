@@ -26,19 +26,17 @@ export default function RecipeDetails() {
     <div className='recipeDetails'>
       <h2>Ready in {recipeData.readyInMinutes} minutes</h2>
     </div>
-    <div>
-    <h2>Tags: {recipeType}</h2>
-    </div>
-    <div>
+
+    <div className='recipeHeader'>
       <img 
+      className='recipeImg'
       src={recipeData.image} 
       alt={recipeData.title} 
       />
-    </div>
-
-    <div>
-      <h2>What you'll need:</h2>
+      <div>
+      <h2 className='recipeIngredient'>What you'll need:</h2>
       {ingredientName}
+      </div>
     </div>
 
     <div>
@@ -46,8 +44,6 @@ export default function RecipeDetails() {
       <ol>
       {instructionStep}
       </ol>
-      
-      
     </div>
     </Details>
   )

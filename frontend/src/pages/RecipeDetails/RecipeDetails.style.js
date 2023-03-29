@@ -11,4 +11,23 @@ export const Details = styled.section`
   justify-content: center;
   align-items: center;
 }
+& .recipeTag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+& .recipeHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 20px;
+}
+& .recipeImg{
+
+}
+& .recipeIngredient{
+  flex-direction: row;
+}
+
 `;
