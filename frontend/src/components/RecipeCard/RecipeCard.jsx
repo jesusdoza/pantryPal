@@ -1,4 +1,5 @@
 import { Card } from './RecipeCard.styles.js';
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const handleSave = () => {
@@ -71,7 +72,10 @@ const RecipeCard = ({ recipe }) => {
             </div>
           </div>
 
-          <button className="try_btn" src={recipe.sourceUrl}>Try it!</button>
+          {/* <button className="btn" src={recipe.sourceUrl}>Try it!</button> */}
+          <Link to="/details" state={{ recipe: recipe }} className="btn link">
+          Try it!
+          </Link>
           <button className="save_btn" onClick={handleSave}>Save it!</button>
 
         </div>

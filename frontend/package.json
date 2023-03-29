@@ -32,11 +32,9 @@
   },
   "resolutions": {
     "styled-components": "^5"
-
   },
   "main": "vite.config.js",
   "author": "",
   "license": "ISC",
   "description": ""
 }
-
