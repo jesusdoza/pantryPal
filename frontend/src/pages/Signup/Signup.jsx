@@ -227,7 +227,7 @@ export default function Signup() {
                     </div>
 
                     <div className="submit-btn">
-                        <button>Signup</button>
+                        <button className="btn">Signup</button>
                     </div>
                 </form>
                 {errorFlag && (
