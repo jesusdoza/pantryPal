@@ -79,7 +79,6 @@ export default function RecipeSearch() {
             setRecipeList(combined);
             setFilteredRecipeList(combined);
             setSearchSpinner(false);
-
         } catch (err) {
             setError(true);
         }
@@ -89,7 +88,6 @@ export default function RecipeSearch() {
         <StyledRecipeSearch>
             <div className="title">
                 <h1>Recipe Search</h1>
-
             </div>
             <div className="search">
                 <form
@@ -110,7 +108,7 @@ export default function RecipeSearch() {
                 </form>
             </div>
             <section className="recipes-display">
-                <div className="filter">
+                <div className="filter-container">
                     <FilterList
                         recipeListArr={filteredRecipeList}
                         setDietFilter={setDietFilter}
@@ -198,4 +196,3 @@ function applyFilter(recipeListArr, recipeFilters, categoryFilters) {
 
     return filteredList;
 }
-

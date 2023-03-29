@@ -107,27 +107,29 @@ export function FilterList({
             {categoryFilter.length > 0 ? (
                 <section>
                     <h2>Category filters</h2>
-                    {categoryFilter.map((category, index) => {
-                        return (
-                            <li
-                                key={index + category}
-                                onClick={() => {
-                                    removeCategoryFilter(category);
-                                }}
-                                className="btn-filter">
-                                {category}
-                            </li>
-                        );
-                    })}
+                    <ul>
+                        {categoryFilter.map((category, index) => {
+                            return (
+                                <li
+                                    key={index + category}
+                                    onClick={() => {
+                                        removeCategoryFilter(category);
+                                    }}
+                                    className="btn-filter">
+                                    {category}
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </section>
             ) : (
                 <section></section>
             )}
             <section>
                 <h2>Dietary options</h2>
-                {dietOptionsArr.length > 0 ? (
-                    <ul className="filter-options">
-                        {dietOptionsArr.map((item, index) => {
+                <ul className="filter-options">
+                    {dietOptionsArr.length > 0 ? (
+                        dietOptionsArr.map((item, index) => {
                             return (
                                 <li
                                     onClick={() => {
@@ -138,11 +140,11 @@ export function FilterList({
                                     <span>{item}</span>
                                 </li>
                             );
-                        })}
-                    </ul>
-                ) : (
-                    <></>
-                )}
+                        })
+                    ) : (
+                        <></>
+                    )}
+                </ul>
             </section>
             <section>
                 <h2>Categories</h2>

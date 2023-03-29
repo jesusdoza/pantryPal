@@ -41,51 +41,25 @@ export const StyledRecipeSearch = styled.section`
             width: 50%;
         }
     }
-    & .searchResults {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    /* 
-    //FILTER SECTION
-    & .filter {
-        border: 1px solid #242424;
-        width: 15%;
-        display: inline-block;
-    }
-    & .filter li {
-        margin: 3%;
-        width: 100%;
-    }
+    
+    .recipes-display{
+        display:grid;
+        grid-template-columns: 1fr 7fr;
 
-    & .filter ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 3px;
-    }
+        .filter-container{
+            margin-top:20px;
+        }
+        .searchResults-container{
+            .searchResults {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .searchResults-container ul {
+              margin:0;
+            }
 
-    & .btn {
-        padding: 5px 0;
-        border-radius: 10px;
-        text-align: center;
-        background-color: #1694b4;
-        color: #e7e7e7;
+        }
     }
-    & .btn-filter {
-        padding: 5px 0;
-        border-radius: 10px;
-        text-align: center;
-        background-color: #16b462;
-        color: #e7e7e7;
-    }
-    & .btn-filter:hover {
-        cursor: pointer;
-        background-color: #1ee47e;
-    }
-    & .btn:hover {
-        cursor: pointer;
-        background-color: #28bee4;
-    } */
+    
 `;
