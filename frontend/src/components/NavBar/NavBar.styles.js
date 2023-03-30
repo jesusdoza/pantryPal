@@ -4,10 +4,13 @@ export const Nav = styled.nav`
 
 font-family: 'Roboto', sans-serif;
 font-weight: 500;
-font-size: 2rem;
+font-size: 1.5rem;
 display: flex;
 justify-content: space-between;
 align-items: center;
+display: flex;
+  justify-content: space-around;
+
 
 img {
   height: auto;
@@ -15,9 +18,9 @@ img {
 }
 
 .logo {
-  height: 200px;
-  width: 205px;
-  padding: 1.5em;
+  height: 75px;
+  width: 80px;
+
   will-change: filter;
   transition: filter 300ms;
 }
