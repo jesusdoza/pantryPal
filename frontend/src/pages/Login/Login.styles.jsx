@@ -5,6 +5,7 @@ export const StyledSignup = styled.section`
     padding: 0%;
     border-radius: 20px;
     margin: 0 auto;
+    box-shadow: 5px 5px 10px gray;
 
     & a {
         text-decoration: none;
@@ -55,7 +56,9 @@ export const StyledSignup = styled.section`
         border-radius: 20px;
         color: #3c3b3b;
     }
-
+    & form input:focus {
+        background-color: #dbff39;
+    }
     & .input-tag {
         color: #5e5e5e;
         position: absolute;
@@ -81,11 +84,13 @@ export const StyledSignup = styled.section`
         font-size: 10px;
         background: #fc9400;
         color: #000000;
-        box-shadow: 1px 1px 1px;
+        border: 1px solid black;
+        box-shadow: 2px 1px 1px gray;
     }
     & .btn:hover {
         cursor: pointer;
-        background-color: #7e5925;
+        background-color: #4ff32e;
+        color: black;
     }
 
     & .submit-btn button {
@@ -97,8 +102,8 @@ export const StyledSignup = styled.section`
         border-radius: 10px;
     }
     & .submit-btn button {
-        background: #fc9400;
-        color: #000000;
+        background: #229e0a;
+        color: #f6f6f6;
     }
 
     & .input-container {
