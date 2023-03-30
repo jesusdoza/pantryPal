@@ -133,11 +133,16 @@ export default function Signup() {
                         handleSignUp();
                     }}>
                     <div className="title">
-                        <h2>Welcome to the app</h2>
+                        <h2>
+                            Welcome to Pantry Pal <br></br>Signup Here
+                        </h2>
                     </div>
 
                     <div className="input-container">
                         {emailError && <span className="error-marker">*</span>}
+                        <label className="input-tag" htmlFor="email">
+                            Email
+                        </label>
                         <input
                             className={emailError ? "error-container" : ""}
                             ref={emailRef}
@@ -147,7 +152,6 @@ export default function Signup() {
                             }}
                             id="email"
                             type="text"
-                            placeholder="Email@email.com"
                             required
                         />
                         {emailError && <span className="error-marker">*</span>}
@@ -157,6 +161,9 @@ export default function Signup() {
                         {usernameError && (
                             <span className="error-marker">*</span>
                         )}
+                        <label className="input-tag" htmlFor="username">
+                            Username
+                        </label>
                         <input
                             className={usernameError ? "error-container" : ""}
                             ref={usernameRef}
@@ -165,7 +172,6 @@ export default function Signup() {
                             }}
                             id="username"
                             type="text"
-                            placeholder="Username"
                             required
                         />
                         {usernameError && (
@@ -177,6 +183,9 @@ export default function Signup() {
                         {passwordError && (
                             <span className="error-marker">*</span>
                         )}
+                        <label className="input-tag" htmlFor="password">
+                            Password
+                        </label>
                         <input
                             className={passwordError ? "error-container" : ""}
                             ref={passwordRef}
@@ -186,7 +195,6 @@ export default function Signup() {
                             }}
                             id="password"
                             type="password"
-                            placeholder="Password"
                             required
                         />
                         {passwordError && (
@@ -198,6 +206,9 @@ export default function Signup() {
                         {passwordError && (
                             <span className="error-marker">*</span>
                         )}
+                        <label htmlFor="confirmpassword" className="input-tag">
+                            Confirm Password
+                        </label>
                         <input
                             className={passwordError ? "error-container" : ""}
                             ref={confirmPasswordRef}
@@ -207,16 +218,16 @@ export default function Signup() {
                             }}
                             id="confirmpassword"
                             type="password"
-                            placeholder="Confirm Password"
                             required
                         />
+
                         {passwordError && (
                             <span className="error-marker">*</span>
                         )}
                     </div>
 
                     <div className="submit-btn">
-                        <button>Signup</button>
+                        <button className="btn">Signup</button>
                     </div>
                 </form>
                 {errorFlag && (
