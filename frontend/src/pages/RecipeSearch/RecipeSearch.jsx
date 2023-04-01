@@ -8,10 +8,18 @@ import { FilterList } from "../../components/FilterList/FilterList";
 
 import searchSample from "../../recipeSearchSample";
 import bulkSample from "../../recipeBulkInfoSample";
+import { useNavigate } from 'react-router-dom';
 
 export default function RecipeSearch() {
     // State for Ingredient
+      const navigate = useNavigate();
 
+      useEffect(() => {
+        const loggedIn = document.cookie.split(';').some((c) => c.trim().startsWith('loggedIn='));
+        if (!loggedIn) {
+          navigate('/login');
+        }
+      }, [navigate]);
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
     const [filteredRecipeList, setFilteredRecipeList] = useState([]);
