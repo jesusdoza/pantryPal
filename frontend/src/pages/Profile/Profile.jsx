@@ -5,45 +5,43 @@ import Cookies from "js-cookie";
 function ProfilePage() {
     return (
         <Dashboard>
-            <aside className="diet-container">
-                <h3>Diet preferences</h3>
-                <section>
-                    <select name="diet" id="diet">
-                        <option value="gluten free">Gluten Free</option>
-                        <option value="ketogenic">Ketogenic</option>
-                        <option value="vegetarian">Vegetarian</option>
-                        <option value="lacto vegetarian">
-                            Lacto-Vegetarian
-                        </option>
-                        <option value="ovo-vegetarian">Ovo-Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                        <option value="pescetarian">Pescetarian</option>
-                        <option value="paleo">Paleo</option>
-                        <option value="primal">Primal</option>
-                        <option value="lacto vegetarian">Low FODMAP</option>
-                        <option value="Whole30">Whole30</option>
-                    </select>
-                    <ul>
-                        <li>Veggy</li>
+            <section className="profile-page">
+                <section className="container profile">
+                    <picture>
+                        <img src="/src/assets/Spoon.png" alt="user avatar" />
+                    </picture>
+                    <h3>Hi! Bob</h3>
+                    <h3>Email@email.com</h3>
+                    <h4>Your Dietary Preferences</h4>
+                    <ul className="app-pref">
+                        <li value="gluten free">Gluten Free</li>
+                        <li value="ketogenic">Ketogenic</li>
+                        <li value="vegetarian">Vegetarian</li>
+                        <li value="lacto vegetarian">Lacto-Vegetarian</li>
+                        <li value="ovo-vegetarian">Ovo-Vegetarian</li>
+                        <li value="vegan">Vegan</li>
+                        <li value="pescetarian">Pescetarian</li>
+                        <li value="paleo">Paleo</li>
+                        <li value="primal">Primal</li>
                     </ul>
                 </section>
-            </aside>
-            <main className="">
-                <section className="recipes-container">
-                    <h3>Saved Recipes</h3>
-                    <section>
-                        <ul className="">
-                            <li className="recipe">RECIPE1</li>
-                            <li className="recipe">RECIPE1</li>
-                            <li className="recipe">RECIPE1</li>
-                            <li className="recipe">RECIPE1</li>
-                        </ul>
-                    </section>
-                    <section>
-                        <span>add recipe +</span>
-                    </section>
+                <section className="container app-config">
+                    <ul className="options">
+                        <li className="btn">
+                            <span>Update Caloric settings</span>
+                        </li>
+                        <li className="btn">
+                            <span>Update Dietary Preferences</span>
+                        </li>
+                        <li className="btn">
+                            <span>Update Email</span>
+                        </li>
+                        <li className="btn">
+                            <span>Update Password</span>
+                        </li>
+                    </ul>
                 </section>
-            </main>
+            </section>
         </Dashboard>
     );
 }
