@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledSignup = styled.section`
-    width: 80%;
+    width: 100%;
     max-width: 500px;
     padding: 0%;
     border-radius: 20px;
@@ -71,7 +71,7 @@ export const StyledSignup = styled.section`
     & form div.title {
         text-align: center;
         position: absolute;
-        top: -15%;
+        top: -3.5rem;
         background-color: #90ac14;
         border-radius: 20px;
         padding: 1%;
