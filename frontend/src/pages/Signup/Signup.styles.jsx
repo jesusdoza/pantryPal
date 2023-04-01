@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const StyledSignup = styled.section`
-    width: max(30%, 400px);
+    width: 80%;
+    max-width: 500px;
     padding: 0%;
     border-radius: 20px;
     margin: 0 auto;
+    margin-top: 4rem;
     box-shadow: 5px 5px 10px gray;
     position: relative;
 
@@ -81,7 +83,7 @@ export const StyledSignup = styled.section`
         border-radius: 20px;
         font-size: 10px;
         border: 1px solid black;
-        box-shadow: 2px 1px 1px gray;
+        box-shadow: 2px 1px 10px gray;
         background: #229e0a;
         color: #f6f6f6;
     }
@@ -102,6 +104,7 @@ export const StyledSignup = styled.section`
     & .submit-btn button {
         background: #229e0a;
         color: #f6f6f6;
+        border: 0;
     }
 
     & .input-container {
@@ -109,6 +112,7 @@ export const StyledSignup = styled.section`
     }
 
     & .goto-btn {
+        border: 0;
         padding: 1%;
         width: 40%;
         margin-top: 5%;
