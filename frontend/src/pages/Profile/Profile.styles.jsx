@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
-const main_bg = "#8ea93e";
-const app_prefbg = "#40a140";
+//OLD COLORS
+// const main_bg = "#8ea93e";
 // const button_bg = " #40abc6";
+// const avatar_bg = "#ADC48C";
+// const avatar_bg = "#ffffff";
+
+const main_bg = "#ffffff";
+const app_prefbg = "#40a140";
 const button_bg = " #ECDC19";
 const button_bg_hover = " #28bee4";
-const avatar_bg = "#ADC48C";
+const avatar_bg = "#ffffff";
 const profile_bg = "#25271843";
 
 export const Dashboard = styled.section`
