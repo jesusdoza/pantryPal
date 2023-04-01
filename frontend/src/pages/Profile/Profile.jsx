@@ -8,12 +8,9 @@ function ProfilePage() {
             <section className="profile-page">
                 <section className="container profile">
                     <picture>
-                        {/* <img src="/src/assets/Spoon.png" alt="user avatar" /> */}
-                        <source srcset="https://cdn.discordapp.com/attachments/1076184648599744674/1091575853470732288/PantryPal_Logo_TPB.png"></source>
-                        <img
-                            // src="https://cdn.discordapp.com/attachments/1076184648599744674/1091575853470732288/PantryPal_Logo_TPB.png"
-                            alt="user avatar"
-                        />
+                        {/* <source srcset="https://cdn.discordapp.com/attachments/1076184648599744674/1091575853470732288/PantryPal_Logo_TPB.png"></source> */}
+                        <source srcset="https://media.discordapp.net/attachments/1076184648599744674/1091475961280741426/EggMoonSnap.png?width=493&height=487"></source>
+                        <img src="/src/assets/spoon.png" alt="user avatar" />
                     </picture>
                     <h3>Hi! Bob</h3>
                     <h3>Email@email.com</h3>

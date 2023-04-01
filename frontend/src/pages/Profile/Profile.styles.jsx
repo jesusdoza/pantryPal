@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const main_bg = "#ffffff";
 const app_prefbg = "#40a140";
-const button_bg = " #ECDC19";
+const button_bg = " #ffea00d0";
 const button_bg_hover = " #28bee4";
 const avatar_bg = "#ffffff";
 const profile_bg = "#25271843";
