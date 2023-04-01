@@ -74,7 +74,7 @@ export const StyledSignup = styled.section`
         top: -15%;
         /* background-color: #8ea93e; */
         background-color: #90ac14;
-        border-radius: 5px;
+        border-radius: 20px;
         padding: 1%;
     }
 

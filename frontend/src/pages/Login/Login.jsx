@@ -60,7 +60,11 @@ function LoginScreen() {
                         </div>
                     )}
                     <div className="input-container">
+                        <label className="input-tag" htmlFor="username">
+                            Username
+                        </label>
                         <input
+                            id="username"
                             type="text"
                             placeholder="Username"
                             ref={usernameRef}
@@ -72,7 +76,11 @@ function LoginScreen() {
                         />
                     </div>
                     <div className="input-container">
+                        <label className="input-tag" htmlFor="password">
+                            Password
+                        </label>
                         <input
+                            id="password"
                             type="password"
                             placeholder="Password"
                             ref={passwordRef}
