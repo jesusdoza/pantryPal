@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const StyledSignup = styled.section`
-    width: max(30%, 400px);
-    padding: 0%;
+    width: 100%;
+    max-width: 500px;
+
     border-radius: 20px;
     margin: 0 auto;
+    margin-top: 4rem;
     box-shadow: 5px 5px 10px gray;
 
     & a {
@@ -69,10 +71,10 @@ export const StyledSignup = styled.section`
     & form div.title {
         text-align: center;
         position: absolute;
-        top: -15%;
+        top: -2rem;
         /* background-color: #8ea93e; */
         background-color: #90ac14;
-        border-radius: 5px;
+        border-radius: 20px;
         padding: 1%;
     }
 
@@ -85,7 +87,7 @@ export const StyledSignup = styled.section`
         background: #fc9400;
         color: #000000;
         border: 1px solid black;
-        box-shadow: 2px 1px 1px gray;
+        box-shadow: 5px 5px 10px gray;
     }
     & .btn:hover {
         cursor: pointer;
@@ -104,6 +106,7 @@ export const StyledSignup = styled.section`
     & .submit-btn button {
         background: #229e0a;
         color: #f6f6f6;
+        border: 0;
     }
 
     & .input-container {
