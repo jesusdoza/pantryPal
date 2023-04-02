@@ -2,11 +2,15 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
 import { Details } from './RecipeDetails.style';
 
+import RelatedRecipe from '../../components/RelatedRecipe/RelatedRecipe';
+
 
 
 export default function RecipeDetails() {
+  
   const location = useLocation();
   const recipeData = location.state?.recipe;
+  console.log(recipeData);
 
   const recipeType = recipeData.dishTypes.map(type => {
     return <li>{type}</li>
@@ -18,16 +22,16 @@ export default function RecipeDetails() {
   const instructionStep = recipeData.analyzedInstructions[0].steps.map(instruction => {
     return <li>{instruction.step}</li>})
 
+
+
   return (
     <Details>
       <div className='recipeHeader'>
-        <div>
-          <h1 className='title'>{recipeData.title}</h1>
+        <div className='title'>
+          <h1 >{recipeData.title}</h1>
+          <h2 className='recipeTime'>Ready in {recipeData.readyInMinutes} minutes</h2>
         </div>
 
-        <div className='recipeTime'>
-          <h2>Ready in {recipeData.readyInMinutes} minutes</h2>
-        </div>
 
         <div className='recipeHead'>
           <div className='recipeCategory'>
@@ -59,6 +63,8 @@ export default function RecipeDetails() {
           </ol>
         </div>
       </div>
+
+      {/* <RelatedRecipe /> */}
     </Details>
   )
 }

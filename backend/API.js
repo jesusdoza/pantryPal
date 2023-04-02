@@ -38,12 +38,12 @@ module.exports = {
             return error;
         }
     },
-    getSimilarRecipes: async(req, res) => {
+    getSimilarRecipes: async(recipeId) => {
+        console.log(`sending... ${recipeId}`);
         try {
-            const res = await fetch(`https://api.spoonacular.com/recipes/{id}/similar?apiKey=${process.env.API_KEY}`)
-            const data = await res.json()
-            res.status(200).json(data);
-
+            const results = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/similar?apiKey=${process.env.API_KEY}`)
+            console.log(`results... ${results}`);
+            return results.data;
         } catch(error) {
             res.status(400).json({
                 error: error

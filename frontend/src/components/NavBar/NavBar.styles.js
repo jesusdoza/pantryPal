@@ -31,8 +31,7 @@ img {
 
 ul {
   display: inline-box;
-  width: 60%;
-  max-width: 60%;
+
   list-style-type: none;
 }
 

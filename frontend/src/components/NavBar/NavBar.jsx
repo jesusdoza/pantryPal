@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav } from './NavBar.styles.js';
 import Spoon from '../../assets/Spoon.png';
+import Egg from '../../assets/PantryPal_Logo_TPB.png';
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie"; // Import Cookies
 
@@ -17,7 +18,7 @@ const NavBar = () => {
   return (
     <Nav>
       <div>
-        <img className="logo" src={Spoon} alt="spoon app logo"></img>
+        <img className="logo" src={Egg} alt="spoon app logo"></img>
       </div>
       <ul className="navigation">
         <li>
@@ -53,7 +54,9 @@ const NavBar = () => {
             </li>
           </>
         )}
+
       </ul>
+
     </Nav>
   );
 };
