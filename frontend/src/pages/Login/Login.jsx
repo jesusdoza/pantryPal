@@ -30,11 +30,10 @@ function LoginScreen() {
                 }
             })
             .then((data) => {
-                console.log("Login successful:", data);
-                Cookies.set("loggedIn", {
+                Cookies.set("loggedIn", JSON.stringify({
                     token: data.token,
                     username: username,
-                });
+                }));
                 window.location.href = "/search";
             })
             .catch((error) => {

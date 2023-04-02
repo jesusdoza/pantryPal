@@ -72,6 +72,28 @@ body {
   }
  }
 }
+ .delete_btn {
+  position: absolute;
+  bottom: -20px;
+  right: 140px;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  background-color: #880808;
+  color: #fff;;
+  padding: 22px 45px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.294);
+  i {
+   margin-left: 20px;
+   font-size: 1.5rem;
+  }
+ }
+}
 .card_body {
  padding: 20px 40px 0;
  h1 {
