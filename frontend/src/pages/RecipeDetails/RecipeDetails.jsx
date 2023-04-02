@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { Details } from './RecipeDetails.style';
 
 import RelatedRecipe from '../../components/RelatedRecipe/RelatedRecipe';
@@ -10,7 +10,15 @@ export default function RecipeDetails() {
   
   const location = useLocation();
   const recipeData = location.state?.recipe;
-  console.log(recipeData);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = document.cookie.split(';').some((c) => c.trim().startsWith('loggedIn='));
+    if (!loggedIn) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
 
   const recipeType = recipeData.dishTypes.map(type => {
     return <li>{type}</li>
