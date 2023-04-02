@@ -6,11 +6,8 @@ font-family: 'Roboto', sans-serif;
 font-weight: 500;
 font-size: 1.5rem;
 display: flex;
-justify-content: space-between;
+justify-content: space-around;
 align-items: center;
-display: flex;
-  justify-content: space-around;
-
 
 img {
   height: auto;
@@ -20,26 +17,8 @@ img {
 .logo {
   height: 75px;
   width: 80px;
-
-  will-change: filter;
-  transition: filter 300ms;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-ul {
-  display: inline-box;
-  width: 60%;
-  max-width: 60%;
-  list-style-type: none;
-}
-
-ul li {
-  margin: 0 1rem;
-  padding: 10px;
-}
 
 a {
   display: flex;
@@ -49,4 +28,3 @@ a {
 }
 
 `;
-
