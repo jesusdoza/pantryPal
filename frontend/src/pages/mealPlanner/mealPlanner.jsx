@@ -46,6 +46,7 @@ function MealPlannerComponent() {
           <option value="lacto-ovo-vegetarian">Lacto-ovo-vegetarian</option>
           <option value="keto">Keto</option>
           <option value="gluten-free">Gluten-free</option>
+          <option value="low-Fodmap">Low Fodmap</option>
         </select>
 
         <label htmlFor="dailyCalories">Daily calories:</label>

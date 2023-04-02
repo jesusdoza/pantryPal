@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import RecipeCard from "../../components/RecipeCard/RecipeCard";
 import Cookies from "js-cookie";
+import { StyledSavedRecipes } from "./Saved.styles";
 
 export default function SavedRecipes() {
   const [savedRecipes, setSavedRecipes] = useState([]);
@@ -27,15 +28,19 @@ export default function SavedRecipes() {
   }, []);
 
   return (
-    <div>
-      <h1>Saved Recipes</h1>
-      <ul>
-        {savedRecipes.map((recipe) => (
-          <li key={recipe._id}>
-            <RecipeCard recipe={recipe.recipeJson} showDelete={true} />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <StyledSavedRecipes>
+      <div className="title">
+        <h1>Saved Recipes</h1>
+      </div>
+      <div className="saved-recipes">
+        <ul>
+          {savedRecipes.map((recipe) => (
+            <li key={recipe._id}>
+              <RecipeCard recipe={recipe.recipeJson} showDelete={true} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </StyledSavedRecipes>
   );
 }
