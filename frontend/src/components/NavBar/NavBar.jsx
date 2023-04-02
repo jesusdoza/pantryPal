@@ -29,9 +29,11 @@ const NavBar = () => {
 
           <NavLink className="page" to="/mealPlanner">Meal Planner</NavLink>
 
-          <NavLink className="page" to="/profile">Profile</NavLink>
-
           <NavLink className="page" to="/login" onClick={handleLogout}>Logout</NavLink>
+
+          <NavLink className="page" to="/profile">
+            <img className="logo" src={PantryPal} alt="PantryPal Egg logo"></img>
+          </NavLink>
 
         </>
       ) : (
