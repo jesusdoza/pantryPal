@@ -21,12 +21,15 @@ img {
   width: 80px;
 }
 
-
 a {
   color: #90ac14;
   text-decoration: none;
 }
 
+ul {
+  display: inline-box;
+  list-style-type: none;
+}
 
 @media ${device.mobileS} { 
   min-width: 200px;

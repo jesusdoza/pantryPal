@@ -3,8 +3,8 @@ import { useLocation,useNavigate } from "react-router-dom";
 import { Details } from './RecipeDetails.style';
 
 
-
 export default function RecipeDetails() {
+  
   const location = useLocation();
   const recipeData = location.state?.recipe;
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ export default function RecipeDetails() {
     }
   }, [navigate]);
 
+
   const recipeType = recipeData.dishTypes.map(type => {
     return <li>{type}</li>
   })
@@ -26,16 +27,16 @@ export default function RecipeDetails() {
   const instructionStep = recipeData.analyzedInstructions[0].steps.map(instruction => {
     return <li>{instruction.step}</li>})
 
+
+
   return (
     <Details>
       <div className='recipeHeader'>
-        <div>
-          <h1 className='title'>{recipeData.title}</h1>
+        <div className='title'>
+          <h1 >{recipeData.title}</h1>
+          <h2 className='recipeTime'>Ready in {recipeData.readyInMinutes} minutes</h2>
         </div>
 
-        <div className='recipeTime'>
-          <h2>Ready in {recipeData.readyInMinutes} minutes</h2>
-        </div>
 
         <div className='recipeHead'>
           <div className='recipeCategory'>

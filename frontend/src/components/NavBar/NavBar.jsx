@@ -1,6 +1,8 @@
 import React from "react";
 import { Nav } from './NavBar.styles.js';
 import PantryPal from '../../assets/PantryPal.png';
+import Spoon from '../../assets/Spoon.png';
+import Egg from '../../assets/PantryPal_Logo_TPB.png';
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie"; // Import Cookies
 
@@ -12,11 +14,11 @@ const NavBar = () => {
     navigate("/login");
   };
 
-
-
   return (
     <Nav>
-
+       <div>
+        <img className="logo" src={Egg} alt="spoon app logo"></img>
+      </div>
       {isLoggedIn ? (
         <>
           <NavLink className="page" to="/" activeclassname="active">
