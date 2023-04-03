@@ -2,9 +2,6 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useLocation,useNavigate } from "react-router-dom";
 import { Details } from './RecipeDetails.style';
 
-import RelatedRecipe from '../../components/RelatedRecipe/RelatedRecipe';
-
-
 
 export default function RecipeDetails() {
   
@@ -71,8 +68,6 @@ export default function RecipeDetails() {
           </ol>
         </div>
       </div>
-
-      {/* <RelatedRecipe /> */}
     </Details>
   )
 }
