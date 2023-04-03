@@ -39,10 +39,8 @@ module.exports = {
         }
     },
     getSimilarRecipes: async(recipeId) => {
-        console.log(`sending... ${recipeId}`);
         try {
             const results = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/similar?apiKey=${process.env.API_KEY}`)
-            console.log(`results... ${results}`);
             return results.data;
         } catch(error) {
             res.status(400).json({

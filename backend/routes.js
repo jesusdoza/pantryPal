@@ -29,8 +29,6 @@ router.get("/searchbyingredient", async (req, res) => {
 
 router.get("/recipeinformation", async (req, res) => {
     const recipeId = req.query.recipeIdList;
-    console.log(recipeId);
-
     try {
         const recipeInfo = await API.getRecipeInstructions(recipeId)
         res.status(200).json(recipeInfo)
@@ -45,7 +43,6 @@ router.get("/recipeinformation", async (req, res) => {
 router.get("/relatedrecipe", async (req, res) => {
     const recipeId = req.query.recipeData
     try {
-        console.log(`Checking... ${recipeId}`);
         const relatedRecipe = await API.getSimilarRecipes(recipeId)
         res.status(200).json(relatedRecipe)
     } catch(error) {
