@@ -1,15 +1,25 @@
 // MealPlannerComponent.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fetchMealPlanner from './apiCall.js';
 import { StyledMealPlanner } from './mealPlanner.styles.jsx';
 import SearchSpinner from "../../components/SearchSpinner/SearchSpinner";
+import { useNavigate } from 'react-router-dom';
+
 
 function MealPlannerComponent() {
+  const navigate = useNavigate();
   const [searchSpinner, setSearchSpinner] = useState(false);
   const [numberOfDays, setNumberOfDays] = useState(1);
   const [dietType, setDietType] = useState('None');
   const [dailyCalories, setDailyCalories] = useState('');
   const [mealPlan, setMealPlan] = useState(null);
+
+  useEffect(() => {
+    const loggedIn = document.cookie.split(';').some((c) => c.trim().startsWith('loggedIn='));
+    if (!loggedIn) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     setSearchSpinner(true);

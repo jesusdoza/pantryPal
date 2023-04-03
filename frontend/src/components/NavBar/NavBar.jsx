@@ -1,6 +1,6 @@
 import React from "react";
 import { Nav } from './NavBar.styles.js';
-import Spoon from '../../assets/Spoon.png';
+import PantryPal from '../../assets/PantryPal.png';
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie"; // Import Cookies
 
@@ -16,44 +16,36 @@ const NavBar = () => {
 
   return (
     <Nav>
-      <div>
-        <img className="logo" src={Spoon} alt="spoon app logo"></img>
-      </div>
-      <ul className="navigation">
-        <li>
+
+      {isLoggedIn ? (
+        <>
           <NavLink className="page" to="/" activeclassname="active">
-            Home
+            <img className="logo" src={PantryPal} alt="PantryPal Egg logo"></img>
           </NavLink>
-        </li>
-        {isLoggedIn ? (
-          <>
-            <li>
-              <NavLink className="page" to="/search">Search</NavLink>
-            </li>
-            <li>
-              <NavLink className="page" to="/saved">Saved</NavLink>
-            </li>
-            <li>
-              <NavLink className="page" to="/mealPlanner">Meal Planner</NavLink>
-            </li>
-            <li>
-              <NavLink className="page" to="/profile">Profile</NavLink>
-            </li>
-            <li>
-              <NavLink className="page" to="/login" onClick={handleLogout}>Logout</NavLink>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <NavLink className="page" to="/signup">SignUp</NavLink>
-            </li>
-            <li>
-              <NavLink className="page" to="/login">Login</NavLink>
-            </li>
-          </>
-        )}
-      </ul>
+
+          <NavLink className="page" to="/search">Search</NavLink>
+
+          <NavLink className="page" to="/saved">Saved</NavLink>
+
+          <NavLink className="page" to="/mealPlanner">Meal Planner</NavLink>
+
+          <NavLink className="page" to="/login" onClick={handleLogout}>Logout</NavLink>
+
+          <NavLink className="page" to="/profile">
+            <img className="logo" src={PantryPal} alt="PantryPal Egg logo"></img>
+          </NavLink>
+
+        </>
+      ) : (
+        <>
+
+          <NavLink className="page" to="/signup">SignUp</NavLink>
+
+          <NavLink className="page" to="/login">Login</NavLink>
+
+        </>
+      )}
+
     </Nav>
   );
 };

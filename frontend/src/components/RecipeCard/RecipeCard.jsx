@@ -67,7 +67,7 @@ const RecipeCard = ({ recipe, showDelete }) => {
   const removeHTMLTagsAndFilterText = (str) => {
     const cleanedText = str.replace(/<\/?[^>]+(>|$)/g, '');
     const cleanedText1 = cleanedText.split('If you like this recipe')[0];
-    const filteredText = cleanedText1.replace('Credit:','');    
+    const filteredText = cleanedText1.replace('Credit:', '');
     return filteredText;
   };
 
@@ -94,18 +94,17 @@ const RecipeCard = ({ recipe, showDelete }) => {
               <p> {recipe.servings}</p>
             </div>
             <div className="card_footer_container">
-              <h2>Total Time</h2>
+              <h2>Total Time:</h2>
               <p>{recipe.readyInMinutes}</p>
             </div>
             <div className="card_footer_container">
-              <h2>Tags</h2>
-              <p className='tag'>{recipe.dietary}</p>
+              <h2>Source:</h2>
+              <p>{recipe.sourceName}</p>
             </div>
           </div>
 
-          {/* <button className="btn" src={recipe.sourceUrl}>Try it!</button> */}
           <Link to="/details" state={{ recipe: recipe }} className="try_btn">
-          Try it!
+            Try it!
           </Link>
           
           {!showDelete && (

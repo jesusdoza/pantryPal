@@ -44,44 +44,59 @@ function LoginScreen() {
 
     return (
         <StyledSignup>
-            <form onSubmit={handleSubmit}>
-                <div className="title">
-                    <h2>Welcome Back!</h2>
-                </div>
-                {error && (
-                    <div className="error-container">
-                        <div className="error-desc">
-                            <span className="error-marker">&#x26A0;</span>{" "}
-                            {error}
-                        </div>
+            <section className="form-sect">
+                <form onSubmit={handleSubmit}>
+                    <div className="title">
+                        <h2>Welcome Back!</h2>
                     </div>
-                )}
-                <div className="input-container">
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        ref={usernameRef}
-                        value={username}
-                        onChange={(event) => setUsername(event.target.value)}
-                        required
-                    />
-                </div>
-                <div className="input-container">
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        ref={passwordRef}
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        required
-                    />
-                </div>
-                <div className="submit-btn">
-                    <button type="submit" className="btn">
-                        Sign In
-                    </button>
-                </div>
-            </form>
+
+                    {error && (
+                        <div className="error-container">
+                            <div className="error-desc">
+                                <span className="error-marker">&#x26A0;</span>{" "}
+                                {error}
+                            </div>
+                        </div>
+                    )}
+                    <div className="input-container">
+                        <label className="input-tag" htmlFor="username">
+                            Username
+                        </label>
+                        <input
+                            id="username"
+                            type="text"
+                            placeholder="Username"
+                            ref={usernameRef}
+                            value={username}
+                            onChange={(event) =>
+                                setUsername(event.target.value)
+                            }
+                            required
+                        />
+                    </div>
+                    <div className="input-container">
+                        <label className="input-tag" htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                            ref={passwordRef}
+                            value={password}
+                            onChange={(event) =>
+                                setPassword(event.target.value)
+                            }
+                            required
+                        />
+                    </div>
+                    <div className="submit-btn">
+                        <button type="submit" className="btn">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+            </section>
         </StyledSignup>
     );
 }
