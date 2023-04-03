@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Signup.styles";
 import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
+
 export default function Signup() {
     const usernameRef = useRef("");
     const passwordRef = useRef("");
@@ -108,7 +110,10 @@ export default function Signup() {
 
             if (response.status === 200) {
                 const data = await response.json();
-                localStorage.setItem("JWT", data.token);
+                Cookies.set("loggedIn", {
+                    token: data.token,
+                    username: username,
+                });
             } else {
                 throw Error(response.statusText);
             }

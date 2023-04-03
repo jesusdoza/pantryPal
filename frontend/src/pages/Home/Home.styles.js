@@ -1,31 +1,81 @@
 import styled from "styled-components";
-import SlateChilis from '../../assets/slateChilis.jpeg';
+import { device } from '../../components/mediaQ/device';
 
 export const ImgContainer = styled.div`
-    min-height: 100%;
-    min-width: 1024px;
-    width: 100%;
-    height: auto;
-    position: fixed;
-    top: 0; //comment this out if you want the image to show below the navbar
-    left: 0;
-    // z-index: -100;  //un-comment this if you want the navbar to show at the top
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
 
+    img {
+        width: auto;
+        height: 100%;
+        max-height: 50vh;
+    }
 
-    background-image: url(${SlateChilis});
-    background-size: cover;
-
-    //any text you put inside the image div (like the <h1> <h2> and <h3> will need to have the position: relative; set on it
-    //as well as set the z-index: -1 so that the text floats on top of the image. 
+    .logoText {
+        width: auto;
+        max-width: 80%;
+        height: 100%;
+        max-height: 25vh;   
+    }
+    
     h1 {
-
+        font-size: 40px;
+        color: #90ac14;
+        text-decoration: none;
     }
 
-    h2 {
+    @media ${device.mobileS} { 
+        min-width: 200px;
+        h1 {
+            font-size: .8rem;
+        }
+    }
+      
+    @media ${device.mobileM} { 
+        min-width: 320px;
+        h1 {
+            font-size: .8rem;
+        }
+    }
+      
+    @media ${device.mobileL} { 
+        min-width: 375px;
+        h1 {
+            font-size: 1rem;    
+        }
+    }
+      
+    @media ${device.tablet} { 
+        min-width: 425px;
+        h1 {
+            font-size: 2rem;    
+        }
+    }
+      
+    @media ${device.laptop} { 
+        min-width: 768px;
+        h1 {
+            font-size: 2.2rem;    
+        }
+  
+    }
+      
+    @media ${device.desktop} {
+        min-width: 1441px;
+        h1 {
+            font-size: 3rem;    
+        }
 
     }
+      
+    @media ${device.desktopL} {
+        min-width: 2560px;
+        h1 {
+            font-size: 4rem;    
+        }
 
-    h3 {
-        
     }
 `;
