@@ -104,17 +104,88 @@ Please note that the "TotalCalories" field should be close to the daily calorie 
 }
 
 const saveRecipe = async (req, res) => {
-  const { username } = req.cookies.loggedIn;
-  console.log(username)
-  const recipe = new Recipe({
-    ...req.body.recipe,
-    username,
-  });
-}
+  const { recipe, username } = req.body;
+
+  try {
+  const existingRecipe = await Recipe.findOne({ recipeJson: recipe });
+
+  if (existingRecipe) {
+    // If the recipe exists and the username is not already included, append the username
+    if (!existingRecipe.username.includes(username)) {
+      existingRecipe.username = existingRecipe.username + ', ' + username;
+      await existingRecipe.save();
+    }
+  } else {
+    // If the recipe does not exist, create a new one with the provided username and recipeJson
+    const newRecipe = new Recipe({
+      username,
+      recipeJson: recipe,
+    });
+
+    await newRecipe.save();
+  }
+
+  res.status(200).json({ message: 'Recipe saved successfully!' });
+  } catch (error) {
+    console.error('Error saving the recipe:', error);
+    res.status(500).json({ message: 'Failed to save the recipe.' });
+  }
+};
+
+
+const getSavedRecipes = async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const savedRecipes = await Recipe.find({
+      username: {
+        $regex: new RegExp(`\\b${username}\\b`, 'i'),
+      },
+    });
+
+    res.status(200).json(savedRecipes);
+  } catch (error) {
+    console.error('Error retrieving saved recipes:', error);
+    res.status(500).json({ message: 'Failed to retrieve saved recipes.' });
+  }
+};
+
+
+const deleteRecipe = async (req, res) => {
+  const { recipe, username } = req.body;
+
+  try {
+    const existingRecipe = await Recipe.findOne({ recipeJson: recipe });
+
+    if (existingRecipe) {
+      const userArray = existingRecipe.username.split(', ');
+
+      if (userArray.length === 1 && userArray[0] === username) {
+        // If the username is the only one associated with the recipe, delete the recipe
+        await Recipe.deleteOne({ _id: existingRecipe._id });
+      } else {
+        // If there are multiple usernames, remove the current username and update the recipe
+        const updatedUserArray = userArray.filter((user) => user !== username);
+        existingRecipe.username = updatedUserArray.join(', ');
+        await existingRecipe.save();
+      }
+
+      res.status(200).json({ message: 'Recipe deleted successfully!' });
+    } else {
+      res.status(404).json({ message: 'Recipe not found.' });
+    }
+  } catch (error) {
+    console.error('Error deleting the recipe:', error);
+    res.status(500).json({ message: 'Failed to delete the recipe.' });
+  }
+};
+
 
 module.exports = {
     createUser,
     login,
     getMealPlanner,
-    saveRecipe
+    saveRecipe,
+    getSavedRecipes,
+    deleteRecipe
 }

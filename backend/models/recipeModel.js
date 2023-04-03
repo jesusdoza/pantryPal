@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = new mongoose.Schema({
-  image: String,
-  title: String,
-  summary: String,
-  creditText: String,
-  dishTypes: [String],
-  servings: Number,
-  readyInMinutes: Number,
-  dietary: String,
+  username: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  recipeJson: {
+    type: Object,
+    required: true,
+    unique: true
+  }
 });
+
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
 
