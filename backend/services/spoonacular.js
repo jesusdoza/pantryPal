@@ -1,6 +1,4 @@
-require("dotenv").config();
 const axios = require("axios");
-
 module.exports = {
     searchRecipe: async (req, res) => {
         try {

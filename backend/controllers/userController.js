@@ -189,24 +189,18 @@ const deleteRecipe = async (req, res) => {
     }
 };
 
-async function updatePassword(req, res) {
-    const { oldPassword, newPassword, id } = req.body;
+async function updateProfile(req, res) {
+    //request will have the property that needs updating
+    // updateType : password | email | caloricPref | dietPref
+
+    //fields of the
+    const {} = req.body;
+
     res.status(200).json({ passwordUpdate: true });
-}
-async function updateEmail(req, res) {
-    const { oldEmail, newEmail, password, id } = req.body;
-    res.status(200).json({ emailUpdate: true });
-}
-async function updateCaloricPref(req, res) {
-    const { oldCaloric, newCaloric, password, id } = req.body;
-    res.status(200).json({ caloricUpdate: true });
-}
-async function updateDietaryPref(req, res) {
-    const { oldDietary, newDietary, password, id } = req.body;
-    res.status(200).json({ dietUpdate: true });
 }
 
 module.exports = {
+    updateProfile,
     createUser,
     login,
     getMealPlanner,

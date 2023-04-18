@@ -1,6 +1,6 @@
 const express = require("express");
 const { send } = require("process");
-const API = require("../../API");
+const API = require("../../services/spoonacular");
 const apiRouter = express.Router();
 const profileRouter = require("./profile");
 const {
