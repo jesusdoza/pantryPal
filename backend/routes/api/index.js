@@ -3,14 +3,27 @@ const { send } = require("process");
 const API = require("../../services/spoonacular");
 const apiRouter = express.Router();
 const profileRouter = require("./profile");
+const loginRouter = require("./login");
+const signupRouter = require("./signup");
+
 const {
-    createUser,
-    login,
     getMealPlanner,
     saveRecipe,
     getSavedRecipes,
     deleteRecipe,
 } = require("../../controllers/userController.js");
+
+//test route to localhost:4000/api/
+apiRouter.get("/", (req, res) => {
+    try {
+        res.json({ msg: "test GET request working" });
+    } catch (error) {
+        res.status(400).json({ error: "something went wrong" });
+    }
+});
+
+apiRouter.use("/signup", signupRouter);
+apiRouter.use("/login", loginRouter);
 
 apiRouter.get("/searchbyingredient", async (req, res) => {
     const ingredientsList = req.query.ingredients;
@@ -58,19 +71,6 @@ apiRouter.get("/relatedrecipe", async (req, res) => {
         res.status(400).json({
             err: error,
         });
-    }
-});
-
-apiRouter.post("/signup", createUser);
-
-apiRouter.post("/login", login);
-
-//test route to localhost:4000/api/
-apiRouter.get("/", (req, res) => {
-    try {
-        res.json({ msg: "test GET request working" });
-    } catch (error) {
-        res.status(400).json({ error: "something went wrong" });
     }
 });
 

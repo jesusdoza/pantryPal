@@ -34,6 +34,7 @@ const createUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
+    console.log("login router");
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
