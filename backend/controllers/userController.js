@@ -190,18 +190,40 @@ const deleteRecipe = async (req, res) => {
     }
 };
 
-async function updateProfile(req, res) {
-    //request will have the property that needs updating
-    // updateType : password | email | caloricPref | dietPref
+//todo update password, email, caloricPref, dietPref
+async function updatePassword(req, res) {
+    const { oldPassword, newPassword, id } = req.body;
 
-    //fields of the
-    const {} = req.body;
+    try {
+        let foundUser = await User.findOne({ _id: id });
 
-    res.status(200).json({ passwordUpdate: true });
+        if (!foundUser) {
+            res.status(400).json({ passwordUpdate: false });
+        }
+
+        //check if old password is correct
+        const isPasswordValid = await bcrypt.compare(
+            oldPassword,
+            foundUser.password
+        );
+
+        //update password
+        if (isPasswordValid) {
+            const encryptedPassword = await bcrypt.hash(
+                newPassword,
+                saltRounds
+            );
+            foundUser.password = encryptedPassword;
+            await foundUser.save();
+        }
+
+        res.status(200).json({ passwordUpdate: true });
+    } catch (err) {
+        res.status(400).json({ passwordUpdate: false, error: err.message });
+    }
 }
 
 module.exports = {
-    updateProfile,
     createUser,
     login,
     getMealPlanner,
