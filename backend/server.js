@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const routes = require("./routes");
+// const routes = require("./routes/api");
+const mainRouter = require("./routes/mainRouter.js");
 const cors = require("cors");
 
 // create express app server
@@ -16,8 +17,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// grabs all of the different routes that are attached to the express router in the routes.js file
-app.use("/api", routes);
+// grabs all of the different routes that are attached to the express router in the /routes/index.js file
+app.use("/", mainRouter);
 
 //connect to db
 mongoose
