@@ -1,13 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-// const routes = require("./routes/api");
 const mainRouter = require("./routes/mainRouter.js");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 // create express app server
 const app = express();
 app.use(cors());
+app.use(cookieParser());
 
 // assign a piece of middleware that will fire anytime a request comes in to the server
 app.use(express.json());
