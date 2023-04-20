@@ -15,7 +15,8 @@ function LoginScreen() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch("http://localhost:4000/api/login", {
+        // fetch("http://localhost:4000/api/login", {
+        fetch(`${import.meta.env.VITE_API_IP}/api/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -30,10 +31,13 @@ function LoginScreen() {
                 }
             })
             .then((data) => {
-                Cookies.set("loggedIn", JSON.stringify({
-                    token: data.token,
-                    username: username,
-                }));
+                Cookies.set(
+                    "loggedIn",
+                    JSON.stringify({
+                        token: data.token,
+                        username: username,
+                    })
+                );
                 window.location.href = "/search";
             })
             .catch((error) => {
