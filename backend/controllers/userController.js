@@ -18,35 +18,38 @@ const saltRounds = 12; // you can adjust this value as needed
 //todo update password, email, caloricPref, dietPref
 async function updatePassword(req, res) {
     const token = req.cookies;
-    const { oldPassword, newPassword, id } = req.body;
+    const decoded = jwt.decode(token, process.env.JWT_SECRET);
 
-    try {
-        let foundUser = await User.findOne({ _id: id });
+    console.log("update password function");
+    // const { oldPassword, newPassword } = req.body;
 
-        if (!foundUser) {
-            res.status(400).json({ passwordUpdate: false });
-        }
+    // try {
+    //     let foundUser = await User.findOne({ _id: id });
 
-        //check if old password is correct
-        const isPasswordValid = await bcrypt.compare(
-            oldPassword,
-            foundUser.password
-        );
+    //     if (!foundUser) {
+    //         res.status(400).json({ passwordUpdate: false });
+    //     }
 
-        //update password
-        if (isPasswordValid) {
-            const encryptedPassword = await bcrypt.hash(
-                newPassword,
-                saltRounds
-            );
-            foundUser.password = encryptedPassword;
-            await foundUser.save();
-        }
+    //     //check if old password is correct
+    //     const isPasswordValid = await bcrypt.compare(
+    //         oldPassword,
+    //         foundUser.password
+    //     );
 
-        res.status(200).json({ passwordUpdate: true });
-    } catch (err) {
-        res.status(400).json({ passwordUpdate: false, error: err.message });
-    }
+    //     //update password
+    //     if (isPasswordValid) {
+    //         const encryptedPassword = await bcrypt.hash(
+    //             newPassword,
+    //             saltRounds
+    //         );
+    //         foundUser.password = encryptedPassword;
+    //         await foundUser.save();
+    //     }
+
+    //     res.status(200).json({ passwordUpdate: true });
+    // } catch (err) {
+    //     res.status(400).json({ passwordUpdate: false, error: err.message });
+    // }
 }
 
 const createUser = async (req, res) => {
@@ -69,6 +72,7 @@ const createUser = async (req, res) => {
     }
 };
 
+//todo update token to carry user ID
 const login = async (req, res) => {
     console.log("login router");
     const { username, password } = req.body;
@@ -84,7 +88,7 @@ const login = async (req, res) => {
                 .json({ message: "Invalid username or password" });
         }
         const token = jwt.sign(
-            { username: username, password: password },
+            { username: username, password: password, id: user._id },
             process.env.JWT_SECRET
         );
         res.status(200).json({ message: "Login successful", token });
