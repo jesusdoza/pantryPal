@@ -13,6 +13,13 @@ const {
     deleteRecipe,
 } = require("../../controllers/userController.js");
 
+apiRouter.use("/signup", signupRouter);
+apiRouter.use("/login", loginRouter);
+apiRouter.post("/saveRecipe", saveRecipe);
+apiRouter.post("/getSavedRecipes", getSavedRecipes);
+apiRouter.post("/deleteRecipe", deleteRecipe);
+apiRouter.use("/profile", profileRouter);
+
 //test route to localhost:4000/api/
 apiRouter.get("/", (req, res) => {
     try {
@@ -21,9 +28,6 @@ apiRouter.get("/", (req, res) => {
         res.status(400).json({ error: "something went wrong" });
     }
 });
-
-apiRouter.use("/signup", signupRouter);
-apiRouter.use("/login", loginRouter);
 
 apiRouter.get("/searchbyingredient", async (req, res) => {
     const ingredientsList = req.query.ingredients;
@@ -89,13 +93,5 @@ apiRouter.post("/getMealPlanner", async (req, res) => {
         res.status(500).json({ message: "Error getting meal plan" });
     }
 });
-
-apiRouter.post("/saveRecipe", saveRecipe);
-
-apiRouter.post("/getSavedRecipes", getSavedRecipes);
-
-apiRouter.post("/deleteRecipe", deleteRecipe);
-
-apiRouter.use("/profile", profileRouter);
 
 module.exports = apiRouter;

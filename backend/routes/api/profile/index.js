@@ -7,16 +7,16 @@ profileRouter.get("/", (req, res) => {
     res.status(200).json({ profileGET: true });
 });
 
-profileRouter.put("/:id/password", (req, res) => {
+profileRouter.put("/password", (req, res) => {
     res.status(200).json({ profileGET: true });
 });
-profileRouter.put("/:id/email", (req, res) => {
+profileRouter.put("/email", (req, res) => {
     res.status(200).json({ profileGET: true });
 });
-profileRouter.put("/:id/caloricpref", (req, res) => {
+profileRouter.put("/caloricpref", (req, res) => {
     res.status(200).json({ profileGET: true });
 });
-profileRouter.put("/:id/dietpref", (req, res) => {
+profileRouter.put("/dietpref", (req, res) => {
     res.status(200).json({ profileGET: true });
 });
 

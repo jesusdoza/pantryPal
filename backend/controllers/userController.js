@@ -13,6 +13,42 @@ const openai = new OpenAIApi(configuration);
 const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
 
+///METHODS
+///================================================
+//todo update password, email, caloricPref, dietPref
+async function updatePassword(req, res) {
+    const token = req.cookies;
+    const { oldPassword, newPassword, id } = req.body;
+
+    try {
+        let foundUser = await User.findOne({ _id: id });
+
+        if (!foundUser) {
+            res.status(400).json({ passwordUpdate: false });
+        }
+
+        //check if old password is correct
+        const isPasswordValid = await bcrypt.compare(
+            oldPassword,
+            foundUser.password
+        );
+
+        //update password
+        if (isPasswordValid) {
+            const encryptedPassword = await bcrypt.hash(
+                newPassword,
+                saltRounds
+            );
+            foundUser.password = encryptedPassword;
+            await foundUser.save();
+        }
+
+        res.status(200).json({ passwordUpdate: true });
+    } catch (err) {
+        res.status(400).json({ passwordUpdate: false, error: err.message });
+    }
+}
+
 const createUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -189,39 +225,6 @@ const deleteRecipe = async (req, res) => {
         res.status(500).json({ message: "Failed to delete the recipe." });
     }
 };
-
-//todo update password, email, caloricPref, dietPref
-async function updatePassword(req, res) {
-    const { oldPassword, newPassword, id } = req.body;
-
-    try {
-        let foundUser = await User.findOne({ _id: id });
-
-        if (!foundUser) {
-            res.status(400).json({ passwordUpdate: false });
-        }
-
-        //check if old password is correct
-        const isPasswordValid = await bcrypt.compare(
-            oldPassword,
-            foundUser.password
-        );
-
-        //update password
-        if (isPasswordValid) {
-            const encryptedPassword = await bcrypt.hash(
-                newPassword,
-                saltRounds
-            );
-            foundUser.password = encryptedPassword;
-            await foundUser.save();
-        }
-
-        res.status(200).json({ passwordUpdate: true });
-    } catch (err) {
-        res.status(400).json({ passwordUpdate: false, error: err.message });
-    }
-}
 
 module.exports = {
     createUser,
