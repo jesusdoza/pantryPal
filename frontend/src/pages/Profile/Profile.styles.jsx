@@ -19,6 +19,8 @@ export const Dashboard = styled.section`
     display: flex;
     justify-content: center;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
     /* align-items: center; */
 
     picture img {

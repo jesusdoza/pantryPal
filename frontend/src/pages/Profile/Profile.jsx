@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Dashboard } from "./Profile.styles";
 import Cookies from "js-cookie";
+import { UpdateModal } from "./updateModal";
 
 function ProfilePage() {
     return (
@@ -9,7 +10,7 @@ function ProfilePage() {
                 <section className="container profile">
                     <picture>
                         {/* <source srcset="https://cdn.discordapp.com/attachments/1076184648599744674/1091575853470732288/PantryPal_Logo_TPB.png"></source> */}
-                        <source srcset="https://media.discordapp.net/attachments/1076184648599744674/1091475961280741426/EggMoonSnap.png?width=493&height=487"></source>
+                        <source srcSet="https://media.discordapp.net/attachments/1076184648599744674/1091475961280741426/EggMoonSnap.png?width=493&height=487"></source>
                         <img src="/src/assets/spoon.png" alt="user avatar" />
                     </picture>
                     <h3>Hi! Bob</h3>
@@ -47,7 +48,22 @@ function ProfilePage() {
                             <span>Update Email</span>
                         </li>
                         <li className="btn">
-                            <span>Update Password</span>
+                            {/* <div>
+                                <span>Update Password</span>
+                            </div> */}
+                            <UpdateModal
+                                title="Update Password"
+                                fieldsArr={[
+                                    {
+                                        title: "Old Password",
+                                        name: "oldpassword",
+                                    },
+                                    {
+                                        title: "New Password",
+                                        name: "newpassword",
+                                    },
+                                ]}
+                            />
                         </li>
                     </ul>
                 </section>
