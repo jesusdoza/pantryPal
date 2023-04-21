@@ -4,8 +4,35 @@ import Cookies from "js-cookie";
 import { UpdateModal } from "./updateModal";
 
 function ProfilePage() {
+    //have the updatemodal component held in variable and change the
+    //vairable as needed by each button
+    let modalContent = (
+        <UpdateModal
+            title={"epmty"}
+            fieldsArr={[{ label: "none", name: "none" }]}
+        />
+    );
     return (
         <Dashboard>
+            {modalContent}
+            {/* <UpdateModal
+                title="Update Password"
+                fieldsArr={[
+                    {
+                        label: "Old Password",
+                        name: "oldpassword",
+                    },
+                    {
+                        label: "New Password",
+                        name: "newpassword",
+                    },
+                    {
+                        label: "Confirm New Password",
+                        name: "confirmnewpassword",
+                    },
+                ]}
+            /> */}
+
             <section className="profile-page">
                 <section className="container profile">
                     <picture>
@@ -48,22 +75,9 @@ function ProfilePage() {
                             <span>Update Email</span>
                         </li>
                         <li className="btn">
-                            {/* <div>
+                            <div>
                                 <span>Update Password</span>
-                            </div> */}
-                            <UpdateModal
-                                title="Update Password"
-                                fieldsArr={[
-                                    {
-                                        title: "Old Password",
-                                        name: "oldpassword",
-                                    },
-                                    {
-                                        title: "New Password",
-                                        name: "newpassword",
-                                    },
-                                ]}
-                            />
+                            </div>
                         </li>
                     </ul>
                 </section>
