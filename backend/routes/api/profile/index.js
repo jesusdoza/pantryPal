@@ -8,7 +8,8 @@ profileRouter.get("/", (req, res) => {
 });
 
 profileRouter.put("/password", (req, res) => {
-    res.status(200).json({ profileGET: true });
+    console.log(req.body);
+    res.status(200).json({ profilePut: true });
 });
 profileRouter.put("/email", (req, res) => {
     res.status(200).json({ profileGET: true });
