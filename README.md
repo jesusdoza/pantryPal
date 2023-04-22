@@ -1,4 +1,12 @@
-### Pantry Pal
+# Pantry Pal
+An app that takes any number of ingredients and searches an extensive database to bring delicious recipes you can make with the ingredients you have on hand.
+
+## How It's Made:
+- React and Vite for the front end using styled components 
+- Node and express backend with Mongodb database
+
+## Optimizations
+1. using a front end framework would provide a more standard and uniform styling experience
 
 ### Env files
 - example env files are in the backend and frontend folders
@@ -25,3 +33,4 @@
 5. npm install
 6. npm run dev
 7. A local host ip address will display in console for link to local running version
+
