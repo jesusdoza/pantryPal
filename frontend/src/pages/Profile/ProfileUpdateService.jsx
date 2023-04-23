@@ -7,13 +7,28 @@ const axiosInstance = axios.create({
     },
 });
 
+function confirmPasswords(password1, password2) {
+    return password1 === password2;
+}
+
 export const ProfileUpdateService = {
     updatePassword: async (body) => {
-        const { newpassword, oldpassword } = body;
-        const response = await axiosInstance.put("/api/profile/password", {
-            newpassword,
-            oldpassword,
-        });
+        const { newPassword, confirmNewPassword, oldPassword } = body;
+        let response = {};
+
+        try {
+            if (!confirmPasswords(newPassword, confirmNewPassword)) {
+                throw Error("passwords dont match");
+            }
+
+            response = await axiosInstance.put("/api/profile/password", {
+                newPassword,
+                oldPassword,
+            });
+        } catch (error) {
+            return { err: error.message };
+        }
+
         return response;
     },
     updateEmail: async () => {

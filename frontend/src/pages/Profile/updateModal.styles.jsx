@@ -17,89 +17,97 @@ const button_text_secondary = "#958e8eff";
 // .Whole-avocado-cut-half-isolated-on-white-background-5-rgba { color: rgba(242, 242, 242, 1); }
 
 export const UpdateModalStyles = styled.section`
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    width: 80%;
-    height: 100vh;
+    width: 100%;
 
-    & h1 {
-        margin: 0;
-    }
-
-    li {
-        list-style: none;
-    }
     .hidden {
         visibility: hidden;
+        height: 0;
+        width: 0;
+        overflow: hidden;
     }
-
-    .row {
+    main {
         display: flex;
         justify-content: center;
-        align-items: center;
-    }
-
-    .container {
-        display: flex;
-    }
-
-    .back__blur {
-        background-color: ${blur_bg};
-        width: 100%;
-        height: 100%;
         position: absolute;
-        z-index: 9;
-        backdrop-filter: blur(10px);
-    }
+        width: 100%;
+        height: 100vh;
+        border: green solid 40px;
 
-    #modal {
-        z-index: 10;
-        background-color: ${main_bg};
-        padding: 1rem;
-        border-radius: 2rem;
-        min-width: 80%;
-        min-height: 300px;
-
-        .btn {
-            padding: 0 0.4rem;
+        & h1 {
+            margin: 0;
         }
 
-        form {
-            height: 300px;
-            .title {
-                height: 10%;
+        li {
+            list-style: none;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .back__blur {
+            background-color: ${blur_bg};
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            /* z-index: 10; */
+            backdrop-filter: blur(10px);
+        }
+
+        #modal {
+            z-index: 10;
+            background-color: ${main_bg};
+            padding: 1rem;
+            border-radius: 2rem;
+            min-width: 80%;
+            min-height: 300px;
+
+            .btn {
+                padding: 0 0.4rem;
             }
 
-            .form__inputs {
-                height: 70%;
+            form {
+                height: 300px;
+                .title {
+                    height: 10%;
+                }
 
-                .update__field {
-                    margin-top: 2rem;
-                    display: flex;
-                    gap: 2rem;
-                    justify-content: center;
+                .form__inputs {
+                    height: 70%;
 
-                    .input__container {
-                        position: relative;
-                        label {
-                            top: -20px;
-                            position: absolute;
-                            font-size: 0.7rem;
-                            color: ${text_secondary};
-                        }
-                        input {
-                            color: ${text_primary};
-                            border: 1px solid ${secondary_bg};
-                            border-radius: 0.2rem;
+                    .update__field {
+                        margin-top: 2rem;
+                        display: flex;
+                        gap: 2rem;
+                        justify-content: center;
+
+                        .input__container {
+                            position: relative;
+                            label {
+                                top: -20px;
+                                position: absolute;
+                                font-size: 0.7rem;
+                                color: ${text_secondary};
+                            }
+                            input {
+                                color: ${text_primary};
+                                border: 1px solid ${secondary_bg};
+                                border-radius: 0.2rem;
+                            }
                         }
                     }
                 }
-            }
-            .form__controls {
-                height: 20%;
-                justify-content: flex-end;
-                gap: 1.5rem;
+                .form__controls {
+                    height: 20%;
+                    justify-content: flex-end;
+                    gap: 1.5rem;
+                }
             }
         }
     }

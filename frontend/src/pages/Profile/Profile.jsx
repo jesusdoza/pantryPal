@@ -18,7 +18,7 @@ function ProfilePage() {
         let modalOptions = {
             email: {
                 title: "Update Email",
-                fieldsArr: [{ label: "New Email", name: "newemail" }],
+                fieldsArr: [{ label: "New Email", name: "newEmail" }],
                 handleSubmit: ProfileUpdateService.updateEmail,
             },
             caloric: {
@@ -26,7 +26,7 @@ function ProfilePage() {
                 fieldsArr: [
                     {
                         label: "New Caloric Value",
-                        name: "newcaloricvalue",
+                        name: "newCaloricValue",
                     },
                 ],
             },
@@ -35,15 +35,15 @@ function ProfilePage() {
                 fieldsArr: [
                     {
                         label: "Old Password",
-                        name: "oldpassword",
+                        name: "oldPassword",
                     },
                     {
                         label: "New Password",
-                        name: "newpassword",
+                        name: "newPassword",
                     },
                     {
                         label: "Confirm New Password",
-                        name: "confirmnewpassword",
+                        name: "confirmNewPassword",
                     },
                 ],
                 handleSubmit: ProfileUpdateService.updatePassword,
