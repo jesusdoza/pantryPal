@@ -19,8 +19,10 @@ export const Dashboard = styled.section`
     display: flex;
     padding: 1rem;
     flex-direction: column;
+    width: 100%;
 
     & .modal__container {
+        width: 100%;
         display: flex;
         justify-content: center;
     }

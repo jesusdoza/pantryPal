@@ -31,7 +31,7 @@ export const UpdateModalStyles = styled.section`
         position: absolute;
         width: 100%;
         height: 100vh;
-        border: green solid 40px;
+        /* border: green solid 40px; */
 
         & h1 {
             margin: 0;
