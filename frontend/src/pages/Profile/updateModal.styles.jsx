@@ -18,7 +18,19 @@ const button_text_secondary = "#958e8eff";
 
 export const UpdateModalStyles = styled.section`
     width: 100%;
+    .container {
+        display: flex;
+    }
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .error {
+        z-index: 3;
+        border: solid 1px black;
+    }
     .hidden {
         visibility: hidden;
         height: 0;
@@ -29,9 +41,10 @@ export const UpdateModalStyles = styled.section`
         display: flex;
         justify-content: center;
         position: absolute;
+        flex-direction: column;
         width: 100%;
         height: 100vh;
-        /* border: green solid 40px; */
+        border: green solid 40px;
 
         & h1 {
             margin: 0;
@@ -39,16 +52,6 @@ export const UpdateModalStyles = styled.section`
 
         li {
             list-style: none;
-        }
-
-        .row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            display: flex;
         }
 
         .back__blur {
@@ -61,11 +64,12 @@ export const UpdateModalStyles = styled.section`
         }
 
         #modal {
-            z-index: 10;
+            z-index: 3;
             background-color: ${main_bg};
             padding: 1rem;
             border-radius: 2rem;
-            min-width: 80%;
+            width: 80%;
+            max-width: 300px;
             min-height: 300px;
 
             .btn {

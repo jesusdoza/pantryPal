@@ -23,8 +23,10 @@ export const Dashboard = styled.section`
 
     & .modal__container {
         width: 100%;
-        display: flex;
+        /* display: flex; */
         justify-content: center;
+        position: absolute;
+        left: 0;
     }
 
     picture img {

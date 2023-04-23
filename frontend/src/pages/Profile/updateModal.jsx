@@ -47,13 +47,8 @@ export function UpdateModal({
                     onClick={() => {
                         closeModal();
                     }}
-                    className={`back__blur `}>
-                    <div className="container">
-                        <div className="error row">
-                            <span>errro</span>
-                        </div>
-                    </div>
-                </div>
+                    className={`back__blur `}></div>
+
                 <div ref={scrollToRef} className={`container row `}>
                     <section id="modal" className="">
                         <form ref={formRef} onSubmit={submitForm} action="">
@@ -74,7 +69,14 @@ export function UpdateModal({
                         </form>
                     </section>
                 </div>
+                <div className="container row">
+                    <ErrorCard />
+                </div>
             </main>
         </UpdateModalStyles>
     );
+}
+
+export function ErrorCard() {
+    return <div className="error">ErrordafCard</div>;
 }
