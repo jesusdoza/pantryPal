@@ -27,6 +27,12 @@ export function UpdateModal({
         );
     });
 
+    useEffect(() => {
+        console.log("fileds changed");
+        setErrors([]);
+        setShowError(false);
+    }, [fieldsArr]);
+
     async function submitForm(event) {
         try {
             event.preventDefault();
