@@ -5,19 +5,21 @@ const axiosInstance = axios.create({
     headers: {
         "Content-Type": "application/json",
     },
+    withCredentials: true,
 });
 
-function confirmPasswords(password1, password2) {
+function confirmStrings(password1, password2) {
     return password1 === password2;
 }
+function verifyEmail() {}
 
 export const ProfileUpdateService = {
-    updatePassword: async (body) => {
-        const { newPassword, confirmNewPassword, oldPassword } = body;
+    updatePassword: async (data) => {
+        const { newPassword, confirmNewPassword, oldPassword } = data;
         let response = {};
 
         try {
-            if (!confirmPasswords(newPassword, confirmNewPassword)) {
+            if (!confirmStrings(newPassword, confirmNewPassword)) {
                 throw Error("passwords dont match");
             }
 
@@ -26,18 +28,47 @@ export const ProfileUpdateService = {
                 oldPassword,
             });
         } catch (error) {
-            return { err: error.message };
+            throw Error(error.message);
         }
 
         return response;
     },
-    updateEmail: async () => {
-        return;
+    updateEmail: async (newEmail, confirmNewEmail) => {
+        let response = {};
+        try {
+            if (!confirmStrings(newEmail, confirmNewEmail)) {
+                throw Error("emails dont match");
+            }
+
+            response = await axiosInstance.put("/api/profile/email", {
+                newEmail,
+                confirmNewEmail,
+            });
+            return response;
+        } catch (error) {
+            throw Error(error.message);
+        }
     },
-    updateCaloric: async () => {
-        return;
+    updateCaloric: async (data) => {
+        console.log(data);
+        const { newCaloricValue } = data;
+        let response = {};
+        let newValue = Number(newCaloricValue);
+        try {
+            if (isNaN(newValue)) {
+                throw Error("not a number");
+            }
+
+            response = await axiosInstance.put("/api/profile/caloricpref", {
+                newValue,
+            });
+            return response;
+        } catch (error) {
+            throw Error(error.message);
+        }
     },
-    updateDietaryPref: async () => {
+    updateDietaryPref: async (newDietPref) => {
+        console.log("diet update");
         return;
     },
 };

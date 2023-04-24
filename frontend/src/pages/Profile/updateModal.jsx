@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { UpdateModalStyles } from "./updateModal.styles";
 import { useState } from "react";
-
+import ErrorCard from "./ErrorCard";
 export function UpdateModal({
     title,
     fieldsArr,
@@ -11,6 +11,8 @@ export function UpdateModal({
     scrollToRef,
 }) {
     const formRef = useRef("");
+    const [errors, setErrors] = useState(["ONE"]);
+    let [showError, setShowError] = useState(false);
 
     const inputBoxes = fieldsArr.map((inputObjs, index) => {
         const name = inputObjs.name;
@@ -26,13 +28,20 @@ export function UpdateModal({
     });
 
     async function submitForm(event) {
-        event.preventDefault();
-        const data = new FormData(formRef.current);
-        const formData = Object.fromEntries(data.entries());
-        const response = await handleSubmit(formData);
-        if (response.err) {
-            console.log("submit error", response);
-            console.log(response.err);
+        try {
+            event.preventDefault();
+            setShowError(false);
+
+            // grab data from form
+            const data = new FormData(formRef.current);
+            const formData = Object.fromEntries(data.entries());
+
+            //submit form
+            const response = await handleSubmit(formData);
+        } catch (error) {
+            setErrors([error.message]);
+            setShowError(true);
+            console.log("error in update modal", error.message);
         }
     }
 
@@ -70,13 +79,9 @@ export function UpdateModal({
                     </section>
                 </div>
                 <div className="container row">
-                    <ErrorCard />
+                    <ErrorCard errorsArr={errors} showError={showError} />
                 </div>
             </main>
         </UpdateModalStyles>
     );
-}
-
-export function ErrorCard() {
-    return <div className="error">ErrordafCard</div>;
 }

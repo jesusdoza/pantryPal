@@ -29,6 +29,7 @@ function ProfilePage() {
                         name: "newCaloricValue",
                     },
                 ],
+                handleSubmit: ProfileUpdateService.updateCaloric,
             },
             password: {
                 title: "Update Password",

@@ -8,6 +8,7 @@ const text_primary = "#000000";
 const text_secondary = "#595959f";
 const button_text_primary = "#ffffff";
 const button_text_secondary = "#958e8eff";
+// const error_bg = "#d87474";
 
 // / Color Theme Swatches in RGBA /
 // .Whole-avocado-cut-half-isolated-on-white-background-1-rgba { color: rgba(43, 63, 1, 1); }
@@ -26,11 +27,10 @@ export const UpdateModalStyles = styled.section`
         justify-content: center;
         align-items: center;
     }
-
-    .error {
-        z-index: 3;
-        border: solid 1px black;
+    .col {
+        flex-direction: column;
     }
+
     .hidden {
         visibility: hidden;
         height: 0;
@@ -44,7 +44,9 @@ export const UpdateModalStyles = styled.section`
         flex-direction: column;
         width: 100%;
         height: 100vh;
-        border: green solid 40px;
+        gap: 1rem;
+
+        /* border: green solid 40px; */
 
         & h1 {
             margin: 0;
