@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Dashboard } from "./Profile.styles";
 import Cookies from "js-cookie";
-import { UpdateModal } from "./updateModal";
+import { Modal } from "./Modal";
 import { ProfileUpdateService } from "./ProfileUpdateService";
 
 function ProfilePage() {
@@ -71,7 +71,7 @@ function ProfilePage() {
     return (
         <Dashboard>
             <section className="modal__container">
-                <UpdateModal
+                <Modal
                     {...modalContent}
                     isDisplayed={showModal}
                     setIsDisplayed={setShowModal}

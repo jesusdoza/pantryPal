@@ -1,8 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { UpdateModalStyles } from "./updateModal.styles";
+import { ModalStyles } from "./Modal.styles";
 import { useState } from "react";
 import ErrorCard from "./ErrorCard";
-export function UpdateModal({
+import ReactDom from "react-dom";
+
+//todo instead of handling the build of the inputs maybe just display
+//todo any content user passes
+export function Modal({
     title,
     fieldsArr,
     handleSubmit,
@@ -55,9 +59,11 @@ export function UpdateModal({
         setIsDisplayed(false);
     }
 
+    // return ReactDom.createPortal(
     return (
-        <UpdateModalStyles>
-            <main className={`${isDisplayed ? "" : "hidden"}`}>
+        <ModalStyles className={`${isDisplayed ? "" : "hidden"}`}>
+            <main>
+                {/* <main className={`${isDisplayed ? "" : "hidden"}`}> */}
                 <div
                     onClick={() => {
                         closeModal();
@@ -88,6 +94,7 @@ export function UpdateModal({
                     <ErrorCard errorsArr={errors} showError={showError} />
                 </div>
             </main>
-        </UpdateModalStyles>
+        </ModalStyles>
+        // document.getElementById("portal")
     );
 }

@@ -21,6 +21,9 @@ export const Dashboard = styled.section`
     flex-direction: column;
     width: 100%;
 
+    .hidden {
+        scale: 0;
+    }
     & .modal__container {
         width: 100%;
         /* display: flex; */

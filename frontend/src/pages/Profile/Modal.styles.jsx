@@ -17,8 +17,15 @@ const button_text_secondary = "#958e8eff";
 // .Whole-avocado-cut-half-isolated-on-white-background-4-rgba { color: rgba(89, 49, 15, 1); }
 // .Whole-avocado-cut-half-isolated-on-white-background-5-rgba { color: rgba(242, 242, 242, 1); }
 
-export const UpdateModalStyles = styled.section`
+export const ModalStyles = styled.section`
     width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* scale: 0; */
+
     .container {
         display: flex;
     }
@@ -58,8 +65,12 @@ export const UpdateModalStyles = styled.section`
 
         .back__blur {
             background-color: ${blur_bg};
-            width: 100%;
-            height: 100%;
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
             position: absolute;
             /* z-index: 10; */
             backdrop-filter: blur(10px);
