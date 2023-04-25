@@ -1,28 +1,36 @@
-# Team A Cohort project 
+# Pantry Pal
+An app that takes any number of ingredients and searches an extensive database to bring delicious recipes you can make with the ingredients you have on hand.
 
-### Install instructions
+## How It's Made:
+- React and Vite for the front end using styled components 
+- Node and express backend with Mongodb database
 
-Backend - 
-1. Fork this repo, open in VSCode and in the terminal `cd backend` and do an `npm install` command
-2. Create a .env file in the root of the backend file and get the necessary variables from the docs
-3. The run command is `npm run dev` which will run nodemon to listen for any backend changes
-4. If the server runs successfully, there will be a "connected to DB & server ready at http://localhost:PORT" message displayed in the console
+## Optimizations
+1. using a front end framework would provide a more standard and uniform styling experience
+
+### Env files
+- example env files are in the backend and frontend folders
+
+## How to run project
+1. git clone 
+2. add .env file to backend folder /backend/.env and to frontend folder /frontend/.env
+3. #### backend env file contents 
+   ### Port
+   - PORT=4000
+   ### mongo connection string
+   - MONGO_URI="mongodb+srv://USERNAME:PASSWORD@cluster0.losdw.mongodb.net?retryWrites=true&w=majority"
+   ### spoonacular api key
+   - API_KEY="string of stufff"
+   ### jwt secret string
+   - JWT_SECRET="anotherrandom stringafdasfasdf"
+   ### open ai api key chatGPT api key if meal planner desired
+   - OPENAI_API_KEY="fasdfasdfasdfHAAXoxfadsfasd9uSxQVe"
+4. #### frontend env file contents
+   ### api address of local server
+   - VITE_API_IP = "http://localhost:4000"
 
 
-Frontend - 
-1. The project is built with Vite and React v18
-2. React Router is installed and imported in the App.js file, and so is the styled-components library, but no other libraries have been installed yet
-3. `cd frontend` and run `npm install`
-4. `npm run dev` to run the frontend
-5. Frontend has a proxy defined to bypass CORS errors during development
+5. npm install
+6. npm run dev
+7. A local host ip address will display in console for link to local running version
 
- 
-### Some basic guidelines for Pull Requests
-1. Include the Jira Issue Number (DSD100-##), your name or initials, and the subject of the issue in the Pull Request Title
-  Exmple - DSD1000-1_ba_InitialRepositoryCommit
-2. In the Pull Request description, include comments about your changes, how to test them (if applicable) or any relevant screenshots
-
-### Branching standards
-1. Include the Jira Issue Number for the task you're currently working on followed by your initials and a brief description of the task, just like with the PR requests
-  IE: DSD100-1_ba_ThisIsTheIssue
-2. Make sure you are committing your changes to your own branch and not to the development branch
