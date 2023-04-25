@@ -47,6 +47,7 @@ export function Modal({
             const formData = Object.fromEntries(data.entries());
 
             //submit form
+            console.log("modal form data", formData);
             const response = await handleSubmit(formData);
         } catch (error) {
             setErrors([error.message]);

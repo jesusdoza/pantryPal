@@ -13,12 +13,15 @@ function ProfilePage() {
 
     const [modalContent, setModalContent] = useState(getModalProps("email"));
 
-    //build an new modal
+    //build modal with specific props
     function getModalProps(modalType) {
         let modalOptions = {
             email: {
                 title: "Update Email",
-                fieldsArr: [{ label: "New Email", name: "newEmail" }],
+                fieldsArr: [
+                    { label: "New Email", name: "newEmail" },
+                    { label: "Confirm New Email", name: "confirmNewEmail" },
+                ],
                 handleSubmit: ProfileUpdateService.updateEmail,
             },
             caloric: {
@@ -59,8 +62,8 @@ function ProfilePage() {
     }
 
     function goToModal(modalType) {
-        const props = getModalProps(modalType);
-        setModalContent(props);
+        const content = getModalProps(modalType);
+        setModalContent(content);
 
         scrollToRef.current.scrollIntoView({
             block: "center",

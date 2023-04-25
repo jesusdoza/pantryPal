@@ -33,7 +33,8 @@ export const ProfileUpdateService = {
 
         return response;
     },
-    updateEmail: async (newEmail, confirmNewEmail) => {
+    updateEmail: async (data) => {
+        const { newEmail, confirmNewEmail } = data;
         let response = {};
         try {
             if (!confirmStrings(newEmail, confirmNewEmail)) {
