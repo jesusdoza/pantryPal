@@ -13,6 +13,42 @@ const openai = new OpenAIApi(configuration);
 const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
 
+async function updatePassword(req, res) {
+    const { oldPassword, newPassword } = req.body;
+    let foundUser = {};
+
+    ///update user password
+    try {
+        foundUser = await User.findOne({ _id: req.user.id });
+
+        ///no user found
+        if (foundUser.password !== req.user.password)
+            throw Error("Invalid User");
+
+        ///encrypt new password and update database
+        const newEncryptedPassword = await bcrypt.hash(newPassword, saltRounds);
+        foundUser.password = newEncryptedPassword;
+        await foundUser.save();
+    } catch (error) {
+        res.status(400).json({ profileUpdate: false, message: error.message });
+        return;
+    }
+
+    //generate new token
+    const token = jwt.sign(
+        {
+            username: foundUser.username,
+            password: foundUser.password,
+            id: foundUser._id,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+    );
+
+    //respond with updated credentials
+    res.status(200).json({ passwordUpdate: true, token, id: foundUser._id });
+}
+
 const createUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -34,7 +70,6 @@ const createUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    console.log("login router");
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
@@ -48,10 +83,15 @@ const login = async (req, res) => {
                 .json({ message: "Invalid username or password" });
         }
         const token = jwt.sign(
-            { username: username, password: password },
-            process.env.JWT_SECRET
+            { username: username, password: user.password, id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
         );
-        res.status(200).json({ message: "Login successful", token });
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            id: user._id,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -190,18 +230,8 @@ const deleteRecipe = async (req, res) => {
     }
 };
 
-async function updateProfile(req, res) {
-    //request will have the property that needs updating
-    // updateType : password | email | caloricPref | dietPref
-
-    //fields of the
-    const {} = req.body;
-
-    res.status(200).json({ passwordUpdate: true });
-}
-
 module.exports = {
-    updateProfile,
+    updatePassword,
     createUser,
     login,
     getMealPlanner,

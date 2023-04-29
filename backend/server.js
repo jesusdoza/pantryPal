@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 
 // create express app server
 const app = express();
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
 
 // assign a piece of middleware that will fire anytime a request comes in to the server

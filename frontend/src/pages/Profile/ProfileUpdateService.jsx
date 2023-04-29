@@ -18,17 +18,24 @@ export const ProfileUpdateService = {
         const { newPassword, confirmNewPassword, oldPassword } = data;
         let response = {};
 
+        //form validation
         try {
             if (!confirmStrings(newPassword, confirmNewPassword)) {
                 throw Error("passwords dont match");
             }
+        } catch (error) {
+            console.log("passwrod confirm error");
+            throw Error(error.message);
+        }
 
+        // request
+        try {
             response = await axiosInstance.put("/api/profile/password", {
                 newPassword,
                 oldPassword,
             });
         } catch (error) {
-            throw Error(error.message);
+            throw Error(error.response.data.message);
         }
 
         return response;
@@ -51,7 +58,7 @@ export const ProfileUpdateService = {
         }
     },
     updateCaloric: async (data) => {
-        console.log(data);
+        console.log("update caloric data ", data);
         const { newCaloricValue } = data;
         let response = {};
         let newValue = Number(newCaloricValue);
@@ -65,7 +72,8 @@ export const ProfileUpdateService = {
             });
             return response;
         } catch (error) {
-            throw Error(error.message);
+            // throw Error(error.message);
+            throw Error(error.response.data.message);
         }
     },
     updateDietaryPref: async (newDietPref) => {
