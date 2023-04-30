@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { Modal } from "./Modal";
 import { ProfileUpdateService } from "./ProfileUpdateService";
 import { v4 as uuidv4 } from "uuid";
+import ErrorCard from "./ErrorCard";
 
 function ProfilePage() {
     //have the updatemodal component held in variable and change the
@@ -120,7 +121,10 @@ function ProfilePage() {
             <section className="modal__container">
                 {showModal ? (
                     <Modal setIsDisplayed={setShowModal}>
-                        <PasswordUpdateForm />
+                        <PasswordUpdateForm
+                            handleSubmit={ProfileUpdateService.updatePassword}
+                        />
+                        <ErrorCard errorsArr={[1, 3, 4]} showError={true} />
                     </Modal>
                 ) : (
                     <></>
@@ -197,13 +201,35 @@ function ProfilePage() {
 
 export default ProfilePage;
 
-function PasswordUpdateForm() {
+function PasswordUpdateForm({ handleSubmit, setErrors, setShowError }) {
+    const formRef = useRef("");
+
+    async function submitForm(event) {
+        try {
+            event.preventDefault();
+            setShowError(false);
+
+            // grab data from form
+            const data = new FormData(formRef.current);
+            const formData = Object.fromEntries(data.entries());
+
+            //submit form
+            console.log("modal form data", formData);
+            const response = await handleSubmit(formData);
+        } catch (error) {
+            setErrors([error.message]);
+            setShowError(true);
+            console.log("error in update modal", error.message);
+        }
+        // ProfileUpdateService.updatePassword
+    }
+
     return (
-        <form action="" onSubmit={ProfileUpdateService.updatePassword}>
-            <section>
+        <form ref={formRef} onSubmit={ProfileUpdateService.updatePassword}>
+            <section className="row title">
                 <h1>Update Password</h1>
             </section>
-            <section>
+            <section className="row form__inputs">
                 <ul>
                     <li className="update__field" key={uuidv4()}>
                         <div className="input__container">
@@ -238,6 +264,14 @@ function PasswordUpdateForm() {
                         </div>
                     </li>
                 </ul>
+            </section>
+            <section className="form__controls row">
+                <div className="btn" onClick={submitForm}>
+                    <span>Submit</span>
+                </div>
+                <div className="btn">
+                    <span>Cancel</span>
+                </div>
             </section>
         </form>
     );

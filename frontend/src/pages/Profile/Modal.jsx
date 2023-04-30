@@ -6,14 +6,7 @@ import ReactDom from "react-dom";
 
 //todo instead of handling the build of the inputs maybe just display
 //todo any content user passes
-export function Modal({
-    children,
-    title,
-    fieldsArr,
-    handleSubmit,
-    setIsDisplayed,
-    scrollToRef,
-}) {
+export function Modal({ children, setIsDisplayed, scrollToRef }) {
     const formRef = useRef("");
     const [errors, setErrors] = useState(["ONE"]);
     let [showError, setShowError] = useState(false);
