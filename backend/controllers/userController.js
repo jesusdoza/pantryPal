@@ -20,10 +20,12 @@ async function updatePassword(req, res) {
     ///update user password
     try {
         foundUser = await User.findOne({ _id: req.user.id });
+        console.log("found user", foundUser);
+        console.log("req user", req.user);
 
         ///no user found
         if (foundUser.password !== req.user.password)
-            throw Error("Invalid User");
+            throw Error("controller :Invalid User test");
 
         ///encrypt new password and update database
         const newEncryptedPassword = await bcrypt.hash(newPassword, saltRounds);
@@ -46,7 +48,12 @@ async function updatePassword(req, res) {
     );
 
     //respond with updated credentials
-    res.status(200).json({ passwordUpdate: true, token, id: foundUser._id });
+    res.status(200).json({
+        profileUpdate: true,
+        token,
+        id: foundUser._id,
+        username: foundUser.username,
+    });
 }
 
 const createUser = async (req, res) => {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_IP,
@@ -11,7 +12,28 @@ const axiosInstance = axios.create({
 function confirmStrings(password1, password2) {
     return password1 === password2;
 }
-function verifyEmail() {}
+function verifyEmail(emailStr) {
+    const emailRegex = new RegExp(
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    );
+
+    return emailRegex.test(emailStr);
+}
+
+export async function updateLoginCookie(username, token) {
+    const cookieBody = await JSON.stringify({
+        token: token,
+        username: username,
+    });
+
+    console.log("cookie body", username, token);
+    Cookies.set("loggedIn", cookieBody);
+    // Cookies.remove("loggedIn");
+
+    console.log("cookie body", cookieBody);
+    Cookies.set("loggedIn", cookieBody);
+    return;
+}
 
 export const ProfileUpdateService = {
     updatePassword: async (data) => {
@@ -28,18 +50,29 @@ export const ProfileUpdateService = {
             throw Error(error.message);
         }
 
-        // request
+        // request and token update
         try {
             response = await axiosInstance.put("/api/profile/password", {
                 newPassword,
                 oldPassword,
             });
+
+            if (response.data.profileUpdate) {
+                console.log("profile updatge", response.data);
+                const username = response.data.username;
+                const token = response.data.token;
+                console.log("sending to cookie", username, token);
+                debugger;
+                await updateLoginCookie(username, token);
+            }
         } catch (error) {
             throw Error(error.response.data.message);
         }
 
+        //return response all ok
         return response;
     },
+
     updateEmail: async (data) => {
         const { newEmail, confirmNewEmail } = data;
         let response = {};
@@ -76,6 +109,7 @@ export const ProfileUpdateService = {
             throw Error(error.response.data.message);
         }
     },
+
     updateDietaryPref: async (newDietPref) => {
         console.log("diet update");
         return;

@@ -8,26 +8,36 @@ module.exports = {
         if (!req.cookies.loggedIn) {
             res.status(401).json({
                 profileUpdate: false,
-                message: "invalid credentials",
+                message: "AUTH:invalid credentials",
             });
             return;
         }
 
         let decodedData = {};
         let userCookie = JSON.parse(req.cookies.loggedIn);
+        // console.log("cookie ", userCookie);
+        let cookieUserName = userCookie.username;
         let userToken = userCookie.token;
 
         ///VERIFY TOKEN
         try {
             decodedData = await jwt.verify(userToken, process.env.JWT_SECRET);
-            // console.log("decodedData token is", decodedData);
+            console.log(
+                "decodedData token is",
+                decodedData,
+                "reqbody ",
+                req.body
+            );
+            if (userCookie.username !== decodedData.username) {
+                throw Error("AUTH:credentials mismatch");
+            }
 
             req.user = decodedData;
         } catch (error) {
             // console.log(error);
             res.status(401).json({
                 profileUpdate: false,
-                message: "Not Authorized",
+                message: error.message,
             });
             return;
         }
