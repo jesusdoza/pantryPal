@@ -17,18 +17,29 @@ img {
 }
 
 .logo {
-  height: 75px;
+  padding: .3em
+  height: 80px;
   width: 80px;
 }
 
 a {
   color: #90ac14;
   text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 
 ul {
   display: inline-box;
   list-style-type: none;
+  
+}
+
+.userIcon {
+  font-size: 1.5em;
+  border: 2px solid #90ac14;
+  padding: .5em;
+  border-radius: 50%;
 }
 
 @media ${device.mobileS} { 
@@ -54,12 +65,13 @@ ul {
   font-size: 1rem;
   .logo {
     height: 50px;
-    width: 54px;
+    width: 100px;
   }
 }
 
 @media ${device.tablet} { 
   min-width: 425px;
+  
 }
 
 @media ${device.laptop} { 
@@ -67,7 +79,7 @@ ul {
   font-size: 1.8rem;
   .logo {
     height: 100px;
-    width: 120px;
+    width: 150px;
   }
 }
 
@@ -85,7 +97,7 @@ ul {
   font-size: 4rem;
   .logo {
     height: 280px;
-    width: 320px;
+    width: 400px;
   }
 }
 
