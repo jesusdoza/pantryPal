@@ -15,19 +15,12 @@ module.exports = {
 
         let decodedData = {};
         let userCookie = JSON.parse(req.cookies.loggedIn);
-        // console.log("cookie ", userCookie);
-        let cookieUserName = userCookie.username;
+
         let userToken = userCookie.token;
 
         ///VERIFY TOKEN
         try {
             decodedData = await jwt.verify(userToken, process.env.JWT_SECRET);
-            // console.log(
-            //     "decodedData token is",
-            //     decodedData,
-            //     "reqbody ",
-            //     req.body
-            // );
 
             // verify user cookie and token match from user request
             if (userCookie.username !== decodedData.username) {

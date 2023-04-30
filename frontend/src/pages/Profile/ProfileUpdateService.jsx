@@ -73,6 +73,7 @@ export const ProfileUpdateService = {
     updateEmail: async (data) => {
         const { newEmail, confirmNewEmail } = data;
         let response = {};
+        console.log("update email service front");
         try {
             if (!confirmStrings(newEmail, confirmNewEmail)) {
                 throw Error("emails dont match");
@@ -84,7 +85,11 @@ export const ProfileUpdateService = {
             });
             return response;
         } catch (error) {
-            throw Error(error.message);
+            if (error.response) {
+                throw Error(error.response.data.message);
+            } else {
+                throw Error(error.message);
+            }
         }
     },
     updateCaloric: async (data) => {

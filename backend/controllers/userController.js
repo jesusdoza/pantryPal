@@ -9,9 +9,24 @@ const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-
 const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
+
+async function updateEmail(req, res) {
+    console.log("update email user", req.user);
+    console.log("update email body", req.body);
+    try {
+        let foundUser = await User.findOne({ _id: req.user.id });
+
+        if (true) {
+            throw Error("Old Email does not match");
+        }
+    } catch (error) {
+        res.status(400).json({ profileUpdate: false, message: error.message });
+    }
+}
+async function updateCaloricPref(req, res) {}
+async function updateDietPref(req, res) {}
 
 async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;
@@ -24,7 +39,6 @@ async function updatePassword(req, res) {
         foundUser = await User.findOne({ _id: req.user.id });
 
         // verify old password
-
         const isValidOldPassword = await bcrypt.compare(
             oldPassword,
             foundUser.password
@@ -247,6 +261,7 @@ const deleteRecipe = async (req, res) => {
 };
 
 module.exports = {
+    updateEmail,
     updatePassword,
     createUser,
     login,
