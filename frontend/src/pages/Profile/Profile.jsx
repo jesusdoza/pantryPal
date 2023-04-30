@@ -3,6 +3,7 @@ import { Dashboard } from "./Profile.styles";
 import Cookies from "js-cookie";
 import { Modal } from "./Modal";
 import { ProfileUpdateService } from "./ProfileUpdateService";
+import { v4 as uuidv4 } from "uuid";
 
 function ProfilePage() {
     //have the updatemodal component held in variable and change the
@@ -12,6 +13,54 @@ function ProfilePage() {
     const [showModal, setShowModal] = useState(false);
 
     const [modalContent, setModalContent] = useState(getModalProps("email"));
+
+    //todo use children instead
+    function changeModalContents(modalType) {
+        let modalOptions = {
+            email: {
+                title: "Update Email",
+                fieldsArr: [
+                    { label: "New Email", name: "newEmail" },
+                    { label: "Confirm New Email", name: "confirmNewEmail" },
+                ],
+                handleSubmit: ProfileUpdateService.updateEmail,
+            },
+            caloric: {
+                title: "Update Caloric Settings",
+                fieldsArr: [
+                    {
+                        label: "New Caloric Value",
+                        name: "newCaloricPref",
+                    },
+                ],
+                handleSubmit: ProfileUpdateService.updateCaloric,
+            },
+            password: {
+                title: "Update Password",
+                fieldsArr: [
+                    {
+                        label: "Old Password",
+                        name: "oldPassword",
+                    },
+                    {
+                        label: "New Password",
+                        name: "newPassword",
+                    },
+                    {
+                        label: "Confirm New Password",
+                        name: "confirmNewPassword",
+                    },
+                ],
+                handleSubmit: ProfileUpdateService.updatePassword,
+            },
+        };
+
+        let modalProps = modalOptions[modalType];
+
+        modalProps.scrollToRef = scrollToRef;
+
+        return modalProps;
+    }
 
     //build modal with specific props
     function getModalProps(modalType) {
@@ -64,21 +113,18 @@ function ProfilePage() {
     function goToModal(modalType) {
         const content = getModalProps(modalType);
         setModalContent(content);
-
-        scrollToRef.current.scrollIntoView({
-            block: "center",
-            behavior: "smooth",
-        });
     }
 
     return (
         <Dashboard>
             <section className="modal__container">
-                <Modal
-                    {...modalContent}
-                    isDisplayed={showModal}
-                    setIsDisplayed={setShowModal}
-                />{" "}
+                {showModal ? (
+                    <Modal setIsDisplayed={setShowModal}>
+                        <PasswordUpdateForm />
+                    </Modal>
+                ) : (
+                    <></>
+                )}
             </section>
 
             <section className="profile-page">
@@ -150,3 +196,49 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+
+function PasswordUpdateForm() {
+    return (
+        <form action="" onSubmit={ProfileUpdateService.updatePassword}>
+            <section>
+                <h1>Update Password</h1>
+            </section>
+            <section>
+                <ul>
+                    <li className="update__field" key={uuidv4()}>
+                        <div className="input__container">
+                            <label htmlFor="oldPassword">Old Password</label>
+                            <input
+                                id="oldPassword"
+                                type="text"
+                                name="oldPassword"
+                            />
+                        </div>
+                    </li>
+                    <li className="update__field" key={uuidv4()}>
+                        <div className="input__container">
+                            <label htmlFor="newPassword">New Password</label>
+                            <input
+                                id="newPassword"
+                                type="text"
+                                name="newpassword"
+                            />
+                        </div>
+                    </li>
+                    <li className="update__field" key={uuidv4()}>
+                        <div className="input__container">
+                            <label htmlFor="confirmNewPassword">
+                                Confirm New Password
+                            </label>
+                            <input
+                                id="confirmNewPassword"
+                                type="text"
+                                name="confirmNewPassword"
+                            />
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </form>
+    );
+}
