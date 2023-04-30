@@ -97,21 +97,25 @@ export const ProfileUpdateService = {
     },
     updateCaloric: async (data) => {
         console.log("update caloric data ", data);
-        const { newCaloricValue } = data;
+        const { newCaloricPref } = data;
         let response = {};
-        let newValue = Number(newCaloricValue);
+        console.log(newCaloricPref);
+        let newValue = Number(newCaloricPref);
         try {
             if (isNaN(newValue)) {
                 throw Error("not a number");
             }
 
             response = await axiosInstance.put("/api/profile/caloricpref", {
-                newValue,
+                newCaloricPref: newValue,
             });
             return response;
         } catch (error) {
-            // throw Error(error.message);
-            throw Error(error.response.data.message);
+            if (error.response) {
+                throw Error(error.response.data.message);
+            } else {
+                throw Error(error.message);
+            }
         }
     },
 

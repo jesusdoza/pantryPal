@@ -10,7 +10,7 @@ profileRouter.get("/", (req, res) => {
 
 profileRouter.put("/password", userController.updatePassword);
 profileRouter.put("/email", userController.updateEmail);
-// profileRouter.put("/caloricpref", userController.updateCaloricPref);
+profileRouter.put("/caloricpref", userController.updateCaloricPref);
 // profileRouter.put("/dietpref", userController.updateDietPref);
 
 module.exports = profileRouter;

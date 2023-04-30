@@ -12,6 +12,25 @@ const openai = new OpenAIApi(configuration);
 const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
 
+async function updateCaloricPref(req, res) {
+    console.log("update caloric", req.body);
+    try {
+        let foundUser = await User.findOne({ _id: req.user.id });
+        console.log("before caloric update ", foundUser);
+
+        foundUser.caloricPref = req.body.newCaloricPref;
+        await foundUser.save();
+
+        console.log("after caloric update ", foundUser);
+        res.status(200).json({
+            profileUpdate: true,
+            newCaloricPref: foundUser.caloricPref,
+        });
+    } catch (error) {
+        res.status(400).json({ profileUpdate: false, message: error.message });
+    }
+}
+
 async function updateEmail(req, res) {
     // console.log("update email user", req.user);
     console.log("update email body", req.body);
@@ -23,12 +42,15 @@ async function updateEmail(req, res) {
         await foundUser.save();
 
         console.log("updated email", foundUser);
-        res.status(200).json({ profileUpdate: true, email: foundUser.email });
+        res.status(200).json({
+            profileUpdate: true,
+            newEmail: foundUser.email,
+        });
     } catch (error) {
         res.status(400).json({ profileUpdate: false, message: error.message });
     }
 }
-async function updateCaloricPref(req, res) {}
+
 async function updateDietPref(req, res) {}
 
 async function updatePassword(req, res) {
@@ -264,6 +286,7 @@ const deleteRecipe = async (req, res) => {
 };
 
 module.exports = {
+    updateCaloricPref,
     updateEmail,
     updatePassword,
     createUser,

@@ -29,7 +29,7 @@ function ProfilePage() {
                 fieldsArr: [
                     {
                         label: "New Caloric Value",
-                        name: "newCaloricValue",
+                        name: "newCaloricPref",
                     },
                 ],
                 handleSubmit: ProfileUpdateService.updateCaloric,
