@@ -50,7 +50,7 @@ export function Modal({
             //todo working flag =  true
             const response = await handleSubmit(formData);
             //todo working flag = false
-            console.log("profile update sucess");
+            console.log("profile update sucess", response);
         } catch (error) {
             setErrors([error.message]);
             setShowError(true);

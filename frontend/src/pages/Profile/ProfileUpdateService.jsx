@@ -16,7 +16,6 @@ function verifyEmail(emailStr) {
     const emailRegex = new RegExp(
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     );
-
     return emailRegex.test(emailStr);
 }
 
@@ -77,6 +76,10 @@ export const ProfileUpdateService = {
         try {
             if (!confirmStrings(newEmail, confirmNewEmail)) {
                 throw Error("emails dont match");
+            }
+
+            if (!verifyEmail(newEmail)) {
+                throw Error("emails improper format");
             }
 
             response = await axiosInstance.put("/api/profile/email", {

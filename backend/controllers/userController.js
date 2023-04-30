@@ -13,14 +13,17 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
 
 async function updateEmail(req, res) {
-    console.log("update email user", req.user);
+    // console.log("update email user", req.user);
     console.log("update email body", req.body);
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
+        console.log("before email update ", foundUser);
 
-        if (true) {
-            throw Error("Old Email does not match");
-        }
+        foundUser.email = req.body.newEmail;
+        await foundUser.save();
+
+        console.log("updated email", foundUser);
+        res.status(200).json({ profileUpdate: true, email: foundUser.email });
     } catch (error) {
         res.status(400).json({ profileUpdate: false, message: error.message });
     }
