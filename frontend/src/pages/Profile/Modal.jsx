@@ -47,8 +47,9 @@ export function Modal({
             const formData = Object.fromEntries(data.entries());
 
             //submit form
-            console.log("modal form data", formData);
+            //todo working flag =  true
             const response = await handleSubmit(formData);
+            //todo working flag = false
         } catch (error) {
             setErrors([error.message]);
             setShowError(true);
@@ -86,6 +87,16 @@ export function Modal({
                                 </div>
                                 <div onClick={closeModal} className="btn">
                                     <span>Cancel</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="container col">
+                                    <div>
+                                        <span>loading</span>
+                                    </div>
+                                    <div>
+                                        <span>done</span>
+                                    </div>
                                 </div>
                             </div>
                         </form>

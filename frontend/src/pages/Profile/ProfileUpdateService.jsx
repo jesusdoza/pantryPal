@@ -26,11 +26,8 @@ export async function updateLoginCookie(username, token) {
         username: username,
     });
 
-    console.log("cookie body", username, token);
     Cookies.set("loggedIn", cookieBody);
     // Cookies.remove("loggedIn");
-
-    console.log("cookie body", cookieBody);
     Cookies.set("loggedIn", cookieBody);
     return;
 }
@@ -46,7 +43,7 @@ export const ProfileUpdateService = {
                 throw Error("passwords dont match");
             }
         } catch (error) {
-            console.log("passwrod confirm error");
+            console.log("password confirm error");
             throw Error(error.message);
         }
 
@@ -58,11 +55,8 @@ export const ProfileUpdateService = {
             });
 
             if (response.data.profileUpdate) {
-                console.log("profile updatge", response.data);
                 const username = response.data.username;
                 const token = response.data.token;
-                console.log("sending to cookie", username, token);
-                debugger;
                 await updateLoginCookie(username, token);
             }
         } catch (error) {

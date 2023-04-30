@@ -28,6 +28,8 @@ export const ModalStyles = styled.section`
 
     .container {
         display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .row {
         display: flex;
