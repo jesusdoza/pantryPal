@@ -22,12 +22,14 @@ module.exports = {
         ///VERIFY TOKEN
         try {
             decodedData = await jwt.verify(userToken, process.env.JWT_SECRET);
-            console.log(
-                "decodedData token is",
-                decodedData,
-                "reqbody ",
-                req.body
-            );
+            // console.log(
+            //     "decodedData token is",
+            //     decodedData,
+            //     "reqbody ",
+            //     req.body
+            // );
+
+            // verify user cookie and token match from user request
             if (userCookie.username !== decodedData.username) {
                 throw Error("AUTH:credentials mismatch");
             }

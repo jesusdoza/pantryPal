@@ -15,17 +15,26 @@ const saltRounds = 12; // you can adjust this value as needed
 
 async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;
+    console.log("req body", oldPassword, newPassword);
     let foundUser = {};
 
     ///update user password
     try {
+        // find user in database
         foundUser = await User.findOne({ _id: req.user.id });
-        console.log("found user", foundUser);
-        console.log("req user", req.user);
 
-        ///no user found
-        if (foundUser.password !== req.user.password)
+        // verify old password
+
+        const isValidOldPassword = await bcrypt.compare(
+            oldPassword,
+            foundUser.password
+        );
+        console.log("is valid password", isValidOldPassword);
+        if (!isValidOldPassword) {
+            // if (foundUser.password !== req.user.password)
+            console.log("invalid password with bcrypt");
             throw Error("controller :Invalid User test");
+        }
 
         ///encrypt new password and update database
         const newEncryptedPassword = await bcrypt.hash(newPassword, saltRounds);

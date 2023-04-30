@@ -55,15 +55,18 @@ export const ProfileUpdateService = {
             });
 
             if (response.data.profileUpdate) {
+                console.log("token update ");
                 const username = response.data.username;
                 const token = response.data.token;
                 await updateLoginCookie(username, token);
             }
         } catch (error) {
+            console.log("server request sent and error");
             throw Error(error.response.data.message);
         }
 
         //return response all ok
+        console.log("password update success");
         return response;
     },
 
