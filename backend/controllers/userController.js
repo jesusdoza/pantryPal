@@ -138,7 +138,8 @@ const login = async (req, res) => {
                 .json({ message: "Invalid username or password" });
         }
         const token = jwt.sign(
-            { username: username, password: user.password, id: user._id },
+            // { username: username, password: user.password, id: user._id },
+            { username: username, id: user._id },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
