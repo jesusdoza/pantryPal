@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { ProfileUpdateService } from "../ProfileUpdateService";
+import { ProfileUpdateService } from "../../services/ProfileUpdateService";
 
 import { v4 as uuidv4 } from "uuid";
 export default function PasswordUpdateForm({

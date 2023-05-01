@@ -13,24 +13,26 @@ function ProfilePage() {
     const scrollToRef = useRef(null);
 
     const [showModal, setShowModal] = useState(false);
-    const [modalContent, setModalContent] = useState(getModalProps("email"));
 
     const [errors, setErrors] = useState([1, 2, 3]);
     const [showError, setShowError] = useState(true);
 
     //todo use children instead
-    function changeModalContents(modalType) {
-        switch (modalType) {
-            case "password":
-                break;
-            case "email":
-                break;
-            case "caloric":
-                break;
 
-            default:
-                break;
-        }
+    const [modalContent, setModalContent] = useState(getModalProps("email"));
+    /* @Params
+        modalContent : JSX - jsx to display in modal
+        modalContentSetter : state setter for modal content
+    */
+    //todo maybe just set at the actual event setter?
+    function changeModalContents(modalContent, modalContentSetter) {
+        modalContent = (
+            <PasswordUpdateForm
+                setShowModal={setShowModal}
+                handleSubmit={ProfileUpdateService.updatePassword}
+            />
+        );
+        modalContentSetter(modalContent);
     }
 
     //build modal with specific props
