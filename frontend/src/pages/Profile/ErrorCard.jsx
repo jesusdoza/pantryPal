@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorCardStyled } from "./ErrorCardStyled";
+import { ErrorCardStyled } from "./ErrorCard.styles";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ErrorCard({
