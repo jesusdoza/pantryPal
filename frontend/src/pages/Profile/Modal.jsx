@@ -4,8 +4,7 @@ import { useState } from "react";
 import ErrorCard from "./ErrorCard";
 import ReactDom from "react-dom";
 
-//todo instead of handling the build of the inputs maybe just display
-//todo any content user passes
+//todo display any children user passes
 export function Modal({ children, setIsDisplayed, scrollToRef }) {
     const formRef = useRef("");
     const [errors, setErrors] = useState(["ONE"]);
@@ -35,6 +34,5 @@ export function Modal({ children, setIsDisplayed, scrollToRef }) {
                 </div>
             </main>
         </ModalStyles>
-        // document.getElementById("portal")
     );
 }
