@@ -116,9 +116,9 @@ export default function PasswordUpdateForm({
                     </section>
                 )}
 
-                <section className="error__container">
+                {/* <section className="error__container">
                     <ErrorCard errorsArr={[1, 3, 4]} showError={true} />
-                </section>
+                </section> */}
             </form>
         </StyledPasswordForm>
     );

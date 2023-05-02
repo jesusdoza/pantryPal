@@ -26,8 +26,6 @@ export default function SucessCard({
             <div className="error container">
                 <div className="row">
                     <section className="container col">
-                        <h3>Success Updating</h3>
-
                         <ul className="display_list">
                             {listArr.length > 0 ? (
                                 makeDisplayList(listArr)
