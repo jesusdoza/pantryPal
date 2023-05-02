@@ -2,7 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { Dashboard } from "./Profile.styles";
 import Cookies from "js-cookie";
 import { Modal } from "./Modal";
-import { ProfileUpdateService } from "./ProfileUpdateService";
+import { ProfileUpdateService } from "./services/ProfileUpdateService";
+
+import SucessCard from "./components/SuccessCard/SuccessCard";
+import ErrorCard from "./ErrorCard";
+import PasswordUpdateForm from "./components/PasswordUpdateForm/PasswordUpdateForm";
+import EmailUpdateForm from "./components/EmailUpdateForm/EmailUpdateForm";
+import CaloricUpdateForm from "./components/CaloricForm/CaloricUpdateForm";
 
 function ProfilePage() {
     //have the updatemodal component held in variable and change the
@@ -11,74 +17,30 @@ function ProfilePage() {
 
     const [showModal, setShowModal] = useState(false);
 
-    const [modalContent, setModalContent] = useState(getModalProps("email"));
+    const [errors, setErrors] = useState([]);
+    const [showError, setShowError] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
-    //build modal with specific props
-    function getModalProps(modalType) {
-        let modalOptions = {
-            email: {
-                title: "Update Email",
-                fieldsArr: [
-                    { label: "New Email", name: "newEmail" },
-                    { label: "Confirm New Email", name: "confirmNewEmail" },
-                ],
-                handleSubmit: ProfileUpdateService.updateEmail,
-            },
-            caloric: {
-                title: "Update Caloric Settings",
-                fieldsArr: [
-                    {
-                        label: "New Caloric Value",
-                        name: "newCaloricValue",
-                    },
-                ],
-                handleSubmit: ProfileUpdateService.updateCaloric,
-            },
-            password: {
-                title: "Update Password",
-                fieldsArr: [
-                    {
-                        label: "Old Password",
-                        name: "oldPassword",
-                    },
-                    {
-                        label: "New Password",
-                        name: "newPassword",
-                    },
-                    {
-                        label: "Confirm New Password",
-                        name: "confirmNewPassword",
-                    },
-                ],
-                handleSubmit: ProfileUpdateService.updatePassword,
-            },
-        };
-
-        let modalProps = modalOptions[modalType];
-
-        modalProps.scrollToRef = scrollToRef;
-
-        return modalProps;
-    }
-
-    function goToModal(modalType) {
-        const content = getModalProps(modalType);
-        setModalContent(content);
-
-        scrollToRef.current.scrollIntoView({
-            block: "center",
-            behavior: "smooth",
-        });
-    }
+    //todo use children instead
+    const [modalContent, setModalContent] = useState(
+        <PasswordUpdateForm
+            setShowModal={setShowModal}
+            handleSubmit={ProfileUpdateService.updatePassword}
+        />
+    );
 
     return (
         <Dashboard>
             <section className="modal__container">
-                <Modal
-                    {...modalContent}
-                    isDisplayed={showModal}
-                    setIsDisplayed={setShowModal}
-                />{" "}
+                {showModal ? (
+                    <Modal setIsDisplayed={setShowModal}>
+                        {modalContent}
+                        {/* <ErrorCard errorsArr={errors} showError={showError} />
+                        <SucessCard showCard={showSuccess} /> */}
+                    </Modal>
+                ) : (
+                    <></>
+                )}
             </section>
 
             <section className="profile-page">
@@ -120,7 +82,16 @@ function ProfilePage() {
                             className="btn"
                             onClick={() => {
                                 setShowModal(true);
-                                goToModal("caloric");
+                                setModalContent(
+                                    <CaloricUpdateForm
+                                        // setErrors={setErrors}
+                                        // setShowError={setShowError}
+                                        setShowModal={setShowModal}
+                                        handleSubmit={
+                                            ProfileUpdateService.updateCaloric
+                                        }
+                                    />
+                                );
                             }}>
                             <span>Update Caloric settings</span>
                         </li>
@@ -128,14 +99,34 @@ function ProfilePage() {
                             className="btn"
                             onClick={() => {
                                 setShowModal(true);
-                                goToModal("email");
+                                // goToModal("email");
+                                setModalContent(
+                                    <EmailUpdateForm
+                                        // setErrors={setErrors}
+                                        // setShowError={setShowError}
+                                        setShowModal={setShowModal}
+                                        handleSubmit={
+                                            ProfileUpdateService.updateEmail
+                                        }
+                                    />
+                                );
                             }}>
                             <span>Update Email</span>
                         </li>
                         <li
                             onClick={() => {
                                 setShowModal(true);
-                                goToModal("password");
+                                // goToModal("password");
+                                setModalContent(
+                                    <PasswordUpdateForm
+                                        // setErrors={setErrors}
+                                        // setShowError={setShowError}
+                                        setShowModal={setShowModal}
+                                        handleSubmit={
+                                            ProfileUpdateService.updatePassword
+                                        }
+                                    />
+                                );
                             }}
                             className="btn">
                             <div>

@@ -5,6 +5,7 @@ const apiRouter = express.Router();
 const profileRouter = require("./profile");
 const loginRouter = require("./login");
 const signupRouter = require("./signup");
+const { isAuthenticated } = require("../../middleware/auth");
 
 const {
     getMealPlanner,
@@ -96,6 +97,7 @@ apiRouter.post("/getSavedRecipes", getSavedRecipes);
 
 apiRouter.post("/deleteRecipe", deleteRecipe);
 
-apiRouter.use("/profile", profileRouter);
+apiRouter.use("/profile", isAuthenticated, profileRouter);
+// apiRouter.use("/profile", profileRouter);
 
 module.exports = apiRouter;

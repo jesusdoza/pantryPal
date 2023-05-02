@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-const error_bg = "#f4888a";
+const card_bg = "#08e171dc";
 
-export const ErrorCardStyled = styled.div`
+export const SuccessCardStyled = styled.div`
     z-index: 3;
-    border: solid 1px black;
-    background-color: ${error_bg};
+    /* border: solid 1px black; */
+    background-color: ${card_bg};
 
-    .error_item {
+    .list_item {
         display: flex;
 
         justify-content: space-between;
         align-items: center;
-        border: solid 1px black;
+        /* border: solid 1px black; */
 
         img {
             width: 20%;
@@ -20,7 +20,7 @@ export const ErrorCardStyled = styled.div`
         p {
             width: 100%;
 
-            border: solid 1px black;
+            /* border: solid 1px black; */
         }
     }
 `;
