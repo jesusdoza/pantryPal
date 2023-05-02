@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useLocation,useNavigate } from "react-router-dom";
 import { Details } from './RecipeDetails.style';
+import { v4 as uuidv4 } from "uuid";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock, faEgg, faHeart } from '@fortawesome/free-solid-svg-icons'
@@ -21,22 +22,22 @@ export default function RecipeDetails() {
 
 
   const recipeType = recipeData.dishTypes.map(type => {
-    return <li>{type}</li>
+    return <li key={uuidv4()}>{type}</li>
   })
   const ingredientName = recipeData.extendedIngredients.map(ingredient => {
-    return <li>{ingredient.amount} {ingredient.unit}  <img src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}></img> {ingredient.name}</li>})
+    return <li key={uuidv4()}>{ingredient.amount} {ingredient.unit}  <img src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}></img> {ingredient.name}</li>})
   
   console.log(recipeData);
 
 
   const instructionStep = recipeData.analyzedInstructions[0].steps.map(instruction => {
-    return <li>{instruction.step}</li>})
+    return <li key={uuidv4()}>{instruction.step}</li>})
 
     const strippedString = recipeData.summary.replace(/<.*?>/g, '');
       const ingredientLength = recipeData.extendedIngredients.length
   const likes = recipeData.aggregateLikes
   const recipeDiets = recipeData.diets.map((item) => {
-    return <li>{item}</li>
+    return <li key={uuidv4()}>{item}</li>
   })
 
   return (
