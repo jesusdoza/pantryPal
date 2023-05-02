@@ -10,8 +10,8 @@ export default function EmailUpdateForm({
 }) {
     const formRef = useRef("");
     async function submitForm(event) {
+        event.preventDefault();
         try {
-            event.preventDefault();
             setShowError(false);
 
             // grab data from form
@@ -32,25 +32,19 @@ export default function EmailUpdateForm({
     return (
         <form ref={formRef} onSubmit={submitForm}>
             <section className="row title">
-                <h1>Update Email</h1>
+                <h1>Update Calorie preferences</h1>
             </section>
             <section className="row form__inputs">
                 <ul>
                     <li className="update__field" key={uuidv4()}>
                         <div className="input__container">
-                            <label htmlFor="newEmail">New Email</label>
-                            <input id="newEmail" type="text" name="newEmail" />
-                        </div>
-                    </li>
-                    <li className="update__field" key={uuidv4()}>
-                        <div className="input__container">
-                            <label htmlFor="confirmNewEmail">
-                                Confirm New Email
+                            <label htmlFor="newCaloricPref">
+                                New Calorie Value
                             </label>
                             <input
-                                id="confirmNewEmail"
+                                id="newCaloricPref"
                                 type="text"
-                                name="confirmNewEmail"
+                                name="newCaloricPref"
                             />
                         </div>
                     </li>
