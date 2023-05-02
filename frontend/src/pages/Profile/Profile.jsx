@@ -35,8 +35,8 @@ function ProfilePage() {
                 {showModal ? (
                     <Modal setIsDisplayed={setShowModal}>
                         {modalContent}
-                        <ErrorCard errorsArr={errors} showError={showError} />
-                        <SucessCard showCard={showSuccess} />
+                        {/* <ErrorCard errorsArr={errors} showError={showError} />
+                        <SucessCard showCard={showSuccess} /> */}
                     </Modal>
                 ) : (
                     <></>
@@ -84,8 +84,8 @@ function ProfilePage() {
                                 setShowModal(true);
                                 setModalContent(
                                     <CaloricUpdateForm
-                                        setErrors={setErrors}
-                                        setShowError={setShowError}
+                                        // setErrors={setErrors}
+                                        // setShowError={setShowError}
                                         setShowModal={setShowModal}
                                         handleSubmit={
                                             ProfileUpdateService.updateCaloric
@@ -102,8 +102,8 @@ function ProfilePage() {
                                 // goToModal("email");
                                 setModalContent(
                                     <EmailUpdateForm
-                                        setErrors={setErrors}
-                                        setShowError={setShowError}
+                                        // setErrors={setErrors}
+                                        // setShowError={setShowError}
                                         setShowModal={setShowModal}
                                         handleSubmit={
                                             ProfileUpdateService.updateEmail
@@ -119,8 +119,8 @@ function ProfilePage() {
                                 // goToModal("password");
                                 setModalContent(
                                     <PasswordUpdateForm
-                                        setErrors={setErrors}
-                                        setShowError={setShowError}
+                                        // setErrors={setErrors}
+                                        // setShowError={setShowError}
                                         setShowModal={setShowModal}
                                         handleSubmit={
                                             ProfileUpdateService.updatePassword

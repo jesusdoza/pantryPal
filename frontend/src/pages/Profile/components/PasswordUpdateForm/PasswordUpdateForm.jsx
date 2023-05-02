@@ -6,11 +6,13 @@ import SuccessCard from "../SuccessCard/SuccessCard";
 import { v4 as uuidv4 } from "uuid";
 export default function PasswordUpdateForm({
     handleSubmit,
-    setErrors,
-    setShowError,
+    // setErrorList,
+    // setShowError,
     setShowModal,
 }) {
     const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorList, setErrorList] = useState([]);
     const formRef = useRef("");
     async function submitForm(event) {
         event.preventDefault();
@@ -25,7 +27,7 @@ export default function PasswordUpdateForm({
             console.log("modal form data", formData);
             const response = await handleSubmit(formData);
         } catch (error) {
-            setErrors([error.message]);
+            setErrorList([error.message]);
             setShowError(true);
             console.log("error in update modal", error.message);
             return;
@@ -41,7 +43,9 @@ export default function PasswordUpdateForm({
                     listArr={["Password Updated"]}
                     showCard={showSuccess}
                 />
+                <ErrorCard errorsArr={errorList} showError={showError} />
             </div>
+
             <form ref={formRef} onSubmit={submitForm}>
                 <section className="row title">
                     <h1>Update Password</h1>
@@ -93,7 +97,7 @@ export default function PasswordUpdateForm({
                             className="btn"
                             onClick={() => {
                                 setShowModal(false);
-                                setErrors([]);
+                                setErrorList([]);
                                 setShowError(false);
                             }}>
                             <span>Done</span>
@@ -108,17 +112,13 @@ export default function PasswordUpdateForm({
                             className="btn"
                             onClick={() => {
                                 setShowModal(false);
-                                setErrors([]);
+                                setErrorList([]);
                                 setShowError(false);
                             }}>
                             <span>Cancel</span>
                         </div>
                     </section>
                 )}
-
-                <section className="error__container">
-                    <ErrorCard errorsArr={[1, 3, 4]} showError={true} />
-                </section>
             </form>
         </StyledPasswordForm>
     );

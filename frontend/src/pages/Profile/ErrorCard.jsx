@@ -11,7 +11,12 @@ export default function ErrorCard({
             return (
                 <li key={uuidv4()} className="error_container">
                     <div className="error_item">
-                        <img src="/src/assets/error.png" alt="error symbol" />
+                        <div className="img__container">
+                            <img
+                                src="/src/assets/error.png"
+                                alt="error symbol"
+                            />
+                        </div>
                         <p>{error}</p>
                     </div>
                 </li>
@@ -26,9 +31,8 @@ export default function ErrorCard({
             <div className="error container">
                 <div className="row">
                     <section className="container col">
-                        <h3>Error</h3>
-                        <span>Please correct following errors</span>
-                        <ul className="error_list">
+                        <h3>Please correct errors</h3>
+                        <ul className="error__list">
                             {errorsArr.length > 0 ? (
                                 makeErrorList(errorsArr)
                             ) : (

@@ -7,11 +7,13 @@ import ReactDom from "react-dom";
 //todo display any children user passes
 export function Modal({ children, setIsDisplayed, scrollToRef }) {
     const formRef = useRef("");
-    const [errors, setErrors] = useState(["ONE"]);
-    let [showError, setShowError] = useState(false);
+    // const [errors, setErrors] = useState(["ONE"]);
+    // let [showError, setShowError] = useState(false);
 
     function closeModal() {
         setIsDisplayed(false);
+        // setErrors([]);
+        // setShowError(false);
     }
 
     // return ReactDom.createPortal(
@@ -29,9 +31,9 @@ export function Modal({ children, setIsDisplayed, scrollToRef }) {
                         {children}
                     </section>
                 </div>
-                <div className="container row">
+                {/* <div className="container row">
                     <ErrorCard errorsArr={errors} showError={showError} />
-                </div>
+                </div> */}
             </main>
         </ModalStyles>
     );

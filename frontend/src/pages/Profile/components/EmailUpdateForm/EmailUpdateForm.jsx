@@ -1,17 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ProfileUpdateService } from "../../services/ProfileUpdateService";
 import { v4 as uuidv4 } from "uuid";
+import SuccessCard from "../SuccessCard/SuccessCard";
+import ErrorCard from "../../ErrorCard";
 
 export default function EmailUpdateForm({
     handleSubmit,
-    setErrors,
-    setShowError,
+    // setErrorList,
+    // setShowError,
     setShowModal,
 }) {
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorList, setErrorList] = useState([]);
     const formRef = useRef("");
     async function submitForm(event) {
+        event.preventDefault();
         try {
-            event.preventDefault();
             setShowError(false);
 
             // grab data from form
@@ -22,15 +27,24 @@ export default function EmailUpdateForm({
             console.log("modal form data", formData);
             const response = await handleSubmit(formData);
         } catch (error) {
-            setErrors([error.message]);
+            // setErrorList(["email error"]);
+            setErrorList([error.message]);
             setShowError(true);
-            console.log("error in update modal", error.message);
+            console.log("error in update form", error.message);
+            return;
         }
-        // ProfileUpdateService.updatePassword
+        setShowSuccess(true);
     }
 
     return (
         <form ref={formRef} onSubmit={submitForm}>
+            <div>
+                <SuccessCard
+                    listArr={["Email Updated"]}
+                    showCard={showSuccess}
+                />
+                <ErrorCard errorsArr={errorList} showError={showError} />
+            </div>
             <section className="row title">
                 <h1>Update Email</h1>
             </section>
@@ -56,18 +70,34 @@ export default function EmailUpdateForm({
                     </li>
                 </ul>
             </section>
-            <section className="form__controls row">
-                <div className="btn" onClick={submitForm}>
-                    <span>Submit</span>
-                </div>
-                <div
-                    className="btn"
-                    onClick={() => {
-                        setShowModal(false);
-                    }}>
-                    <span>Cancel</span>
-                </div>
-            </section>
+            {showSuccess ? (
+                <section className="form__controls row">
+                    <div
+                        className="btn"
+                        onClick={() => {
+                            setShowModal(false);
+                            setErrorList([]);
+                            setShowError(false);
+                        }}>
+                        <span>Done</span>
+                    </div>
+                </section>
+            ) : (
+                <section className="form__controls row">
+                    <div className="btn" onClick={submitForm}>
+                        <span>Submit</span>
+                    </div>
+                    <div
+                        className="btn"
+                        onClick={() => {
+                            setShowModal(false);
+                            setErrorList([]);
+                            setShowError(false);
+                        }}>
+                        <span>Cancel</span>
+                    </div>
+                </section>
+            )}
         </form>
     );
 }
