@@ -80,11 +80,11 @@ export const ModalStyles = styled.section`
 
         #modal {
             z-index: 3;
-            background-color: ${main_bg};
+            /* background-color: ${main_bg}; */
             padding: 1rem;
             border-radius: 2rem;
-            width: 80%;
-            max-width: 300px;
+            /* width: 100%; */
+            /* max-width: 300px; */
             min-height: 300px;
 
             .btn {
@@ -92,7 +92,7 @@ export const ModalStyles = styled.section`
             }
 
             form {
-                height: 300px;
+                /* height: 300px; */
                 .title {
                     height: 10%;
                 }

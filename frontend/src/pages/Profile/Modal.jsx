@@ -5,10 +5,10 @@ import ErrorCard from "./ErrorCard";
 import ReactDom from "react-dom";
 
 //todo display any children user passes
-export function Modal({ children, setIsDisplayed, scrollToRef }) {
+export function Modal({ children, setIsDisplayed }) {
     const formRef = useRef("");
-    const [errors, setErrors] = useState(["ONE"]);
-    let [showError, setShowError] = useState(false);
+    // const [errors, setErrors] = useState(["ONE"]);
+    // let [showError, setShowError] = useState(true);
 
     function closeModal() {
         setIsDisplayed(false);
@@ -24,14 +24,14 @@ export function Modal({ children, setIsDisplayed, scrollToRef }) {
                     }}
                     className={`back__blur `}></div>
 
-                <div ref={scrollToRef} className={`container row `}>
+                <div className={`container row `}>
                     <section id="modal" className="">
                         {children}
                     </section>
                 </div>
-                <div className="container row">
+                {/* <div className="container row">
                     <ErrorCard errorsArr={errors} showError={showError} />
-                </div>
+                </div> */}
             </main>
         </ModalStyles>
     );

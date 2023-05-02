@@ -18,8 +18,8 @@ function ProfilePage() {
     const [showModal, setShowModal] = useState(false);
 
     const [errors, setErrors] = useState([]);
-    const [showError, setShowError] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(true);
+    const [showSuccess, setShowSuccess] = useState(true);
 
     //todo use children instead
     const [modalContent, setModalContent] = useState(
@@ -33,11 +33,16 @@ function ProfilePage() {
         <Dashboard>
             <section className="modal__container">
                 {showModal ? (
-                    <Modal setIsDisplayed={setShowModal}>
-                        {modalContent}
-                        <ErrorCard errorsArr={errors} showError={showError} />
-                        <SucessCard showCard={showSuccess} />
-                    </Modal>
+                    <>
+                        <Modal setIsDisplayed={setShowModal}>
+                            {modalContent}
+                            {/* <ErrorCard
+                                errorsArr={errors}
+                                showError={showError}
+                            />
+                            <SucessCard showCard={showSuccess} /> */}
+                        </Modal>
+                    </>
                 ) : (
                     <></>
                 )}

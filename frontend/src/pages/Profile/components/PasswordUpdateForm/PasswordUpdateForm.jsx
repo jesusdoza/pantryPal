@@ -4,6 +4,7 @@ import ErrorCard from "../../ErrorCard";
 import { StyledPasswordForm } from "./PasswordUpdateForm.styles";
 
 import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 export default function PasswordUpdateForm({
     handleSubmit,
     setErrors,
@@ -11,6 +12,7 @@ export default function PasswordUpdateForm({
     setShowModal,
 }) {
     const formRef = useRef("");
+
     async function submitForm(event) {
         event.preventDefault();
         try {
@@ -22,13 +24,12 @@ export default function PasswordUpdateForm({
 
             //submit form
             console.log("modal form data", formData);
-            const response = await handleSubmit(formData);
+            // const response = await handleSubmit(formData);//! uncomment to submit form
         } catch (error) {
             setErrors([error.message]);
             setShowError(true);
-            console.log("error in update modal", error.message);
+            console.log("error in password update form", error.message);
         }
-        // ProfileUpdateService.updatePassword
     }
 
     return (
@@ -40,40 +41,22 @@ export default function PasswordUpdateForm({
                 <section className="row form__inputs">
                     <ul>
                         <li className="update__field" key={uuidv4()}>
-                            <div className="input__container">
-                                <label htmlFor="oldPassword">
-                                    Old Password
-                                </label>
-                                <input
-                                    id="oldPassword"
-                                    type="text"
-                                    name="oldPassword"
-                                />
-                            </div>
+                            <InputField
+                                name="oldPassword"
+                                label="Old Password"
+                            />
                         </li>
                         <li className="update__field" key={uuidv4()}>
-                            <div className="input__container">
-                                <label htmlFor="newPassword">
-                                    New Password
-                                </label>
-                                <input
-                                    id="newPassword"
-                                    type="text"
-                                    name="newPassword"
-                                />
-                            </div>
+                            <InputField
+                                name="newPassword"
+                                label="New Password"
+                            />
                         </li>
                         <li className="update__field" key={uuidv4()}>
-                            <div className="input__container">
-                                <label htmlFor="confirmNewPassword">
-                                    Confirm New Password
-                                </label>
-                                <input
-                                    id="confirmNewPassword"
-                                    type="text"
-                                    name="confirmNewPassword"
-                                />
-                            </div>
+                            <InputField
+                                name="confirmNewPassword"
+                                label="Confirm New Password"
+                            />
                         </li>
                     </ul>
                 </section>
@@ -89,10 +72,30 @@ export default function PasswordUpdateForm({
                         <span>Cancel</span>
                     </div>
                 </section>
-                {/* <section className="error__container">
-                    <ErrorCard errorsArr={[1, 3, 4]} showError={true} />
-                </section> */}
             </form>
+            <section className="error__container">
+                <ErrorCard errorsArr={[]} showError={false} />
+            </section>
         </StyledPasswordForm>
+    );
+}
+
+const InputStyled = styled.div``;
+
+function InputField({ name, label, validationFunc }) {
+    const [error, setError] = useState(true);
+
+    function validateInput(event) {
+        let input = event.target.value;
+    }
+
+    return (
+        <div className="input__container error">
+            <label htmlFor={name}>{label}</label>
+            <input id={name} type="text" name={name} onChange={validateInput} />
+            <div>
+                <span>error</span>
+            </div>
+        </div>
     );
 }
