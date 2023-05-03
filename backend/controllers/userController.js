@@ -16,12 +16,12 @@ async function updateCaloricPref(req, res) {
     console.log("update caloric", req.body);
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-        console.log("before caloric update ", foundUser);
+        // console.log("before caloric update ", foundUser);
 
         foundUser.caloricPref = req.body.newCaloricPref;
         await foundUser.save();
 
-        console.log("after caloric update ", foundUser);
+        // console.log("after caloric update ", foundUser);
         res.status(200).json({
             profileUpdate: true,
             newCaloricPref: foundUser.caloricPref,
@@ -36,12 +36,12 @@ async function updateEmail(req, res) {
     console.log("update email body", req.body);
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-        console.log("before email update ", foundUser);
+        // console.log("before email update ", foundUser);
 
         foundUser.email = req.body.newEmail;
         await foundUser.save();
 
-        console.log("updated email", foundUser);
+        // console.log("updated email", foundUser);
         res.status(200).json({
             profileUpdate: true,
             newEmail: foundUser.email,
