@@ -42,6 +42,7 @@ module.exports = {
                 error: error,
                 userToken,
                 secret: process.env.JWT_SECRET,
+                decodedData,
             });
             // res.status(401).json({
             //     profileUpdate: false,
