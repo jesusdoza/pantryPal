@@ -22,10 +22,11 @@ module.exports = {
         ///VERIFY TOKEN
         try {
             console.log("auth: ", userCookie, JWT_SECRET, typeof JWT_SECRET);
-            decodedData = await jwt.verify(userToken, JWT_SECRET, {
-                algorithms: ["HS256"],
-                allowInvalidAsymmetricKeyTypes: true,
-            });
+            // decodedData = await jwt.verify(userToken, JWT_SECRET, {
+            //     algorithms: ["HS256"],
+            //     allowInvalidAsymmetricKeyTypes: true,
+            // });
+            decodedData = verifyToken(userToken, JWT_SECRET);
 
             // verify user cookie and token match from user request
             if (userCookie.username !== decodedData.username) {
@@ -55,3 +56,15 @@ module.exports = {
         }
     },
 };
+
+function verifyToken(token, secret) {
+    try {
+        const isValid = jwt.verify(token, secret, {
+            algorithms: ["HS256"],
+            allowInvalidAsymmetricKeyTypes: true,
+        });
+        return isValid;
+    } catch (error) {
+        throw error;
+    }
+}
