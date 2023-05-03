@@ -30,7 +30,10 @@ function LoginScreen() {
                     throw new Error("Invalid username or password");
                 }
             })
+
             .then((data) => {
+                console.log("setting cookie with: ", data);
+                debugger;
                 Cookies.set(
                     "loggedIn",
                     JSON.stringify({
@@ -38,7 +41,7 @@ function LoginScreen() {
                         username: username,
                     })
                 );
-                window.location.href = "/search";
+                // window.location.href = "/search";
             })
             .catch((error) => {
                 console.error("Login failed:", error);
