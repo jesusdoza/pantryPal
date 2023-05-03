@@ -106,6 +106,7 @@ async function updatePassword(req, res) {
 
 const createUser = async (req, res) => {
     try {
+        console.log("req createuser", req.body);
         const { username, email, password } = req.body;
         const encryptedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = new User({
@@ -115,7 +116,9 @@ const createUser = async (req, res) => {
         });
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
+        return;
     } catch (error) {
+        console.log(error);
         if (error.code === 11000) {
             res.status(401).json({ message: "Username already exists" });
         } else {
@@ -126,6 +129,7 @@ const createUser = async (req, res) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
+    console.log(req.body);
     try {
         const user = await User.findOne({ username });
         if (!user) {
@@ -141,7 +145,7 @@ const login = async (req, res) => {
             // { username: username, password: user.password, id: user._id },
             { username: username, id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "1h", algorithm: "HS256" }
         );
         res.status(200).json({
             message: "Login successful",
