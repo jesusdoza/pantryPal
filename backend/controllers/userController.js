@@ -134,7 +134,7 @@ const createUser = async (req, res) => {
 const login = async (req, res) => {
     const { username, password } = req.body;
     const JWT_SECRET = process.env.JWT_SECRET;
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const user = await User.findOne({ username });
         if (!user) {
@@ -151,14 +151,7 @@ const login = async (req, res) => {
             JWT_SECRET,
             { expiresIn: "1h", algorithm: "HS256" }
         );
-        console.log(
-            "verify login: ",
-            jwt.verify(token, JWT_SECRET),
-            "token: ",
-            token,
-            "secret: ",
-            JWT_SECRET
-        );
+        console.log("verify login: ", "token: ", token, "secret: ", JWT_SECRET);
         res.status(200).json({
             message: "Login successful",
             token,
