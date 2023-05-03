@@ -91,7 +91,11 @@ async function updatePassword(req, res) {
             id: foundUser._id,
         },
         process.env.JWT_SECRET,
-        { expiresIn: "1h", algorithm: "HS256" }
+        {
+            expiresIn: "1h",
+            algorithm: "HS256",
+            allowInvalidAsymmetricKeyTypes: true,
+        }
     );
 
     //respond with updated credentials

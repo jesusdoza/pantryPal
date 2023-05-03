@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     isAuthenticated: async (req, res, next) => {
+        const JWT_SECRET = process.env.JWT_SECRET;
         // console.log("is auth middle ware");
         if (!req.cookies.loggedIn) {
             res.status(401).json({
@@ -20,9 +21,10 @@ module.exports = {
 
         ///VERIFY TOKEN
         try {
-            console.log("auth: ", userCookie, process.env.JWT_SECRET);
-            decodedData = await jwt.verify(userToken, process.env.JWT_SECRET, {
+            console.log("auth: ", userCookie, JWT_SECRET);
+            decodedData = await jwt.verify(userToken, JWT_SECRET, {
                 algorithms: ["HS256"],
+                allowInvalidAsymmetricKeyTypes: true,
             });
 
             // verify user cookie and token match from user request
