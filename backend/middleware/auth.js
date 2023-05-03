@@ -39,7 +39,15 @@ module.exports = {
             res.status(401).json({
                 profileUpdate: false,
                 message: error.message,
+                error: error,
+                userToken,
+                secret: process.env.JWT_SECRET,
             });
+            // res.status(401).json({
+            //     profileUpdate: false,
+            //     message: error.message,
+            //
+            // });
             return;
         }
     },
