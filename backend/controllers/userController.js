@@ -88,11 +88,10 @@ async function updatePassword(req, res) {
     const token = jwt.sign(
         {
             username: foundUser.username,
-            password: foundUser.password,
             id: foundUser._id,
         },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "1h", algorithm: "HS256" }
     );
 
     //respond with updated credentials
@@ -142,7 +141,6 @@ const login = async (req, res) => {
                 .json({ message: "Invalid username or password" });
         }
         const token = jwt.sign(
-            // { username: username, password: user.password, id: user._id },
             { username: username, id: user._id },
             process.env.JWT_SECRET,
             { expiresIn: "1h", algorithm: "HS256" }
