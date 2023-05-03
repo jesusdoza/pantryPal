@@ -99,7 +99,14 @@ async function updatePassword(req, res) {
         }
     );
 
-    console.log(jwt.verify(token, JWT_SECRET));
+    console.log(
+        "verify login: ",
+        jwt.verify(token, JWT_SECRET),
+        "token: ",
+        token,
+        "secret: ",
+        JWT_SECRET
+    );
 
     //respond with updated credentials
     res.status(200).json({
