@@ -21,7 +21,7 @@ module.exports = {
 
         ///VERIFY TOKEN
         try {
-            console.log("auth: ", userCookie, JWT_SECRET);
+            console.log("auth: ", userCookie, JWT_SECRET, typeof JWT_SECRET);
             decodedData = await jwt.verify(userToken, JWT_SECRET, {
                 algorithms: ["HS256"],
                 allowInvalidAsymmetricKeyTypes: true,
