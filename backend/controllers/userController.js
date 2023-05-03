@@ -99,15 +99,6 @@ async function updatePassword(req, res) {
         }
     );
 
-    console.log(
-        "verify login: ",
-        jwt.verify(token, JWT_SECRET),
-        "token: ",
-        token,
-        "secret: ",
-        JWT_SECRET
-    );
-
     //respond with updated credentials
     res.status(200).json({
         profileUpdate: true,
@@ -142,6 +133,7 @@ const createUser = async (req, res) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
+    const JWT_SECRET = process.env.JWT_SECRET;
     console.log(req.body);
     try {
         const user = await User.findOne({ username });
@@ -156,8 +148,16 @@ const login = async (req, res) => {
         }
         const token = jwt.sign(
             { username: username, id: user._id },
-            process.env.JWT_SECRET,
+            JWT_SECRET,
             { expiresIn: "1h", algorithm: "HS256" }
+        );
+        console.log(
+            "verify login: ",
+            jwt.verify(token, JWT_SECRET),
+            "token: ",
+            token,
+            "secret: ",
+            JWT_SECRET
         );
         res.status(200).json({
             message: "Login successful",
