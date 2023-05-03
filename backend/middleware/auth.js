@@ -20,6 +20,7 @@ module.exports = {
 
         ///VERIFY TOKEN
         try {
+            console.log("auth: ", userCookie, process.env.JWT_SECRET);
             decodedData = await jwt.verify(userToken, process.env.JWT_SECRET, {
                 algorithms: ["HS256"],
             });
