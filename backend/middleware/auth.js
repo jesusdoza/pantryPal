@@ -42,6 +42,7 @@ module.exports = {
             res.status(401).json({
                 profileUpdate: false,
                 message: error.message,
+                secret: JWT_SECRET,
                 error: error,
                 userToken,
                 decodedData,

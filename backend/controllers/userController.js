@@ -57,6 +57,7 @@ async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;
     console.log("req body", oldPassword, newPassword);
     let foundUser = {};
+    const JWT_SECRET = process.env.JWT_SECRET;
 
     ///update user password
     try {
@@ -90,13 +91,15 @@ async function updatePassword(req, res) {
             username: foundUser.username,
             id: foundUser._id,
         },
-        process.env.JWT_SECRET,
+        JWT_SECRET,
         {
             expiresIn: "1h",
             algorithm: "HS256",
             allowInvalidAsymmetricKeyTypes: true,
         }
     );
+
+    console.log(jwt.verify(token, JWT_SECRET));
 
     //respond with updated credentials
     res.status(200).json({
