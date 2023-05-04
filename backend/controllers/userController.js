@@ -155,7 +155,7 @@ const login = async (req, res) => {
                 allowInvalidAsymmetricKeyTypes: true,
             }
         );
-        console.log("verify login: ", "token: ", token, "secret: ", JWT_SECRET);
+        // console.log("verify login: ", "token: ", token, "secret: ", JWT_SECRET);
         res.status(200).json({
             message: "Login successful",
             token,

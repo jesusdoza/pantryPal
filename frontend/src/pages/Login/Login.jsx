@@ -32,8 +32,8 @@ function LoginScreen() {
             })
 
             .then((data) => {
-                console.log("setting cookie with: ", data);
-                debugger;
+                // console.log("setting cookie with: ", data);
+                // debugger;
                 Cookies.set(
                     "loggedIn",
                     JSON.stringify({
