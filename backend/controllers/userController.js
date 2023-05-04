@@ -149,7 +149,11 @@ const login = async (req, res) => {
         const token = jwt.sign(
             { username: username, id: user._id },
             JWT_SECRET,
-            { expiresIn: "1h", algorithm: "HS256" }
+            {
+                expiresIn: "1h",
+                algorithm: "HS256",
+                allowInvalidAsymmetricKeyTypes: true,
+            }
         );
         console.log("verify login: ", "token: ", token, "secret: ", JWT_SECRET);
         res.status(200).json({
