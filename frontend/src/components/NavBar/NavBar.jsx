@@ -1,8 +1,10 @@
 import React from "react";
 import { Nav } from './NavBar.styles.js';
-import PantryPal from '../../assets/PantryPal.png';
+import PantryPal from '../../assets/PantryPalAvo.png';
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie"; // Import Cookies
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 const NavBar = () => {
   const isLoggedIn = Cookies.get("loggedIn");
@@ -29,7 +31,8 @@ const NavBar = () => {
           <NavLink className="page" to="/login" onClick={handleLogout}>Logout</NavLink>
 
           <NavLink className="page" to="/profile">
-            <img className="logo" src={PantryPal} alt="PantryPal Egg logo"></img>
+          <FontAwesomeIcon icon={faUser} className="userIcon"/>
+         
           </NavLink>
 
         </>
