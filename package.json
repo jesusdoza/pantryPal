@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run server",
-    "install": " npm:backinstall",
+    "install": " npm run backinstall",
     "install-dev": "concurrently 'npm:frontinstall' 'npm:backinstall'",
     "frontinstall": "cd ./frontend/ && npm install",
     "backinstall": "cd ./backend/ && npm install",
