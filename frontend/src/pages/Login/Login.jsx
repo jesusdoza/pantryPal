@@ -32,8 +32,6 @@ function LoginScreen() {
             })
 
             .then((data) => {
-                // console.log("setting cookie with: ", data);
-                // debugger;
                 Cookies.set(
                     "loggedIn",
                     JSON.stringify({
@@ -41,6 +39,10 @@ function LoginScreen() {
                         username: username,
                     })
                 );
+
+                const userCookie = Cookies.get("loggedIn");
+                console.log("response data ", data);
+                console.log("cookie ", userCookie);
                 window.location.href = "/search";
             })
             .catch((error) => {

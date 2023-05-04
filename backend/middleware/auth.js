@@ -14,6 +14,7 @@ module.exports.isAuthenticated = async (req, res, next) => {
     }
 
     let decodedData = {};
+    console.log("cookies: ", req.cookies);
     let userCookie = JSON.parse(req.cookies.loggedIn);
 
     let userToken = userCookie.token;
@@ -21,10 +22,7 @@ module.exports.isAuthenticated = async (req, res, next) => {
     ///VERIFY TOKEN
     try {
         console.log("auth: ", userCookie, JWT_SECRET, typeof JWT_SECRET);
-        // decodedData = await jwt.verify(userToken, JWT_SECRET, {
-        //     algorithms: ["HS256"],
-        //     allowInvalidAsymmetricKeyTypes: true,
-        // });
+
         decodedData = verifyToken(userToken, JWT_SECRET);
 
         // verify user cookie and token match from user request
@@ -57,19 +55,20 @@ module.exports.isAuthenticated = async (req, res, next) => {
 };
 function verifyToken(token, secret) {
     try {
-        const isValid = jwt.verify(token, secret, {
-            algorithms: ["HS256"],
-            allowInvalidAsymmetricKeyTypes: true,
-        });
+        const decodedData = jwt.verify(token, secret);
+        // const decodedData = jwt.verify(token, secret, {
+        //     algorithms: ["HS256"],
+        //     allowInvalidAsymmetricKeyTypes: true,
+        // });
         console.log(
             "verify token is valid",
-            isValid,
+            decodedData,
             "token:",
             token,
             "secret: ",
             secret
         );
-        return isValid;
+        return decodedData;
     } catch (error) {
         throw error;
     }
@@ -77,9 +76,11 @@ function verifyToken(token, secret) {
 
 module.exports.createToken = async function (secret, payload) {
     const data = await JSON.stringify(payload);
-    const token = jwt.sign(data, secret, {
-        algorithm: "HS256",
-        allowInvalidAsymmetricKeyTypes: true,
-    });
+    // const token = jwt.sign(data, secret, {
+    //     algorithm: "HS256",
+    //     allowInvalidAsymmetricKeyTypes: true,
+    // });
+    const token = jwt.sign(data, secret);
+
     return token;
 };

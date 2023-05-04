@@ -86,19 +86,22 @@ async function updatePassword(req, res) {
         return;
     }
 
-    //generate new token
-    const token = jwt.sign(
-        {
-            username: foundUser.username,
-            id: foundUser._id,
-        },
-        JWT_SECRET,
-        {
-            expiresIn: "1h",
-            algorithm: "HS256",
-            allowInvalidAsymmetricKeyTypes: true,
-        }
-    );
+    const token = await createToken(JWT_SECRET, {
+        username: username,
+        id: user._id,
+    });
+    // const token = jwt.sign(
+    //     {
+    //         username: foundUser.username,
+    //         id: foundUser._id,
+    //     },
+    //     JWT_SECRET,
+    //     {
+    //         expiresIn: "1h",
+    //         algorithm: "HS256",
+    //         allowInvalidAsymmetricKeyTypes: true,
+    //     }
+    // );
 
     //respond with updated credentials
     res.status(200).json({
@@ -147,19 +150,12 @@ const login = async (req, res) => {
                 .status(401)
                 .json({ message: "Invalid username or password" });
         }
-        // const token = jwt.sign(
-        //     { username: username, id: user._id },
-        //     JWT_SECRET,
-        //     {
-        //         expiresIn: "1h",
-        //         algorithm: "HS256",
-        //         allowInvalidAsymmetricKeyTypes: true,
-        //     }
-        // );
+
         const token = await createToken(JWT_SECRET, {
             username: username,
             id: user._id,
         });
+
         // console.log("verify login: ", "token: ", token, "secret: ", JWT_SECRET);
         res.status(200).json({
             message: "Login successful",
