@@ -9,9 +9,90 @@ const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-
 const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
+
+async function updateCaloricPref(req, res) {
+    try {
+        let foundUser = await User.findOne({ _id: req.user.id });
+
+        foundUser.caloricPref = req.body.newCaloricPref;
+        await foundUser.save();
+
+        res.status(200).json({
+            profileUpdate: true,
+            newCaloricPref: foundUser.caloricPref,
+        });
+    } catch (error) {
+        res.status(400).json({ profileUpdate: false, message: error.message });
+    }
+}
+
+async function updateEmail(req, res) {
+    try {
+        let foundUser = await User.findOne({ _id: req.user.id });
+
+        foundUser.email = req.body.newEmail;
+        await foundUser.save();
+
+        res.status(200).json({
+            profileUpdate: true,
+            newEmail: foundUser.email,
+        });
+    } catch (error) {
+        res.status(400).json({ profileUpdate: false, message: error.message });
+    }
+}
+
+async function updateDietPref(req, res) {}
+
+async function updatePassword(req, res) {
+    const { oldPassword, newPassword } = req.body;
+    let foundUser = {};
+
+    ///update user password
+    try {
+        // find user in database
+        foundUser = await User.findOne({ _id: req.user.id });
+
+        // verify old password
+        const isValidOldPassword = await bcrypt.compare(
+            oldPassword,
+            foundUser.password
+        );
+        if (!isValidOldPassword) {
+            // if (foundUser.password !== req.user.password)
+            throw Error("controller :Invalid User test");
+        }
+
+        ///encrypt new password and update database
+        const newEncryptedPassword = await bcrypt.hash(newPassword, saltRounds);
+        foundUser.password = newEncryptedPassword;
+        await foundUser.save();
+    } catch (error) {
+        res.status(400).json({ profileUpdate: false, message: error.message });
+        return;
+    }
+
+    //generate new token
+    const token = jwt.sign(
+        {
+            username: foundUser.username,
+            password: foundUser.password,
+            id: foundUser._id,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+    );
+
+    //respond with updated credentials
+    res.status(200).json({
+        profileUpdate: true,
+        token,
+        id: foundUser._id,
+        username: foundUser.username,
+    });
+}
 
 const createUser = async (req, res) => {
     try {
@@ -34,7 +115,6 @@ const createUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    console.log("login router");
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
@@ -48,10 +128,16 @@ const login = async (req, res) => {
                 .json({ message: "Invalid username or password" });
         }
         const token = jwt.sign(
-            { username: username, password: password },
-            process.env.JWT_SECRET
+            // { username: username, password: user.password, id: user._id },
+            { username: username, id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
         );
-        res.status(200).json({ message: "Login successful", token });
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            id: user._id,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -190,18 +276,10 @@ const deleteRecipe = async (req, res) => {
     }
 };
 
-async function updateProfile(req, res) {
-    //request will have the property that needs updating
-    // updateType : password | email | caloricPref | dietPref
-
-    //fields of the
-    const {} = req.body;
-
-    res.status(200).json({ passwordUpdate: true });
-}
-
 module.exports = {
-    updateProfile,
+    updateCaloricPref,
+    updateEmail,
+    updatePassword,
     createUser,
     login,
     getMealPlanner,

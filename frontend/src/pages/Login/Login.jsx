@@ -23,6 +23,7 @@ function LoginScreen() {
             body: JSON.stringify({ username, password }),
         })
             .then((response) => {
+                console.log("response is ", response);
                 if (response.ok) {
                     return response.json();
                 } else {
@@ -30,10 +31,13 @@ function LoginScreen() {
                 }
             })
             .then((data) => {
-                Cookies.set("loggedIn", JSON.stringify({
-                    token: data.token,
-                    username: username,
-                }));
+                Cookies.set(
+                    "loggedIn",
+                    JSON.stringify({
+                        token: data.token,
+                        username: username,
+                    })
+                );
                 window.location.href = "/search";
             })
             .catch((error) => {

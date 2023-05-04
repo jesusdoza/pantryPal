@@ -28,6 +28,8 @@ export const ModalStyles = styled.section`
 
     .container {
         display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .row {
         display: flex;
@@ -39,10 +41,10 @@ export const ModalStyles = styled.section`
     }
 
     .hidden {
-        visibility: hidden;
+        /* visibility: hidden;
         height: 0;
         width: 0;
-        overflow: hidden;
+        overflow: hidden; */
     }
     main {
         display: flex;
