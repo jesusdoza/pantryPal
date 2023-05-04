@@ -156,7 +156,7 @@ const login = async (req, res) => {
             username: username,
             id: user._id,
         });
-
+        console.log("token created :", token);
         res.status(200).json({
             message: "Login successful",
             token,

@@ -39,7 +39,7 @@ function LoginScreen() {
                         username: username,
                     })
                 );
-
+                debugger;
                 window.location.href = "/search";
             })
             .catch((error) => {
