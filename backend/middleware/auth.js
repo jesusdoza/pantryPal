@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports.isAuthenticated = async (req, res, next) => {
     const JWT_SECRET = process.env.JWT_SECRET;
-    // console.log("is auth middle ware");
+    console.log("is auth middle ware", JWT_SECRET);
     if (!req.cookies.loggedIn) {
         res.status(401).json({
             profileUpdate: false,
@@ -14,14 +14,14 @@ module.exports.isAuthenticated = async (req, res, next) => {
     }
 
     let decodedData = {};
-    console.log("cookies: ", req.cookies);
+
     let userCookie = JSON.parse(req.cookies.loggedIn);
 
     let userToken = userCookie.token;
 
     ///VERIFY TOKEN
     try {
-        console.log("auth: ", userCookie, JWT_SECRET, typeof JWT_SECRET);
+        console.log("auth: ", userCookie, JWT_SECRET);
 
         decodedData = verifyToken(userToken, JWT_SECRET);
 
@@ -55,11 +55,12 @@ module.exports.isAuthenticated = async (req, res, next) => {
 };
 function verifyToken(token, secret) {
     try {
-        const decodedData = jwt.verify(token, secret);
-        // const decodedData = jwt.verify(token, secret, {
-        //     algorithms: ["HS256"],
-        //     allowInvalidAsymmetricKeyTypes: true,
-        // });
+        // const utf8Secret = utf8.encode(secret);
+        let utf8Secret = Buffer.from(secret, "utf-8").toString();
+        const decodedData = jwt.verify(token, utf8Secret, {
+            algorithms: ["HS256"],
+            allowInvalidAsymmetricKeyTypes: true,
+        });
         console.log(
             "verify token is valid",
             decodedData,
@@ -76,11 +77,12 @@ function verifyToken(token, secret) {
 
 module.exports.createToken = async function (secret, payload) {
     const data = await JSON.stringify(payload);
-    // const token = jwt.sign(data, secret, {
-    //     algorithm: "HS256",
-    //     allowInvalidAsymmetricKeyTypes: true,
-    // });
-    const token = jwt.sign(data, secret);
+    let utf8Secret = Buffer.from(secret, "utf-8").toString();
+    const token = jwt.sign(data, utf8Secret, {
+        algorithm: "HS256",
+        allowInvalidAsymmetricKeyTypes: true,
+    });
+    // const token = jwt.sign(data, utf8Secret);
 
     return token;
 };

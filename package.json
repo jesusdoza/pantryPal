@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run server",
-    "install": "concurrently 'npm:frontinstall' 'npm:backinstall'",
+    "install": " npm:backinstall",
+    "install-dev": "concurrently 'npm:frontinstall' 'npm:backinstall'",
     "frontinstall": "cd ./frontend/ && npm install",
     "backinstall": "cd ./backend/ && npm install",
     "test": "echo \"Error: no test specified\" && exit 1",

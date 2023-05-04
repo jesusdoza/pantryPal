@@ -40,9 +40,6 @@ function LoginScreen() {
                     })
                 );
 
-                const userCookie = Cookies.get("loggedIn");
-                console.log("response data ", data);
-                console.log("cookie ", userCookie);
                 window.location.href = "/search";
             })
             .catch((error) => {
