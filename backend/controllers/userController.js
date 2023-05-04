@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
 const Recipe = require("../models/recipeModel.js");
+const { createToken } = require("../middleware/auth.js");
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -134,7 +135,7 @@ const createUser = async (req, res) => {
 const login = async (req, res) => {
     const { username, password } = req.body;
     const JWT_SECRET = process.env.JWT_SECRET;
-    // console.log(req.body);
+    console.log(req.body);
     try {
         const user = await User.findOne({ username });
         if (!user) {
@@ -146,15 +147,19 @@ const login = async (req, res) => {
                 .status(401)
                 .json({ message: "Invalid username or password" });
         }
-        const token = jwt.sign(
-            { username: username, id: user._id },
-            JWT_SECRET,
-            {
-                expiresIn: "1h",
-                algorithm: "HS256",
-                allowInvalidAsymmetricKeyTypes: true,
-            }
-        );
+        // const token = jwt.sign(
+        //     { username: username, id: user._id },
+        //     JWT_SECRET,
+        //     {
+        //         expiresIn: "1h",
+        //         algorithm: "HS256",
+        //         allowInvalidAsymmetricKeyTypes: true,
+        //     }
+        // );
+        const token = await createToken(JWT_SECRET, {
+            username: username,
+            id: user._id,
+        });
         // console.log("verify login: ", "token: ", token, "secret: ", JWT_SECRET);
         res.status(200).json({
             message: "Login successful",
@@ -162,6 +167,7 @@ const login = async (req, res) => {
             id: user._id,
         });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };

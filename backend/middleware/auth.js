@@ -61,17 +61,25 @@ function verifyToken(token, secret) {
             algorithms: ["HS256"],
             allowInvalidAsymmetricKeyTypes: true,
         });
+        console.log(
+            "verify token is valid",
+            isValid,
+            "token:",
+            token,
+            "secret: ",
+            secret
+        );
         return isValid;
     } catch (error) {
         throw error;
     }
 }
 
-function createToken(secret, payload) {
-    const token = jwt.sign(payload, JWT_SECRET, {
-        expiresIn: "1h",
+module.exports.createToken = async function (secret, payload) {
+    const data = await JSON.stringify(payload);
+    const token = jwt.sign(data, secret, {
         algorithm: "HS256",
         allowInvalidAsymmetricKeyTypes: true,
     });
     return token;
-}
+};
