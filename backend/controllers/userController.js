@@ -13,15 +13,12 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
 
 async function updateCaloricPref(req, res) {
-    console.log("update caloric", req.body);
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-        console.log("before caloric update ", foundUser);
 
         foundUser.caloricPref = req.body.newCaloricPref;
         await foundUser.save();
 
-        console.log("after caloric update ", foundUser);
         res.status(200).json({
             profileUpdate: true,
             newCaloricPref: foundUser.caloricPref,
@@ -32,16 +29,12 @@ async function updateCaloricPref(req, res) {
 }
 
 async function updateEmail(req, res) {
-    // console.log("update email user", req.user);
-    console.log("update email body", req.body);
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-        console.log("before email update ", foundUser);
 
         foundUser.email = req.body.newEmail;
         await foundUser.save();
 
-        console.log("updated email", foundUser);
         res.status(200).json({
             profileUpdate: true,
             newEmail: foundUser.email,
@@ -55,7 +48,6 @@ async function updateDietPref(req, res) {}
 
 async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;
-    console.log("req body", oldPassword, newPassword);
     let foundUser = {};
 
     ///update user password
@@ -68,10 +60,8 @@ async function updatePassword(req, res) {
             oldPassword,
             foundUser.password
         );
-        console.log("is valid password", isValidOldPassword);
         if (!isValidOldPassword) {
             // if (foundUser.password !== req.user.password)
-            console.log("invalid password with bcrypt");
             throw Error("controller :Invalid User test");
         }
 

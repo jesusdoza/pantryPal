@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     isAuthenticated: async (req, res, next) => {
-        // console.log("is auth middle ware");
         if (!req.cookies.loggedIn) {
             res.status(401).json({
                 profileUpdate: false,
@@ -29,7 +28,6 @@ module.exports = {
 
             req.user = decodedData;
         } catch (error) {
-            // console.log(error);
             res.status(401).json({
                 profileUpdate: false,
                 message: error.message,
