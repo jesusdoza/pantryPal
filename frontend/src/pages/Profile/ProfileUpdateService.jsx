@@ -96,13 +96,7 @@ export const ProfileUpdateService = {
         }
     },
     updateCaloric: async (data) => {
-<<<<<<< Updated upstream
         console.log("update caloric data ", data);
-        const { newCaloricPref } = data;
-=======
-        console.log(import.meta.env.VITE_API_IP);
-        const { newCaloricValue } = data;
->>>>>>> Stashed changes
         let response = {};
         console.log(newCaloricPref);
         let newValue = Number(newCaloricPref);

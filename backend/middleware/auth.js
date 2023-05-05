@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
+<<<<<<< HEAD
 module.exports.isAuthenticated = async (req, res, next) => {
     const JWT_SECRET = process.env.JWT_SECRET;
     // console.log("is auth middle ware", JWT_SECRET);
@@ -79,4 +80,42 @@ module.exports.createToken = async function (secret, payload) {
     // const token = jwt.sign(data, utf8Secret);
 
     return token;
+=======
+module.exports = {
+    isAuthenticated: async (req, res, next) => {
+        if (!req.cookies.loggedIn) {
+            res.status(401).json({
+                profileUpdate: false,
+                message: "AUTH:invalid credentials",
+            });
+            return;
+        }
+
+        let decodedData = {};
+        let userCookie = JSON.parse(req.cookies.loggedIn);
+
+        let userToken = userCookie.token;
+
+        ///VERIFY TOKEN
+        try {
+            decodedData = await jwt.verify(userToken, process.env.JWT_SECRET);
+
+            // verify user cookie and token match from user request
+            if (userCookie.username !== decodedData.username) {
+                throw Error("AUTH:credentials mismatch");
+            }
+
+            req.user = decodedData;
+        } catch (error) {
+            res.status(401).json({
+                profileUpdate: false,
+                message: error.message,
+            });
+            return;
+        }
+
+        //all was good keep request going
+        next();
+    },
+>>>>>>> development
 };
