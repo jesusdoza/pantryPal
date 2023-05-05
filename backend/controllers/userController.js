@@ -160,7 +160,7 @@ const login = async (req, res) => {
 
         return res
             .cookie("loggedIn", JSON.stringify({ token: token }), {
-                // httpOnly: true,
+                httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 signed: true,
             })
