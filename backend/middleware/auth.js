@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports.isAuthenticated = async (req, res, next) => {
     const JWT_SECRET = process.env.JWT_SECRET;
-    console.log("is auth middle ware", JWT_SECRET);
+    // console.log("is auth middle ware", JWT_SECRET);
     if (!req.signedCookies.loggedIn) {
         res.status(401).json({
             profileUpdate: false,
@@ -16,24 +16,20 @@ module.exports.isAuthenticated = async (req, res, next) => {
     let decodedData = {};
 
     // let userCookie = JSON.parse(req.cookies.loggedIn);//! old
-    console.log("cookies: ", req.signedCookies.loggedIn);
+    // console.log("cookies: ", req.signedCookies.loggedIn);
     let userCookie = JSON.parse(req.signedCookies.loggedIn);
 
-    // let userToken = userCookie.token;
+    let userToken = userCookie.token;
     // decodedData = verifyToken(userToken, JWT_SECRET);
     // console.log(decodedData);
 
     // ///VERIFY TOKEN
     try {
-        console.log("auth: ", userCookie, JWT_SECRET);
+        // console.log("auth: ", userCookie, JWT_SECRET);
 
         decodedData = verifyToken(userToken, JWT_SECRET);
 
-        // verify user cookie and token match from user request
-        // if (userCookie.username !== decodedData.username) {
-        //     throw Error("AUTH:credentials mismatch");
-        //     return;
-        // }
+        console.log("decoded", decodedData);
 
         req.user = decodedData;
         //all was good keep request going
@@ -43,18 +39,12 @@ module.exports.isAuthenticated = async (req, res, next) => {
         res.status(401).json({
             profileUpdate: false,
             message: error.message,
-            secret: JWT_SECRET,
-            error: error,
-            userToken,
             decodedData,
-            userCookie,
+            userToken,
+            JWT_SECRET,
         });
-        //     // res.status(401).json({
-        //     //     profileUpdate: false,
-        //     //     message: error.message,
-        //     //
     }
-    res.status(200);
+
     return;
 };
 function verifyToken(token, secret) {
@@ -65,14 +55,14 @@ function verifyToken(token, secret) {
             algorithms: ["HS256"],
             allowInvalidAsymmetricKeyTypes: true,
         });
-        console.log(
-            "verify token is valid",
-            decodedData,
-            "token:",
-            token,
-            "secret: ",
-            secret
-        );
+        // console.log(
+        //     "verify token is valid",
+        //     decodedData,
+        //     "token:",
+        //     token,
+        //     "secret: ",
+        //     secret
+        // );
         return decodedData;
     } catch (error) {
         throw error;
