@@ -134,6 +134,7 @@ const createUser = async (req, res) => {
 const login = async (req, res) => {
     const { username, password } = req.body;
     const JWT_SECRET = process.env.JWT_SECRET;
+    console.log("login");
 
     try {
         const user = await User.findOne({ username });
@@ -156,7 +157,7 @@ const login = async (req, res) => {
 
         return res
             .cookie("loggedIn", JSON.stringify({ token: token }), {
-                httpOnly: true,
+                // httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 signed: true,
             })
