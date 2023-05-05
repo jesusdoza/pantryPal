@@ -156,12 +156,23 @@ const login = async (req, res) => {
             username: username,
             id: user._id,
         });
-        console.log("token created :", token);
-        res.status(200).json({
-            message: "Login successful",
-            token,
-            id: user._id,
-        });
+        // console.log("token created :", token);
+
+        return res
+            .cookie("loggedIn", JSON.stringify({ token: token }), {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                signed: true,
+            })
+            .status(200)
+            .json({ message: "Login successful", id: user._id });
+        //! make cookie server side
+
+        // res.status(200).json({
+        //     message: "Login successful",
+        //     token,
+        //     id: user._id,
+        // });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });

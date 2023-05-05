@@ -32,14 +32,15 @@ function LoginScreen() {
             })
 
             .then((data) => {
-                Cookies.set(
-                    "loggedIn",
-                    JSON.stringify({
-                        token: data.token,
-                        username: username,
-                    })
-                );
-                debugger;
+                // Cookies.set(
+                //     "loggedIn",
+                //     JSON.stringify({
+                //         token: data.token,
+                //         username: username,
+                //     })
+                // );
+                // debugger;
+                console.log("done loging in");
                 window.location.href = "/search";
             })
             .catch((error) => {

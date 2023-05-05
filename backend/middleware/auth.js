@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 module.exports.isAuthenticated = async (req, res, next) => {
     const JWT_SECRET = process.env.JWT_SECRET;
     console.log("is auth middle ware", JWT_SECRET);
-    if (!req.cookies.loggedIn) {
+    if (!req.signedCookies.loggedIn) {
         res.status(401).json({
             profileUpdate: false,
             message: "AUTH:invalid credentials",
@@ -15,21 +15,25 @@ module.exports.isAuthenticated = async (req, res, next) => {
 
     let decodedData = {};
 
-    let userCookie = JSON.parse(req.cookies.loggedIn);
+    // let userCookie = JSON.parse(req.cookies.loggedIn);//! old
+    console.log("cookies: ", req.signedCookies.loggedIn);
+    let userCookie = JSON.parse(req.signedCookies.loggedIn);
 
-    let userToken = userCookie.token;
+    // let userToken = userCookie.token;
+    // decodedData = verifyToken(userToken, JWT_SECRET);
+    // console.log(decodedData);
 
-    ///VERIFY TOKEN
+    // ///VERIFY TOKEN
     try {
         console.log("auth: ", userCookie, JWT_SECRET);
 
         decodedData = verifyToken(userToken, JWT_SECRET);
 
         // verify user cookie and token match from user request
-        if (userCookie.username !== decodedData.username) {
-            throw Error("AUTH:credentials mismatch");
-            return;
-        }
+        // if (userCookie.username !== decodedData.username) {
+        //     throw Error("AUTH:credentials mismatch");
+        //     return;
+        // }
 
         req.user = decodedData;
         //all was good keep request going
@@ -45,13 +49,13 @@ module.exports.isAuthenticated = async (req, res, next) => {
             decodedData,
             userCookie,
         });
-        // res.status(401).json({
-        //     profileUpdate: false,
-        //     message: error.message,
-        //
-        // });
-        return;
+        //     // res.status(401).json({
+        //     //     profileUpdate: false,
+        //     //     message: error.message,
+        //     //
     }
+    res.status(200);
+    return;
 };
 function verifyToken(token, secret) {
     try {
