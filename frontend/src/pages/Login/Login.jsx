@@ -15,7 +15,7 @@ function LoginScreen() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch("http://localhost:4000/api/login", {
+        fetch(`${import.meta.env.VITE_API_IP}/api/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
