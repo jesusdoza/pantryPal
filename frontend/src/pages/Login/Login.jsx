@@ -15,7 +15,7 @@ function LoginScreen() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch("http://localhost:4000/api/login", {
+        fetch(`${import.meta.env.VITE_API_IP}/api/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -30,14 +30,8 @@ function LoginScreen() {
                     throw new Error("Invalid username or password");
                 }
             })
+
             .then((data) => {
-                Cookies.set(
-                    "loggedIn",
-                    JSON.stringify({
-                        token: data.token,
-                        username: username,
-                    })
-                );
                 window.location.href = "/search";
             })
             .catch((error) => {

@@ -97,7 +97,6 @@ export const ProfileUpdateService = {
     },
     updateCaloric: async (data) => {
         console.log("update caloric data ", data);
-        const { newCaloricPref } = data;
         let response = {};
         console.log(newCaloricPref);
         let newValue = Number(newCaloricPref);

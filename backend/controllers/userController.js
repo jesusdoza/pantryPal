@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
 const Recipe = require("../models/recipeModel.js");
+const { createToken } = require("../middleware/auth.js");
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -15,7 +16,6 @@ const saltRounds = 12; // you can adjust this value as needed
 async function updateCaloricPref(req, res) {
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-
         foundUser.caloricPref = req.body.newCaloricPref;
         await foundUser.save();
 
@@ -31,7 +31,6 @@ async function updateCaloricPref(req, res) {
 async function updateEmail(req, res) {
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-
         foundUser.email = req.body.newEmail;
         await foundUser.save();
 
@@ -49,6 +48,7 @@ async function updateDietPref(req, res) {}
 async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;
     let foundUser = {};
+    const JWT_SECRET = process.env.JWT_SECRET;
 
     ///update user password
     try {
@@ -61,7 +61,6 @@ async function updatePassword(req, res) {
             foundUser.password
         );
         if (!isValidOldPassword) {
-            // if (foundUser.password !== req.user.password)
             throw Error("controller :Invalid User test");
         }
 
@@ -74,16 +73,10 @@ async function updatePassword(req, res) {
         return;
     }
 
-    //generate new token
-    const token = jwt.sign(
-        {
-            username: foundUser.username,
-            password: foundUser.password,
-            id: foundUser._id,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: "1h" }
-    );
+    const token = await createToken(JWT_SECRET, {
+        username: username,
+        id: user._id,
+    });
 
     //respond with updated credentials
     res.status(200).json({
@@ -105,7 +98,9 @@ const createUser = async (req, res) => {
         });
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
+        return;
     } catch (error) {
+        console.log(error);
         if (error.code === 11000) {
             res.status(401).json({ message: "Username already exists" });
         } else {
@@ -116,6 +111,8 @@ const createUser = async (req, res) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
+    const JWT_SECRET = process.env.JWT_SECRET;
+
     try {
         const user = await User.findOne({ username });
         if (!user) {
@@ -127,18 +124,22 @@ const login = async (req, res) => {
                 .status(401)
                 .json({ message: "Invalid username or password" });
         }
-        const token = jwt.sign(
-            // { username: username, password: user.password, id: user._id },
-            { username: username, id: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
-        res.status(200).json({
-            message: "Login successful",
-            token,
+
+        const token = await createToken(JWT_SECRET, {
+            username: username,
             id: user._id,
         });
+
+        return res
+            .cookie("loggedIn", JSON.stringify({ token: token }), {
+                // httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                signed: true,
+            })
+            .status(200)
+            .json({ message: "Login successful", id: user._id });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -175,7 +176,6 @@ async function getMealPlanner(numberOfDays, dietType, dailyCalories) {
 
 Please note that the "TotalCalories" field should be close to the daily calorie goal for each day.
 `;
-    //console.log(gptString)
     try {
         return openai
             .createCompletion({
@@ -189,7 +189,6 @@ Please note that the "TotalCalories" field should be close to the daily calorie 
             })
             .then((response) => {
                 const mealPlan = JSON.parse(response.data.choices[0].text);
-                //console.log(response.data.choices[0].text)
                 return mealPlan;
             });
     } catch (error) {
