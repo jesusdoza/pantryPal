@@ -32,7 +32,7 @@ An app that takes any number of ingredients and searches an extensive database t
    - VITE_API_IP = "http://localhost:4000"
 
 
-5. npm install
+5. npm install 
 6. npm run dev
 7. A local host ip address will display in console for link to local running version
 
