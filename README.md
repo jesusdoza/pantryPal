@@ -25,6 +25,8 @@ An app that takes any number of ingredients and searches an extensive database t
    - JWT_SECRET="anotherrandom stringafdasfasdf"
    ### open ai api key chatGPT api key if meal planner desired
    - OPENAI_API_KEY="fasdfasdfasdfHAAXoxfadsfasd9uSxQVe"
+   ### server sercret 
+   - SEVER_SECRET="string of stuff"
 4. #### frontend env file contents
    ### api address of local server
    - VITE_API_IP = "http://localhost:4000"
