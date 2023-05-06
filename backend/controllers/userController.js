@@ -14,15 +14,11 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12; // you can adjust this value as needed
 
 async function updateCaloricPref(req, res) {
-    console.log("update caloric", req.body);
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-        // console.log("before caloric update ", foundUser);
-
         foundUser.caloricPref = req.body.newCaloricPref;
         await foundUser.save();
 
-        // console.log("after caloric update ", foundUser);
         res.status(200).json({
             profileUpdate: true,
             newCaloricPref: foundUser.caloricPref,
@@ -35,7 +31,6 @@ async function updateCaloricPref(req, res) {
 async function updateEmail(req, res) {
     try {
         let foundUser = await User.findOne({ _id: req.user.id });
-
         foundUser.email = req.body.newEmail;
         await foundUser.save();
 
@@ -52,7 +47,6 @@ async function updateDietPref(req, res) {}
 
 async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;
-    console.log("req body", oldPassword, newPassword);
     let foundUser = {};
     const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -66,10 +60,7 @@ async function updatePassword(req, res) {
             oldPassword,
             foundUser.password
         );
-        console.log("is valid password", isValidOldPassword);
         if (!isValidOldPassword) {
-            // if (foundUser.password !== req.user.password)
-            console.log("invalid password with bcrypt");
             throw Error("controller :Invalid User test");
         }
 
@@ -86,18 +77,6 @@ async function updatePassword(req, res) {
         username: username,
         id: user._id,
     });
-    // const token = jwt.sign(
-    //     {
-    //         username: foundUser.username,
-    //         id: foundUser._id,
-    //     },
-    //     JWT_SECRET,
-    //     {
-    //         expiresIn: "1h",
-    //         algorithm: "HS256",
-    //         allowInvalidAsymmetricKeyTypes: true,
-    //     }
-    // );
 
     //respond with updated credentials
     res.status(200).json({
@@ -110,7 +89,6 @@ async function updatePassword(req, res) {
 
 const createUser = async (req, res) => {
     try {
-        console.log("req createuser", req.body);
         const { username, email, password } = req.body;
         const encryptedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = new User({
@@ -134,7 +112,6 @@ const createUser = async (req, res) => {
 const login = async (req, res) => {
     const { username, password } = req.body;
     const JWT_SECRET = process.env.JWT_SECRET;
-    console.log("login");
 
     try {
         const user = await User.findOne({ username });
@@ -143,7 +120,6 @@ const login = async (req, res) => {
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            console.log("password is not valid errror bcrypt");
             return res
                 .status(401)
                 .json({ message: "Invalid username or password" });
@@ -153,7 +129,6 @@ const login = async (req, res) => {
             username: username,
             id: user._id,
         });
-        // console.log("token created :", token);
 
         return res
             .cookie("loggedIn", JSON.stringify({ token: token }), {
@@ -201,7 +176,6 @@ async function getMealPlanner(numberOfDays, dietType, dailyCalories) {
 
 Please note that the "TotalCalories" field should be close to the daily calorie goal for each day.
 `;
-    //console.log(gptString)
     try {
         return openai
             .createCompletion({
@@ -215,7 +189,6 @@ Please note that the "TotalCalories" field should be close to the daily calorie 
             })
             .then((response) => {
                 const mealPlan = JSON.parse(response.data.choices[0].text);
-                //console.log(response.data.choices[0].text)
                 return mealPlan;
             });
     } catch (error) {
