@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Login.styles.jsx";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function LoginScreen() {
     const usernameRef = useRef(null);
@@ -13,31 +14,41 @@ function LoginScreen() {
         usernameRef.current.focus();
     }, []);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        fetch(`${import.meta.env.VITE_API_IP}/api/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password }),
-        })
-            .then((response) => {
-                console.log("response is ", response);
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Invalid username or password");
-                }
-            })
 
-            .then((data) => {
-                window.location.href = "/search";
-            })
-            .catch((error) => {
-                console.error("Login failed:", error);
-                setError(error.message);
-            });
+        const axiosResponse = await axios.post(
+            `${import.meta.env.VITE_API_IP}/api/login`,
+            { username, password },
+            { crossDomain: true, withCredentials: true }
+        );
+        console.log("response from axios :", axiosResponse);
+        // fetch(`${import.meta.env.VITE_API_IP}/api/login`, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         credentials: "include",
+        //         mode: "cors",
+        //         crossDomain: true,
+        //     },
+        //     body: JSON.stringify({ username, password }),
+        // })
+        //     .then((response) => {
+        //         console.log("response is ", response);
+        //         if (response.ok) {
+        //             return response.json();
+        //         } else {
+        //             throw new Error("Invalid username or password");
+        //         }
+        //     })
+
+        //     .then((data) => {
+        window.location.href = "/search";
+        //     })
+        //     .catch((error) => {
+        //         console.error("Login failed:", error);
+        //         setError(error.message);
+        //     });
     };
 
     return (
