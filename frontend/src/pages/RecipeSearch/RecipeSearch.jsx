@@ -10,19 +10,18 @@ import searchSample from "../../recipeSearchSample";
 import bulkSample from "../../recipeBulkInfoSample";
 import { useNavigate } from "react-router-dom";
 
+import { useContext } from "react";
+import { userContext } from "../../context/userContext.jsx";
+
 export default function RecipeSearch() {
     // State for Ingredient
     const navigate = useNavigate();
-
+    const { isLoggedIn } = useContext(userContext);
     useEffect(() => {
-        const loggedIn = document.cookie
-            .split(";")
-            .some((c) => c.trim().startsWith("loggedIn="));
-
-        if (!loggedIn) {
-            navigate("/login");
+        if (!isLoggedIn) {
+            navigate("/login"); //! uncomment
         }
-    }, [navigate]);
+    }, [navigate, isLoggedIn]);
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
     const [filteredRecipeList, setFilteredRecipeList] = useState([]);
@@ -41,7 +40,7 @@ export default function RecipeSearch() {
         }
 
         setFilteredRecipeList(recipeList);
-    }, [dietFilter, categoryFilter]);
+    }, [dietFilter, categoryFilter, isLoggedIn]);
 
     // List of Ingredients
     const ingredientRef = useRef("");

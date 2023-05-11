@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Login.styles.jsx";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../../context/userContext.jsx";
 
 function LoginScreen() {
     const usernameRef = useRef(null);
@@ -9,6 +12,10 @@ function LoginScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    const { userProfile, isLoggedIn, updateProfile, updateLoginStatus } =
+        useContext(userContext);
 
     useEffect(() => {
         usernameRef.current.focus();
@@ -17,38 +24,22 @@ function LoginScreen() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const axiosResponse = await axios.post(
-            `${import.meta.env.VITE_API_IP}/api/login`,
-            { username, password },
-            { crossDomain: true, withCredentials: true }
-        );
-        console.log("response from axios :", axiosResponse);
-        // fetch(`${import.meta.env.VITE_API_IP}/api/login`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         credentials: "include",
-        //         mode: "cors",
-        //         crossDomain: true,
-        //     },
-        //     body: JSON.stringify({ username, password }),
-        // })
-        //     .then((response) => {
-        //         console.log("response is ", response);
-        //         if (response.ok) {
-        //             return response.json();
-        //         } else {
-        //             throw new Error("Invalid username or password");
-        //         }
-        //     })
+        try {
+            const axiosResponse = await axios.post(
+                `${import.meta.env.VITE_API_IP}/api/login`,
+                { username, password },
+                { crossDomain: true, withCredentials: true }
+            );
 
-        //     .then((data) => {
-        window.location.href = "/search";
-        //     })
-        //     .catch((error) => {
-        //         console.error("Login failed:", error);
-        //         setError(error.message);
-        //     });
+            const loginData = axiosResponse.data;
+
+            updateLoginStatus(true);
+
+            navigate("/search");
+        } catch (error) {
+            setIsLoggedIn(false);
+            console.log(error);
+        }
     };
 
     return (
@@ -56,6 +47,7 @@ function LoginScreen() {
             <section className="form-sect">
                 <form onSubmit={handleSubmit}>
                     <div className="title">
+                        <div>{isLoggedIn && "logged in"}</div>
                         <h2>Welcome Back!</h2>
                     </div>
 
