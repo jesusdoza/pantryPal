@@ -19,7 +19,7 @@ export default function RecipeSearch() {
     const { isLoggedIn } = useContext(userContext);
     useEffect(() => {
         if (!isLoggedIn) {
-            navigate("/login"); //! uncomment
+            navigate("/login");
         }
     }, [navigate, isLoggedIn]);
     const [ingredients, setIngredients] = useState("");
