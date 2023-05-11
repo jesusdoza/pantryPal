@@ -140,7 +140,7 @@ const login = async (req, res) => {
             .json({
                 message: "Login successful",
                 id: user._id,
-                userprofile: { username: username, id: user._id },
+                userProfile: { username: username, id: user._id },
             });
     } catch (error) {
         console.log(error);

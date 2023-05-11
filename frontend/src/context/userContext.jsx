@@ -16,19 +16,11 @@ export default function UserContextProvider({ children }) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    function updateProfile(profile) {
-        setUserProfile((state) => {
-            return { ...state, ...profile };
-        });
-    }
-    function updateLoginStatus(isLoggedIn) {
-        setIsLoggedIn(isLoggedIn);
-    }
-
     const contextValues = {
         userProfile,
+        setUserProfile,
         isLoggedIn,
-        updateLoginStatus,
+        setIsLoggedIn,
     };
 
     return (

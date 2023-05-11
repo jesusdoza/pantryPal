@@ -14,7 +14,7 @@ function LoginScreen() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const { userProfile, isLoggedIn, updateProfile, updateLoginStatus } =
+    const { userProfile, isLoggedIn, setIsLoggedIn, setUserProfile } =
         useContext(userContext);
 
     useEffect(() => {
@@ -33,7 +33,13 @@ function LoginScreen() {
 
             const loginData = axiosResponse.data;
 
-            updateLoginStatus(true);
+            setIsLoggedIn(true);
+            setUserProfile((state) => {
+                const updateUserProfile = loginData.userProfile
+                    ? { ...state, ...loginData.userProfile }
+                    : state;
+                return updateUserProfile;
+            });
 
             navigate("/search");
         } catch (error) {
