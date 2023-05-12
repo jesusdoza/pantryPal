@@ -5,12 +5,9 @@ const mainRouter = require("./routes/mainRouter.js");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-const allowedDomains =
-    process.env.enviroment !== "development" ? ["http://localhost:5173"] : true;
-
 // create express app server
 const app = express();
-app.use(cors({ origin: allowedDomains, credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser(process.env.SERVER_SECRET));
 app.use(express.static("public"));
 
@@ -33,8 +30,6 @@ mongoose
         autoIndex: true,
     })
     .then(() => {
-        console.log("crossdomain is: ", allowedDomains);
-
         // listen for requests - PORT defined in .env file
         app.listen(process.env.PORT, () => {
             console.log(
