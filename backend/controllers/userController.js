@@ -137,7 +137,11 @@ const login = async (req, res) => {
                 signed: true,
             })
             .status(200)
-            .json({ message: "Login successful", id: user._id });
+            .json({
+                message: "Login successful",
+                id: user._id,
+                userProfile: { username: username, id: user._id },
+            });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });

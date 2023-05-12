@@ -1,7 +1,0 @@
-PORT=4000
-MONGO_URI="mongodb+srv://USERNAME:PASSWORD@cluster0.losdw.mongodb.net?retryWrites=true&w=majority"
-# spoonacular API KEY
-API_KEY="4fasdfasdfasdfasdc4cbb9e6f"
-JWT_SECRET="f12321dff"
-# chatGPT api key if meal planner desired
-OPENAI_API_KEY="fasdfasdfasdfHAAXoxfadsfasd9uSxQVe"
