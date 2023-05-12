@@ -100,7 +100,7 @@ export default function RecipeSearch() {
             <div className="title">
                 <h1>Recipe Search</h1>
             </div>
-            <div className="search">
+            <div className="searchContainer">
                 <form
                     action="#"
                     onSubmit={(event) => {
@@ -113,11 +113,13 @@ export default function RecipeSearch() {
                         id="ingregients"
                         value={ingredients}
                         type="text"
-                        placeholder="What are you in the mood for?"
+                        placeholder="Enter your ingredients"
+                        className="search"
                     />
-                    <button>Search</button>
+                    <button className="search-btn">Search</button>
                 </form>
             </div>
+           
             <section className="recipes-display">
                 <div className="filter-container">
                     <FilterList
@@ -149,7 +151,7 @@ export default function RecipeSearch() {
                                     again.{" "}
                                 </h3>
                             ) : (
-                                <h3>
+                                <h3 className="searchPrompt">
                                     {" "}
                                     Search for Ingredients to show Recipe
                                     Results.{" "}
@@ -157,8 +159,10 @@ export default function RecipeSearch() {
                             )}
                         </ul>
                     </div>
+                    
                 </section>
             </section>
+          
         </StyledRecipeSearch>
     );
 }
