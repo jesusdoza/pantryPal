@@ -81,10 +81,11 @@ export function FilterList({
     }
 
     return (
-        <Filter>
+        <Filter className="main-filter-container">
             {dietFilter.length > 0 ? (
                 <section>
-                    <h2>selected filters: </h2>
+                    <h2>Selected filters: </h2>
+                    
                     <ul>
                         {dietFilter.map((item, index) => {
                             return (
@@ -125,19 +126,23 @@ export function FilterList({
             ) : (
                 <section></section>
             )}
-            <section>
-                <h2>Dietary options</h2>
+            <section className="filter-row">
+                <h2>Dietary options:</h2>
+                
                 <ul className="filter-options">
                     {dietOptionsArr.length > 0 ? (
                         dietOptionsArr.map((item, index) => {
                             return (
+                                
                                 <li
                                     onClick={() => {
                                         addDietFilter(item);
                                     }}
                                     className="btn"
                                     key={index + item + 1}>
-                                    <span>{item}</span>
+                                            <span>{item}</span>
+
+                                    
                                 </li>
                             );
                         })
@@ -146,8 +151,8 @@ export function FilterList({
                     )}
                 </ul>
             </section>
-            <section>
-                <h2>Categories</h2>
+            <section className="filter-row">
+                <h2>Categories:</h2>
                 <ul className="filter-options">
                     {otherOptionsAvailableArr.map((option, index) => {
                         return (

@@ -87,7 +87,7 @@ const RecipeCard = ({ recipe, showDelete }) => {
           <div className="card_footer">
             <div className="card_footer_container">
               <h2>Dish type:</h2>
-              <p> {recipe.dishTypes}</p>
+              <p> {recipe.dishTypes[0]}</p>
             </div>
             <div className="card_footer_container">
               <h2>Servings:</h2>
@@ -97,13 +97,15 @@ const RecipeCard = ({ recipe, showDelete }) => {
               <h2>Total Time:</h2>
               <p>{recipe.readyInMinutes}</p>
             </div>
-            <div className="card_footer_container">
+            {/* <div className="card_footer_container">
               <h2>Source:</h2>
               <p>{recipe.sourceName}</p>
-            </div>
-          </div>
+            </div> */}
+            
 
-          <Link to="/details" state={{ recipe: recipe }} className="try_btn">
+          </div>
+            <div className='btn-container'>
+            <Link to="/details" state={{ recipe: recipe }} className="try_btn">
             Try it!
           </Link>
           
@@ -115,6 +117,8 @@ const RecipeCard = ({ recipe, showDelete }) => {
               Delete Recipe
             </button>
           )}
+            </div>
+
         </div>
       </div>
     </Card>
