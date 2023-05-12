@@ -66,7 +66,7 @@ export default function RecipeSearch() {
             const recipeIdList = result.data.map((recipe) => recipe.id);
 
             const recipeInstructions = await axios.get(
-                "http://localhost:4000/api/recipeinformation",
+                `${API_URL}/api/recipeinformation`,
                 {
                     params: {
                         recipeIdList: recipeIdList,

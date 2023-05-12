@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export default function Signup() {
+    const API_URL = import.meta.env.VITE_API_IP;
     const usernameRef = useRef("");
     const passwordRef = useRef("");
     const confirmPasswordRef = useRef("");
@@ -73,7 +74,7 @@ export default function Signup() {
 
         ///sign up user
         try {
-            const response = await fetch("http://localhost:4000/api/signup", {
+            const response = await fetch(`${API_URL}/api/signup`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -99,7 +100,7 @@ export default function Signup() {
 
         ///login in user
         try {
-            const response = await fetch("http://localhost:4000/api/login", {
+            const response = await fetch(`${API_URL}/api/login`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
