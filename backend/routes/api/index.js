@@ -40,6 +40,7 @@ apiRouter.get("/searchbyingredient", async (req, res) => {
         let ingredientsListApi = encodeURIComponent(
             ingredientsList.replace(/,/g, ",+")
         );
+
         const recipes = await API.searchRecipeByIngredients(ingredientsListApi);
         res.status(200).json(recipes);
     } catch (error) {
