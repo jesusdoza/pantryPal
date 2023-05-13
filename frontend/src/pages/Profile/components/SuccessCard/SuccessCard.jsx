@@ -1,6 +1,7 @@
 import React from "react";
 import { SuccessCardStyled } from "./SuccessCard.styles";
 import { v4 as uuidv4 } from "uuid";
+import checkedUrl from "../../../../assets/checked.png";
 
 export default function SucessCard({
     listArr = ["list Empty"],
@@ -11,7 +12,7 @@ export default function SucessCard({
             return (
                 <li key={uuidv4()} className="error_container">
                     <div className="list_item">
-                        <img src="/src/assets/checked.png" alt="check symbol" />
+                        <img src={checkedUrl} alt="check symbol" />
                         <p>{item}</p>
                     </div>
                 </li>
