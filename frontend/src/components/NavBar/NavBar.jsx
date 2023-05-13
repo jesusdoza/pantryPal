@@ -12,7 +12,7 @@ import { userContext } from "../../context/userContext.jsx";
 const NavBar = () => {
     const { isLoggedIn, userProfile } = useContext(userContext);
 
-    console.log("userProfile", userProfile); //! placeholder need to implement
+    console.log("userProfile in navbar console.log", userProfile); //! placeholder need to implement
 
     const handleLogout = () => {
         Cookies.remove("loggedIn");

@@ -15,6 +15,7 @@ import { userContext } from "../../context/userContext.jsx";
 
 export default function RecipeSearch() {
     // State for Ingredient
+    const API_URL = import.meta.env.VITE_API_IP;
     const navigate = useNavigate();
     const { isLoggedIn } = useContext(userContext);
     useEffect(() => {
@@ -49,17 +50,13 @@ export default function RecipeSearch() {
         try {
             setSearchSpinner(true);
             const result = await axios.get(
-                "http://localhost:4000/api/searchbyingredient",
+                `${API_URL}/api/searchbyingredient`,
                 {
                     params: {
                         ingredients: ingredients,
                     },
                 }
             );
-
-            //!test remove
-            // const result = { data: searchSample };
-            //!test remove
 
             if (result?.data) {
                 setError(false);
@@ -69,7 +66,7 @@ export default function RecipeSearch() {
             const recipeIdList = result.data.map((recipe) => recipe.id);
 
             const recipeInstructions = await axios.get(
-                "http://localhost:4000/api/recipeinformation",
+                `${API_URL}/api/recipeinformation`,
                 {
                     params: {
                         recipeIdList: recipeIdList,
@@ -118,7 +115,7 @@ export default function RecipeSearch() {
                     <button className="search-btn">Search</button>
                 </form>
             </div>
-           
+
             <section className="recipes-display">
                 <div className="filter-container">
                     <FilterList
@@ -158,10 +155,8 @@ export default function RecipeSearch() {
                             )}
                         </ul>
                     </div>
-                    
                 </section>
             </section>
-          
         </StyledRecipeSearch>
     );
 }

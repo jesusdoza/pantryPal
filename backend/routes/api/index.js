@@ -55,7 +55,7 @@ apiRouter.get("/recipeinformation", async (req, res) => {
     try {
         const recipeInfo = await API.getRecipeInstructions(recipeId);
         res.status(200).json(recipeInfo);
-        console.log(recipeInfo);
+        // console.log(recipeInfo);
     } catch (error) {
         res.status(400).json({
             err: error,
