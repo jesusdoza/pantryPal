@@ -33,7 +33,6 @@ const handleSave = (recipe, username) => {
 };
 
 const handleDelete = (recipe, username) => {
-    username = loggedInData ? loggedInData.username : null;
     const API_URL = import.meta.env.VITE_API_IP;
 
     if (!username) {
@@ -51,7 +50,6 @@ const handleDelete = (recipe, username) => {
         .then((response) => {
             if (response.ok) {
                 alert("Recipe deleted successfully!");
-                window.location.reload();
             } else {
                 throw new Error("Failed to delete the recipe.");
             }
