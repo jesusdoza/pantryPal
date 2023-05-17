@@ -6,6 +6,7 @@ const profileRouter = require("./profile");
 const loginRouter = require("./login");
 const signupRouter = require("./signup");
 const { isAuthenticated } = require("../../middleware/auth");
+const recipeController = require("../../controllers/recipeController");
 
 const {
     getMealPlanner,
@@ -26,30 +27,7 @@ apiRouter.get("/", (req, res) => {
 apiRouter.use("/signup", signupRouter);
 apiRouter.use("/login", loginRouter);
 
-apiRouter.get("/searchbyingredient", async (req, res) => {
-    const ingredientsList = req.query.ingredients;
-
-    //verify ingredients exist
-    if (!ingredientsList) {
-        res.status(400).json({ error: "no ingredients" });
-        return;
-    }
-
-    //get data from api
-    try {
-        let ingredientsListApi = encodeURIComponent(
-            ingredientsList.replace(/,/g, ",+")
-        );
-
-        const recipes = await API.searchRecipeByIngredients(ingredientsListApi);
-        res.status(200).json(recipes);
-    } catch (error) {
-        res.status(400).json({
-            message: "recipe search by ingredient error",
-            err: error,
-        });
-    }
-});
+apiRouter.get("/searchbyingredient", recipeController.getRecipesByIngredient);
 
 apiRouter.get("/recipeinformation", async (req, res) => {
     const recipeId = req.query.recipeIdList;

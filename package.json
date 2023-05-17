@@ -28,5 +28,8 @@
   "homepage": "https://github.com/jesusdoza/2023-Cohort-Projects#readme",
   "devDependencies": {
     "concurrently": "^8.0.1"
+  },
+  "dependencies": {
+    "node-cache": "^5.1.2"
   }
 }
