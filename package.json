@@ -30,6 +30,7 @@
     "concurrently": "^8.0.1"
   },
   "dependencies": {
+    "@types/jest": "^29.5.1",
     "node-cache": "^5.1.2"
   }
 }
