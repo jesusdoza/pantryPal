@@ -6,6 +6,8 @@ class CacheService {
     }
 
     set(key, data) {
+        if (!data) return false; //no data
+        if (data instanceof Array && !data.length) return false; //empty data
         return this.cache.set(key, data);
     }
     get(key) {
