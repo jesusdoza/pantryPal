@@ -8,21 +8,11 @@ import { FilterList } from "../../components/FilterList/FilterList";
 
 import searchSample from "../../recipeSearchSample";
 import bulkSample from "../../recipeBulkInfoSample";
-import { useNavigate } from "react-router-dom";
-
-import { useContext } from "react";
-import { userContext } from "../../context/userContext.jsx";
 
 export default function RecipeSearch() {
     // State for Ingredient
     const API_URL = import.meta.env.VITE_API_IP;
-    const navigate = useNavigate();
-    const { isLoggedIn } = useContext(userContext);
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate("/login");
-        }
-    }, [navigate, isLoggedIn]);
+
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
     const [filteredRecipeList, setFilteredRecipeList] = useState([]);
@@ -41,7 +31,7 @@ export default function RecipeSearch() {
         }
 
         setFilteredRecipeList(recipeList);
-    }, [dietFilter, categoryFilter, isLoggedIn]);
+    }, [dietFilter, categoryFilter]);
 
     // List of Ingredients
     const ingredientRef = useRef("");
