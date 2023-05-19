@@ -12,7 +12,7 @@
     "server": " cd ./backend/ && npm run start",
     "backend": " cd ./backend/ && npm run dev",
     "frontend": "cd ./frontend/ && npm run dev",
-    "dev": "concurrently 'npm:backend' 'npm:frontend'",
+    "dev": "concurrently 'npm:backend' 'npm:frontend' 'npm:build-front'",
     "build-front": "cd ./frontend/ && npm run build"
   },
   "repository": {

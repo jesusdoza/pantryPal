@@ -2,7 +2,7 @@ const NodeCache = require("node-cache");
 
 class CacheService {
     constructor() {
-        this.cache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
+        this.cache = new NodeCache({ stdTTL: 300, checkperiod: 150 });
     }
 
     set(key, data) {
@@ -12,7 +12,7 @@ class CacheService {
     }
     get(key) {
         let result = this.cache.get(key);
-        console.log("checking cache", result);
+        // console.log("checking cache", result);
         return result;
     }
 }

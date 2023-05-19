@@ -17,15 +17,16 @@ const getRecipesByIngredient = async (req, res) => {
     //check cache
     let recipes = cache.get(ingredientsListApiFormat);
     if (recipes) {
-        console.log(`cache for ${ingredientsListApiFormat} found`);
+        console.log(`cache for found`);
         res.status(200).json(recipes);
         return;
     }
 
     //get data from api
     try {
+        // console.log(`fetching from api for`);
         recipes = await API.searchRecipeByIngredients(ingredientsListApiFormat);
-        console.log(`caching for ${ingredientsListApiFormat}`);
+        // console.log(`caching for ${ingredientsListApiFormat}`);
         cache.set(ingredientsListApiFormat, recipes);
         res.status(200).json(recipes);
     } catch (error) {

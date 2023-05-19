@@ -29,7 +29,8 @@ module.exports = {
             );
             return results.data;
         } catch (error) {
-            return error;
+            console.log("spoonacular service error", error);
+            return [];
         }
     },
     getRecipeInstructions: async (recipeId) => {
