@@ -78,6 +78,7 @@ const getRelatedRecipe = async (req, res) => {
     }
 };
 
+//todo the combined data
 const getRecipesByIngredientData = async (req, res) => {
     // console.log("req.query.ingredients", req.query.ingredients);
     const ingredientsList = req.query.ingredients;
@@ -107,20 +108,25 @@ const getRecipesByIngredientData = async (req, res) => {
     try {
         console.log(`fetching from api for`);
 
-        recipes = await API.searchRecipeByIngredients(ingredientsListApiFormat);
+        //query API for recipes
+        let recipesList = await API.searchRecipeByIngredients(
+            ingredientsListApiFormat
+        );
 
-        let recipeIdList = recipes.map((recipe) => recipe.id);
+        //extract IDs from recipes
+        let recipeIdList = recipesList.map((recipe) => recipe.id);
 
-        //todo get recipe instructions api
-        const recipeInstruct = await API.getRecipeInstructions(recipeIdList);
+        //get instructions for all recipe ids
+        const recipeInstructList = await API.getRecipeInstructions(
+            recipeIdList
+        );
 
-        //add to cache
+        const recipeData = combineRecipeData(recipesList, recipeInstructList);
 
-        combineRecipeData(recipes, recipeInstruct);
+        //cache combined data
+        recipeByIngredientCache.set(ingredientsListApiFormat, recipeData);
 
-        recipeByIngredientCache.set(ingredientsListApiFormat, recipes);
-
-        res.status(200).json(recipes);
+        res.status(200).json(recipeData);
     } catch (error) {
         res.status(400).json({
             message: "recipe search by ingredient error",
@@ -130,6 +136,7 @@ const getRecipesByIngredientData = async (req, res) => {
 };
 
 module.exports = {
+    getRecipesByIngredientData,
     getRecipesByIngredient,
     getRecipeInformation,
     getRelatedRecipe,
