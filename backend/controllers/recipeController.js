@@ -1,7 +1,10 @@
 const API = require("../services/spoonacular");
-const cache = require("../services/cacheService");
+const CacheService = require("../services/cacheService");
+const recipeCache = require("../models/recipeCacheModel");
+const recipeByIngredientCache = new CacheService(recipeCache);
 
 const getRecipesByIngredient = async (req, res) => {
+    // console.log("req.query.ingredients", req.query.ingredients);
     const ingredientsList = req.query.ingredients;
 
     //verify ingredients exist
@@ -10,24 +13,29 @@ const getRecipesByIngredient = async (req, res) => {
         return;
     }
 
+    //format ingredient string for api
     let ingredientsListApiFormat = encodeURIComponent(
         ingredientsList.replace(/,/g, ",+")
     );
 
-    //check cache
-    let recipes = cache.get(ingredientsListApiFormat);
+    //check recipeByIngredientCache
+    let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
+
     if (recipes) {
-        console.log(`cache for found`);
+        console.log(`recipeByIngredientCache for found`);
         res.status(200).json(recipes);
         return;
     }
 
-    //get data from api
+    //data not cached query apiService
     try {
-        // console.log(`fetching from api for`);
+        console.log(`fetching from api for`);
         recipes = await API.searchRecipeByIngredients(ingredientsListApiFormat);
         // console.log(`caching for ${ingredientsListApiFormat}`);
-        cache.set(ingredientsListApiFormat, recipes);
+
+        //add to cache
+        recipeByIngredientCache.set(ingredientsListApiFormat, recipes);
+
         res.status(200).json(recipes);
     } catch (error) {
         res.status(400).json({
@@ -37,6 +45,7 @@ const getRecipesByIngredient = async (req, res) => {
     }
 };
 
+//todo have single endpoint for recipes
 const getRecipeInformation = async (req, res) => {
     const recipeId = req.query.recipeIdList;
     try {

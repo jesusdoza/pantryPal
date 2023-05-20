@@ -46,9 +46,11 @@ export default function RecipeSearch() {
     // List of Ingredients
     const ingredientRef = useRef("");
 
-    async function handleSubmit() {
+    async function handleSubmit(ingredients) {
+        setSearchSpinner(true);
+
         try {
-            setSearchSpinner(true);
+            // get recipes for ingredients
             const result = await axios.get(
                 `${API_URL}/api/searchbyingredient`,
                 {
@@ -65,6 +67,7 @@ export default function RecipeSearch() {
             //used for bulk info api call
             const recipeIdList = result.data.map((recipe) => recipe.id);
 
+            //get recipe instructions from api
             const recipeInstructions = await axios.get(
                 `${API_URL}/api/recipeinformation`,
                 {
@@ -101,7 +104,7 @@ export default function RecipeSearch() {
                     action="#"
                     onSubmit={(event) => {
                         event.preventDefault();
-                        handleSubmit();
+                        handleSubmit(ingredients);
                     }}>
                     <input
                         ref={ingredientRef}
