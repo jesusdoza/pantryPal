@@ -6,6 +6,7 @@ const profileRouter = require("./profile");
 const loginRouter = require("./login");
 const signupRouter = require("./signup");
 const { isAuthenticated } = require("../../middleware/auth");
+const recipeController = require("../../controllers/recipeController");
 
 const {
     getMealPlanner,
@@ -22,6 +23,11 @@ apiRouter.get("/", (req, res) => {
         res.status(400).json({ error: "something went wrong" });
     }
 });
+
+apiRouter.get(
+    "/searchByIngredientCombined",
+    recipeController.getRecipesByIngredientCombinedData
+);
 
 apiRouter.use("/signup", signupRouter);
 apiRouter.use("/login", loginRouter);

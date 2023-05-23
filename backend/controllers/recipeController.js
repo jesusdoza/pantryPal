@@ -94,8 +94,8 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
         ingredientsList.replace(/,/g, ",+")
     );
 
-    //check recipeByIngredientCache
-    let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
+    //!check recipeByIngredientCache
+    // let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
     //cache had values return
     if (recipes) {
@@ -107,20 +107,7 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
     //query apiService and cache
     try {
         console.log(`fetching from api for`);
-        //query API for recipes
-        let recipesList = await API.searchRecipeByIngredients(
-            ingredientsListApiFormat
-        );
-
-        //extract IDs from recipes
-        let recipeIdList = recipesList.map((recipe) => recipe.id);
-
-        //get instructions for all recipe ids
-        const recipeInstructList = await API.getRecipeInstructions(
-            recipeIdList
-        );
-
-        const recipeData = combineRecipeData(recipesList, recipeInstructList);
+        const recipeData = getApiData(ingredientsListApiFormat);
 
         //cache combined data
         recipeByIngredientCache.set(ingredientsListApiFormat, recipeData);
@@ -134,8 +121,26 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
     }
 };
 
+async function getApiData(ingredientsListApiFormat) {
+    console.log(`fetching from api for`);
+    //query API for recipes
+    let recipesList = await API.searchRecipeByIngredients(
+        ingredientsListApiFormat
+    );
+
+    //extract IDs from recipes
+    let recipeIdList = recipesList.map((recipe) => recipe.id);
+
+    //get instructions for all recipe ids
+    const recipeInstructList = await API.getRecipeInstructions(recipeIdList);
+
+    const recipeData = combineRecipeData(recipesList, recipeInstructList);
+
+    return recipeData;
+}
+
 module.exports = {
-    getRecipesByIngredientData,
+    getRecipesByIngredientCombinedData,
     getRecipesByIngredient,
     getRecipeInformation,
     getRelatedRecipe,
