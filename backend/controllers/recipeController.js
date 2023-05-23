@@ -79,7 +79,7 @@ const getRelatedRecipe = async (req, res) => {
 };
 
 //todo the combined data
-const getRecipesByIngredientData = async (req, res) => {
+const getRecipesByIngredientCombinedData = async (req, res) => {
     // console.log("req.query.ingredients", req.query.ingredients);
     const ingredientsList = req.query.ingredients;
 
@@ -97,7 +97,7 @@ const getRecipesByIngredientData = async (req, res) => {
     //check recipeByIngredientCache
     let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
-    //cache had values
+    //cache had values return
     if (recipes) {
         console.log(`recipeByIngredientCache for found`);
         res.status(200).json(recipes);
@@ -107,7 +107,6 @@ const getRecipesByIngredientData = async (req, res) => {
     //query apiService and cache
     try {
         console.log(`fetching from api for`);
-
         //query API for recipes
         let recipesList = await API.searchRecipeByIngredients(
             ingredientsListApiFormat
