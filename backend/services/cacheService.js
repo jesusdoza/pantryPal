@@ -23,7 +23,6 @@ class CacheService {
 
         //found in local cache
         if (result) {
-            console.log("in memory cache found");
             return result;
         }
 
@@ -34,7 +33,6 @@ class CacheService {
             return false;
         }
 
-        console.log("in datbase cache found");
         this.set(key, result);
         return result;
     }
