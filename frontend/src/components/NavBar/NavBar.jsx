@@ -132,13 +132,13 @@ const NavBar = () => {
                 </>
             ) : (
                 <>
-                    <NavLink className="page" to="/signup">
+                    {/* <NavLink className="page" to="/signup">
                         SignUp
                     </NavLink>
 
                     <NavLink className="page" to="/login">
                         Login
-                    </NavLink>
+                    </NavLink> */}
                 </>
             )}
         </Nav>
