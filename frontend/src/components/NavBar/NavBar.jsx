@@ -119,7 +119,7 @@ const NavBar = () => {
                                     <NavLink
                                         className="page mobile-nav"
                                         to="/profile"
-                                        onClick={handleLogout}>
+                                        onClick={toggleState}>
                                         <FontAwesomeIcon
                                             icon={faUser}
                                             className="userIcon mobile-nav"
