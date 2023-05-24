@@ -1,4 +1,7 @@
-export function CombinedRecipeData(searchResultsArr, recipeInstructionsArr) {
+module.exports = function CombinedRecipeData(
+    searchResultsArr,
+    recipeInstructionsArr
+) {
     let combined = [];
 
     searchResultsArr.forEach((recipe) => {
@@ -11,4 +14,4 @@ export function CombinedRecipeData(searchResultsArr, recipeInstructionsArr) {
         }
     });
     return combined;
-}
+};

@@ -81,6 +81,7 @@ const getRelatedRecipe = async (req, res) => {
 //todo the combined data
 const getRecipesByIngredientCombinedData = async (req, res) => {
     // console.log("req.query.ingredients", req.query.ingredients);
+    console.log("recipe combined endpoint");
     const ingredientsList = req.query.ingredients;
 
     //verify ingredients exist
@@ -95,23 +96,24 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
     );
 
     //!check recipeByIngredientCache
-    // let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
+    let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
     //cache had values return
     if (recipes) {
-        console.log(`recipeByIngredientCache for found`);
+        console.log(`recipeByIngredientCache found for ${ingredientsList} `);
+        // console.log("recipes", recipes);
         res.status(200).json(recipes);
         return;
     }
 
     //query apiService and cache
     try {
-        console.log(`fetching from api for`);
-        const recipeData = getApiData(ingredientsListApiFormat);
+        console.log(`fetching from api no cache found ${ingredientsList}`);
+        const recipeData = await getApiData(ingredientsListApiFormat);
 
         //cache combined data
+        // console.log("recipeData", recipeData);
         recipeByIngredientCache.set(ingredientsListApiFormat, recipeData);
-
         res.status(200).json(recipeData);
     } catch (error) {
         res.status(400).json({
@@ -122,7 +124,6 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
 };
 
 async function getApiData(ingredientsListApiFormat) {
-    console.log(`fetching from api for`);
     //query API for recipes
     let recipesList = await API.searchRecipeByIngredients(
         ingredientsListApiFormat

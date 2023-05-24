@@ -23,12 +23,19 @@ class CacheService {
 
         //found in local cache
         if (result) {
+            console.log("in memory cache found");
             return result;
         }
 
         // check database for cache
         result = await this.getFromDataBase(key);
+        if (!result) {
+            //no cache found in database
+            return false;
+        }
 
+        console.log("in datbase cache found");
+        this.set(key, result);
         return result;
     }
 
