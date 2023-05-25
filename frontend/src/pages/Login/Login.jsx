@@ -5,6 +5,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../../context/userContext.jsx";
+import { NavLink } from "react-router-dom";
 
 function LoginScreen() {
     const usernameRef = useRef(null);
@@ -50,6 +51,12 @@ function LoginScreen() {
 
     return (
         <StyledSignup>
+            <section className="login-container">
+            <div>
+            <img src="\src\assets\PantryPalAvo.png" alt="Pantry Pal Logo" className="logo"/>
+            
+
+            </div>
             <section className="form-sect">
                 <form onSubmit={handleSubmit}>
                     <div className="title">
@@ -67,7 +74,7 @@ function LoginScreen() {
                     )}
                     <div className="input-container">
                         <label className="input-tag" htmlFor="username">
-                            Username
+                           
                         </label>
                         <input
                             id="username"
@@ -83,7 +90,7 @@ function LoginScreen() {
                     </div>
                     <div className="input-container">
                         <label className="input-tag" htmlFor="password">
-                            Password
+                            
                         </label>
                         <input
                             id="password"
@@ -102,8 +109,16 @@ function LoginScreen() {
                             Sign In
                         </button>
                     </div>
+
+                    <span>Don't have an account?</span>
+                    <NavLink className="page" to="/signup">
+                        SignUp
+                    </NavLink>
                 </form>
             </section>
+            </section>
+            
+
         </StyledSignup>
     );
 }

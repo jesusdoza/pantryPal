@@ -13,14 +13,16 @@ export const ImgContainer = styled.div`
         height: 100%;
         max-height: 50vh;
     }
-
-    .logoText {
-        width: auto;
-        max-width: 80%;
-        height: 100%;
-        max-height: 25vh;   
+    .logo {
+        width: 50%;
     }
-    
+    .linkContainer{
+        display: flex;
+        justify-content: center;
+    }
+    .linkItem{
+        padding: 0 2em;
+    }
     h1 {
         font-size: 40px;
         color: #90ac14;
