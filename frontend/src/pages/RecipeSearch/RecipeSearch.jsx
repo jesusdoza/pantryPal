@@ -40,7 +40,7 @@ export default function RecipeSearch() {
         try {
             setSearchSpinner(true);
             const result = await axios.get(
-                `${API_URL}/api/searchbyingredient`,
+                `${API_URL}/api/searchByIngredientCombined`,
                 {
                     params: {
                         ingredients: ingredients,
@@ -52,27 +52,7 @@ export default function RecipeSearch() {
                 setError(false);
             }
 
-            //used for bulk info api call
-            const recipeIdList = result.data.map((recipe) => recipe.id);
-
-            const recipeInstructions = await axios.get(
-                `${API_URL}/api/recipeinformation`,
-                {
-                    params: {
-                        recipeIdList: recipeIdList,
-                    },
-                }
-            );
-
-            //! test remove
-            // const recipeInstructions = { data: bulkSample };
-            //! test remove
-            //combining both api calls data
-
-            let combined = CombinedRecipeData(
-                result.data,
-                recipeInstructions.data
-            );
+            let combined = result.data;
             setRecipeList(combined);
             setFilteredRecipeList(combined);
             setSearchSpinner(false);
