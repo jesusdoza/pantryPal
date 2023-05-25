@@ -13,11 +13,11 @@ app.use(express.static("public"));
 
 // assign a piece of middleware that will fire anytime a request comes in to the server
 app.use(express.json());
-app.use((req, res, next) => {
-    // log out the path every time we get a request (for testing routes only)
-    // console.log(req.path, req.method);
-    next();
-});
+// app.use((req, res, next) => {
+//     // log out the path every time we get a request (for testing routes only)
+//     // console.log(req.path, req.method);
+//     next();
+// });
 
 // grabs all of the different routes that are attached to the express router in the /routes/index.js file
 app.use("/", mainRouter);
