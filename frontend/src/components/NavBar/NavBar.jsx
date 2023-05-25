@@ -119,7 +119,7 @@ const NavBar = () => {
                                     <NavLink
                                         className="page mobile-nav"
                                         to="/profile"
-                                        onClick={handleLogout}>
+                                        onClick={toggleState}>
                                         <FontAwesomeIcon
                                             icon={faUser}
                                             className="userIcon mobile-nav"
@@ -132,13 +132,13 @@ const NavBar = () => {
                 </>
             ) : (
                 <>
-                    <NavLink className="page" to="/signup">
+                    {/* <NavLink className="page" to="/signup">
                         SignUp
                     </NavLink>
 
                     <NavLink className="page" to="/login">
                         Login
-                    </NavLink>
+                    </NavLink> */}
                 </>
             )}
         </Nav>
