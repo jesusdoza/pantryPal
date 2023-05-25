@@ -28,7 +28,12 @@ class CacheService {
 
         // check database for cache
         result = await this.getFromDataBase(key);
+        if (!result) {
+            //no cache found in database
+            return false;
+        }
 
+        this.set(key, result);
         return result;
     }
 
