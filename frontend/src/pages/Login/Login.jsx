@@ -55,7 +55,6 @@ function LoginScreen() {
             <div>
             <img src="\src\assets\PantryPalAvo.png" alt="Pantry Pal Logo" className="logo"/>
             
-
             </div>
             <section className="form-sect">
                 <form onSubmit={handleSubmit}>
@@ -112,7 +111,7 @@ function LoginScreen() {
 
                     <span>Don't have an account?</span>
                     <NavLink className="page" to="/signup">
-                        SignUp
+                        Sign up
                     </NavLink>
                 </form>
             </section>
