@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Signup.styles";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { NavLink } from "react-router-dom";
 
 export default function Signup() {
     const API_URL = import.meta.env.VITE_API_IP;
@@ -131,6 +132,10 @@ export default function Signup() {
 
     return (
         <StyledSignup>
+            <section className="signup-container">
+            <div>
+                <img src="\src\assets\PantryPalAvo.png" alt="Pantry Pal Logo" className="logo"/>
+            </div>
             <section className="form-sect">
                 <form
                     action="#"
@@ -139,17 +144,20 @@ export default function Signup() {
                         handleSignUp();
                     }}>
                     <div className="title">
-                        <h2>
-                            Welcome to Pantry Pal <br></br>Signup Here
-                        </h2>
+                        <h1>
+                            Welcome to Pantry Pal!
+                        </h1>
+                        <h2>Sign Up Here</h2>
                     </div>
 
                     <div className="input-container">
                         {emailError && <span className="error-marker">*</span>}
                         <label className="input-tag" htmlFor="email">
-                            Email
+                          
                         </label>
                         <input
+                           
+                            placeholder="Email"
                             className={emailError ? "error-container" : ""}
                             ref={emailRef}
                             onChange={(event) => {
@@ -168,9 +176,10 @@ export default function Signup() {
                             <span className="error-marker">*</span>
                         )}
                         <label className="input-tag" htmlFor="username">
-                            Username
+                            
                         </label>
                         <input
+                            placeholder="Username"
                             className={usernameError ? "error-container" : ""}
                             ref={usernameRef}
                             onChange={(event) => {
@@ -190,9 +199,10 @@ export default function Signup() {
                             <span className="error-marker">*</span>
                         )}
                         <label className="input-tag" htmlFor="password">
-                            Password
+                            
                         </label>
                         <input
+                            placeholder="Password"
                             className={passwordError ? "error-container" : ""}
                             ref={passwordRef}
                             onChange={(event) => {
@@ -213,9 +223,10 @@ export default function Signup() {
                             <span className="error-marker">*</span>
                         )}
                         <label htmlFor="confirmpassword" className="input-tag">
-                            Confirm Password
+                            
                         </label>
                         <input
+                        placeholder="Confirm Password"
                             className={passwordError ? "error-container" : ""}
                             ref={confirmPasswordRef}
                             onChange={(event) => {
@@ -232,8 +243,8 @@ export default function Signup() {
                         )}
                     </div>
 
-                    <div className="submit-btn">
-                        <button className="btn">Signup</button>
+                    <div className="submit-btn-container">
+                        <button className="signup-btn">Sign Up</button>
                     </div>
                 </form>
                 {errorFlag && (
@@ -250,11 +261,13 @@ export default function Signup() {
                 )}
             </section>
 
-            <div className="btn goto-btn">
-                <Link to="/login">
-                    Already signed<br></br>up login here
-                </Link>
+            <div className="goto-btn">
+                <span>Already have an account?</span>
+                <NavLink className="page" to="/login">
+                     Sign in
+                </NavLink>
             </div>
+            </section>
         </StyledSignup>
     );
 }
