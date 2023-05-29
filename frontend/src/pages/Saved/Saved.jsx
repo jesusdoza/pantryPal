@@ -9,15 +9,11 @@ import { userContext } from "../../context/userContext.jsx";
 export default function SavedRecipes() {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const API_URL = import.meta.env.VITE_API_IP;
-    const { isLoggedIn, userProfile } = useContext(userContext);
+    const { userProfile } = useContext(userContext);
 
     useEffect(() => {
         async function fetchSavedRecipes() {
             try {
-                if (!isLoggedIn) {
-                    alert("Please log in to get saved recipes.");
-                    return;
-                }
                 const response = await axios.post(
                     `${API_URL}/api/getSavedRecipes`,
                     { username: userProfile.username }

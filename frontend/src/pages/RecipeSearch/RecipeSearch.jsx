@@ -8,21 +8,11 @@ import { FilterList } from "../../components/FilterList/FilterList";
 
 import searchSample from "../../recipeSearchSample";
 import bulkSample from "../../recipeBulkInfoSample";
-import { useNavigate } from "react-router-dom";
-
-import { useContext } from "react";
-import { userContext } from "../../context/userContext.jsx";
 
 export default function RecipeSearch() {
     // State for Ingredient
     const API_URL = import.meta.env.VITE_API_IP;
-    const navigate = useNavigate();
-    const { isLoggedIn } = useContext(userContext);
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate("/login");
-        }
-    }, [navigate, isLoggedIn]);
+
     const [ingredients, setIngredients] = useState("");
     const [recipeList, setRecipeList] = useState([]);
     const [filteredRecipeList, setFilteredRecipeList] = useState([]);
@@ -41,7 +31,7 @@ export default function RecipeSearch() {
         }
 
         setFilteredRecipeList(recipeList);
-    }, [dietFilter, categoryFilter, isLoggedIn]);
+    }, [dietFilter, categoryFilter]);
 
     // List of Ingredients
     const ingredientRef = useRef("");
@@ -50,7 +40,7 @@ export default function RecipeSearch() {
         try {
             setSearchSpinner(true);
             const result = await axios.get(
-                `${API_URL}/api/searchbyingredient`,
+                `${API_URL}/api/searchByIngredientCombined`,
                 {
                     params: {
                         ingredients: ingredients,
@@ -62,27 +52,7 @@ export default function RecipeSearch() {
                 setError(false);
             }
 
-            //used for bulk info api call
-            const recipeIdList = result.data.map((recipe) => recipe.id);
-
-            const recipeInstructions = await axios.get(
-                `${API_URL}/api/recipeinformation`,
-                {
-                    params: {
-                        recipeIdList: recipeIdList,
-                    },
-                }
-            );
-
-            //! test remove
-            // const recipeInstructions = { data: bulkSample };
-            //! test remove
-            //combining both api calls data
-
-            let combined = CombinedRecipeData(
-                result.data,
-                recipeInstructions.data
-            );
+            let combined = result.data;
             setRecipeList(combined);
             setFilteredRecipeList(combined);
             setSearchSpinner(false);

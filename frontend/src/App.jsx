@@ -13,6 +13,8 @@ import { GlobalStyle } from "./GlobalStyles";
 import ProfilePage from "./pages/Profile/Profile";
 import UserContextProvider from "./context/userContext";
 
+import Protected from "./components/Protected/Protected";
+
 function App() {
     return (
         <UserContextProvider>
@@ -23,13 +25,49 @@ function App() {
                 <main>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/search" element={<RecipeSearch />} />
-                        <Route path="/details" element={<RecipeDetails />} />
-                        <Route path="/saved" element={<Saved />} />
+                        <Route
+                            path="/search"
+                            element={
+                                <Protected>
+                                    <RecipeSearch />
+                                </Protected>
+                            }
+                        />
+                        <Route
+                            path="/details"
+                            element={
+                                <Protected>
+                                    <RecipeDetails />
+                                </Protected>
+                            }
+                        />
+                        <Route
+                            path="/saved"
+                            element={
+                                <Protected>
+                                    <Saved />
+                                </Protected>
+                            }
+                        />
+
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/mealPlanner" element={<MealPlanner />} />
-                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route
+                            path="/mealPlanner"
+                            element={
+                                <Protected>
+                                    <MealPlanner />
+                                </Protected>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <Protected>
+                                    <ProfilePage />
+                                </Protected>
+                            }
+                        />
                         <Route path="/*" element={<h1>404 no page</h1>} />
                     </Routes>
                     <GlobalStyle />
