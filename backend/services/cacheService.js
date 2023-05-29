@@ -33,6 +33,7 @@ class CacheService {
             return false;
         }
 
+        //database returned key set in memory cache aswell
         this.set(key, result);
         return result;
     }
@@ -68,6 +69,4 @@ class CacheService {
     }
 }
 
-// const cache = new CacheService();
-// module.exports = cache;
 module.exports = CacheService;
