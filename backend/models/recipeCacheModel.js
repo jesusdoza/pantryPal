@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const recipeCacheSchema = new mongoose.Schema({
-    key: String,
+    key: { type: String, required: true, unique: true },
     data: [Object],
 });
 
