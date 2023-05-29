@@ -38,9 +38,16 @@ class CacheService {
     }
 
     async saveToDataBase(key, data) {
+        let newItem;
         try {
-            const newItem = await this.model.create({ key, data });
+            key = key.trim();
+            newItem = await this.model.create({ key, data });
+            return true;
         } catch (error) {
+            if (error.code === 11000) {
+                // duplicate key already in database error
+                return true;
+            }
             console.log("cache saveToDataBase error", error);
             return false;
         }
