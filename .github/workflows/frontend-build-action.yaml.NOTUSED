@@ -1,0 +1,24 @@
+name: build-frontend-action
+run-name: ${{ github.actor }} made push building front end
+on: [push]
+jobs:
+  vite-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: set up node enviroment
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: clean install
+        run: npm ci
+      - name: install front end dependencies
+        run: npm run frontinstall
+      - name: build front end
+        run: npm run build-front
+      - name: commit new front end build
+        run: |
+          git status

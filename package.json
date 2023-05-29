@@ -13,7 +13,8 @@
     "backend": " cd ./backend/ && npm run dev",
     "frontend": "cd ./frontend/ && npm run dev",
     "dev": "concurrently 'npm:backend' 'npm:frontend'",
-    "build-front": "cd ./frontend/ && npm run build"
+    "build-front": "cd ./frontend/ && npm run build",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/jesusdoza/2023-Cohort-Projects#readme",
   "devDependencies": {
-    "concurrently": "^8.0.1"
+    "concurrently": "^8.0.1",
+    "husky": "^8.0.3"
   }
 }
