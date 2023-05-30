@@ -4,7 +4,6 @@ import PantryPalText from "../../assets/PantryPalText.png";
 import { ImgContainer } from "./Home.styles";
 import { NavLink } from "react-router-dom";
 
-// home
 const Home = () => {
     return (
         <ImgContainer>
