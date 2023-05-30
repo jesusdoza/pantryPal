@@ -11,7 +11,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser(process.env.SERVER_SECRET));
 app.use(express.static("public"));
 
-// assign a piece of middleware that will fire anytime a request comes in to the server
+/// assign a piece of middleware that will fire anytime a request comes in to the server
 app.use(express.json());
 // app.use((req, res, next) => {
 //     // log out the path every time we get a request (for testing routes only)
