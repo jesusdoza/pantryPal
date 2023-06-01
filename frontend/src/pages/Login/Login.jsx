@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../../context/userContext.jsx";
 import { NavLink } from "react-router-dom";
+import PantryPalLogo from "../../assets/PantryPalAvo.png"
 
 function LoginScreen() {
     const usernameRef = useRef(null);
@@ -53,7 +54,7 @@ function LoginScreen() {
         <StyledSignup>
             <section className="login-container">
             <div>
-            <img src="\src\assets\PantryPalAvo.png" alt="Pantry Pal Logo" className="logo"/>
+            <img src={PantryPalLogo} alt="Pantry Pal Logo" className="logo"/>
             
             </div>
             <section className="form-sect">

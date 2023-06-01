@@ -3,6 +3,7 @@ import { StyledSignup } from "./Signup.styles";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { NavLink } from "react-router-dom";
+import PantryPalLogo from "../../assets/PantryPalAvo.png"
 
 export default function Signup() {
     const API_URL = import.meta.env.VITE_API_IP;
@@ -134,7 +135,7 @@ export default function Signup() {
         <StyledSignup>
             <section className="signup-container">
             <div>
-                <img src="\src\assets\PantryPalAvo.png" alt="Pantry Pal Logo" className="logo"/>
+                <img src={PantryPalLogo} alt="Pantry Pal Logo" className="logo"/>
             </div>
             <section className="form-sect">
                 <form
