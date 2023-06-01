@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --emptyOutDir --outDir ../backend/public/",
+    "build": "vite build --watch --emptyOutDir --outDir ../backend/public/",
     "preview": "vite preview"
   },
   "dependencies": {
