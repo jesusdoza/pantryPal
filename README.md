@@ -7,6 +7,7 @@ An app that takes any number of ingredients and searches an extensive database t
 
 ## Try it out:
 - Development currently hosted [here](https://pantrypal.onrender.com) on render
+- Main branch hosted [here](https://pantrypal.cyclic.app/)
 
 ## Optimizations
 1. using a front end framework would provide a more standard and uniform styling experience
