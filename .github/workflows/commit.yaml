@@ -1,0 +1,31 @@
+name: make-commit
+run-name: ${{ github.actor }} made push
+on: [pull_request]
+jobs:
+  make-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: jesusdoza/pantryPal
+          token: ${{secrets.FRONTEND_BUILD_TOKEN}}
+      - name: set up node enviroment
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: add file
+        run: touch file.txt
+      - name: change file
+        run: echo "another" >> file.txt
+      - name: commit workflow
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: commit
+        run: |
+          git add .
+          git commit -m 'test commit'
+          git push
