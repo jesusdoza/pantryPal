@@ -30,12 +30,13 @@ An app that takes any number of ingredients and searches an extensive database t
    - OPENAI_API_KEY="fasdfasdfasdfHAAXoxfadsfasd9uSxQVe"
    ### server sercret 
    - SEVER_SECRET="string of stuff"
-4. #### frontend env file contents
+4. #### frontend env file contents for dev enviroment
    ### api address of local server
    - VITE_API_IP = "http://localhost:4000"
 
-
-5. npm install 
-6. npm run dev
-7. A local host ip address will display in console for link to local running version
+5. #### (OPTIONAL) .env.production file to test build with empty string so request are relative to server serving files
+   - VITE_API_IP =""
+7. npm install 
+8. npm run dev
+9. A local host ip address will display in console for link to local running version
 
