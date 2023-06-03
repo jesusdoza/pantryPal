@@ -1,5 +1,5 @@
 name: make-commit
-run-name: ${{ github.actor }} made push
+run-name: ${{ github.actor }} made pull request from branch ${{github.head_ref}}
 on: [pull_request]
 jobs:
   make-commit:
