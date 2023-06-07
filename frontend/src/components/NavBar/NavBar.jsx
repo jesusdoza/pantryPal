@@ -11,7 +11,7 @@ import { userContext } from "../../context/userContext.jsx";
 const NavBar = () => {
     const [toggleNav, setToggleNav] = useState(false);
     const { isLoggedIn, userProfile } = useContext(userContext);
-    console.log("userProfile in navbar console.log", userProfile); //! placeholder need to implement
+    // console.log("userProfile in navbar console.log", userProfile); //! placeholder need to implement
 
     const toggleState = () => {
         setToggleNav(!toggleNav);
