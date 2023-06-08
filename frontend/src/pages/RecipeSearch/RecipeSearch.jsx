@@ -14,7 +14,11 @@ export default function RecipeSearch() {
     const API_URL = import.meta.env.VITE_API_IP;
 
     const [ingredients, setIngredients] = useState("");
-    const [recipeList, setRecipeList] = useState([]);
+    const [recipeList, setRecipeList] = useState(() => {
+        let lastSearch = JSON.parse(localStorage.getItem("lastSearch"));
+        console.log("lastSearch", lastSearch);
+        return lastSearch ? lastSearch : [];
+    });
     const [filteredRecipeList, setFilteredRecipeList] = useState([]);
     const [dietFilter, setDietFilter] = useState([]);
     const [categoryFilter, setCategoryFilter] = useState([]);
@@ -24,6 +28,7 @@ export default function RecipeSearch() {
 
     //FILTER RESULTS
     useEffect(() => {
+        //if any filters selected filter the list
         if (dietFilter.length > 0 || categoryFilter.length > 0) {
             let filtered = applyFilter(recipeList, dietFilter, categoryFilter);
             setFilteredRecipeList(filtered);
@@ -53,7 +58,10 @@ export default function RecipeSearch() {
             }
 
             let combined = result.data;
-            setRecipeList(combined);
+            setRecipeList(() => {
+                localStorage.setItem("lastSearch", JSON.stringify(combined));
+                return combined;
+            });
             setFilteredRecipeList(combined);
             setSearchSpinner(false);
         } catch (err) {
