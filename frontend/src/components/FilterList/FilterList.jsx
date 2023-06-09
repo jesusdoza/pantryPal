@@ -15,7 +15,9 @@ export function FilterList({
     }
     let dietOptions = new Set();
     let categoryOptionsAvailable = new Set();
-
+    let filterOptions = [
+        { value: "options", label: "label", otherthing: "otherthing" },
+    ];
     let categoryOptions = [
         "cheap",
         "veryPopular",
@@ -52,6 +54,18 @@ export function FilterList({
         categoryOptionsAvailable.values()
     );
 
+    //todo
+    // add all options to a string set
+    //check if in set already if not add to filter options set
+    //
+    //todo load option into select
+    // iterate through extracted options and add options to multiselect
+    let allOptions = { dietOptionsArr, otherOptionsAvailableArr };
+    for (let options of Object.keys(allOptions)) {
+        console.log("options", options);
+        console.log("options", allOptions[options]);
+    }
+
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
         setDietFilter((state) => {
@@ -82,9 +96,7 @@ export function FilterList({
         });
     }
     //todo implement a creatable select for filter
-    let filterOptions = [
-        { value: "options", label: "label", otherthing: "otherthing" },
-    ];
+
     function handleFilter(event) {
         console.log("event from change on creatable select", event);
     }
