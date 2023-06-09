@@ -1,5 +1,7 @@
 import { Filter } from "./FilterList.styles";
 
+import CreatableSelect from "react-select/creatable";
+
 export function FilterList({
     recipeListArr,
     setDietFilter,
@@ -79,13 +81,25 @@ export function FilterList({
             return state.filter((category) => category !== str);
         });
     }
+    //todo implement a creatable select for filter
+    let filterOptions = [
+        { value: "options", label: "label", otherthing: "otherthing" },
+    ];
+    function handleFilter(event) {
+        console.log("event from change on creatable select", event);
+    }
 
     return (
         <Filter className="main-filter-container">
+            <CreatableSelect
+                isMulti
+                options={filterOptions}
+                onChange={handleFilter}
+            />
             {dietFilter.length > 0 ? (
                 <section>
                     <h2>Selected filters: </h2>
-                    
+
                     <ul>
                         {dietFilter.map((item, index) => {
                             return (
@@ -104,7 +118,6 @@ export function FilterList({
             ) : (
                 <section></section>
             )}
-
             {categoryFilter.length > 0 ? (
                 <section>
                     <h2>Category filters</h2>
@@ -128,21 +141,18 @@ export function FilterList({
             )}
             <section className="filter-row">
                 <h2>Dietary options:</h2>
-                
+
                 <ul className="filter-options">
                     {dietOptionsArr.length > 0 ? (
                         dietOptionsArr.map((item, index) => {
                             return (
-                                
                                 <li
                                     onClick={() => {
                                         addDietFilter(item);
                                     }}
                                     className="btn"
                                     key={index + item + 1}>
-                                            <span>{item}</span>
-
-                                    
+                                    <span>{item}</span>
                                 </li>
                             );
                         })
