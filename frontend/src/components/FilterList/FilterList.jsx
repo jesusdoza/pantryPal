@@ -54,27 +54,11 @@ export function FilterList({
         categoryOptionsAvailable.values()
     );
 
-    //todo
-    // add all options to a string set
-    //check if in set already if not add to filter options set
-    //
-    //todo load option into select
-    // iterate through extracted options and add options to multiselect
-
-    //createSelectOptions()
-    let allOptions = {
+    //todo create options function to clean up
+    filterOptions = createSelectOptions({
         dietOptions: dietOptionsArr,
         otherOptions: otherOptionsAvailableArr,
-    };
-    for (let options of Object.keys(allOptions)) {
-        const newOptions = allOptions[options].map((filter) => {
-            return { value: filter, label: filter, type: options };
-        });
-
-        //add options into single array
-        filterOptions = filterOptions.concat(newOptions);
-    }
-    console.log("filterOptions", filterOptions);
+    });
 
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
@@ -108,18 +92,21 @@ export function FilterList({
 
     return (
         <Filter className="main-filter-container">
-            <CreatableSelect
-                closeMenuOnSelect={false}
-                isMulti
-                options={filterOptions}
-                onChange={(filters) => {
-                    handleFilter(filters, {
-                        diets: setDietFilter,
-                        categories: setCategoryFilter,
-                    });
-                }}
-            />
-            {dietFilter.length > 0 ? (
+            <section className="filter-container">
+                <h2>Filter Results</h2>
+                <CreatableSelect
+                    closeMenuOnSelect={false}
+                    isMulti
+                    options={filterOptions}
+                    onChange={(filters) => {
+                        handleFilter(filters, {
+                            diets: setDietFilter,
+                            other: setCategoryFilter,
+                        });
+                    }}
+                />
+            </section>
+            {/* {dietFilter.length > 0 ? (
                 <section>
                     <h2>Selected filters: </h2>
 
@@ -161,8 +148,8 @@ export function FilterList({
                 </section>
             ) : (
                 <section></section>
-            )}
-            <section className="filter-row">
+            )} */}
+            {/* <section className="filter-row">
                 <h2>Dietary options:</h2>
 
                 <ul className="filter-options">
@@ -200,16 +187,29 @@ export function FilterList({
                         );
                     })}
                 </ul>
-            </section>
+            </section> */}
         </Filter>
     );
 }
 
+function createSelectOptions(allOptions) {
+    let filterOptions = [];
+    for (let options of Object.keys(allOptions)) {
+        const newOptions = allOptions[options].map((filter) => {
+            return { value: filter, label: filter, type: options };
+        });
+
+        //add options into single array
+        filterOptions = filterOptions.concat(newOptions);
+    }
+    console.log("filterOptions create options", filterOptions);
+    return filterOptions;
+}
+
 ///change the filter
-//todo implement a creatable select for filter
 function handleFilter(filterArr, setters) {
     let diets = [];
-    let categories = [];
+    let other = [];
 
     filterArr.forEach((event) => {
         //if filter is of dietOptionsarr type
@@ -217,9 +217,9 @@ function handleFilter(filterArr, setters) {
             diets.push(event.value);
         }
         if (event.type === "otherOptions") {
-            categories.push(event.value);
+            other.push(event.value);
         }
     });
-    console.log("diets : ", diets);
     setters.diets(diets);
+    setters.other(other);
 }
