@@ -62,9 +62,13 @@ export function FilterList({
     // iterate through extracted options and add options to multiselect
     let allOptions = { dietOptionsArr, otherOptionsAvailableArr };
     for (let options of Object.keys(allOptions)) {
-        console.log("options", options);
-        console.log("options", allOptions[options]);
+        const newOptions = allOptions[options].map((filter) => {
+            return { value: filter, label: filter, type: options };
+        });
+
+        filterOptions = filterOptions.concat(newOptions);
     }
+    console.log("filterOptions", filterOptions);
 
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
