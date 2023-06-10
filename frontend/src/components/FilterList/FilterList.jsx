@@ -60,16 +60,38 @@ export function FilterList({
     //
     //todo load option into select
     // iterate through extracted options and add options to multiselect
-    let allOptions = { dietOptionsArr, otherOptionsAvailableArr };
+    let allOptions = {
+        dietOptions: dietOptionsArr,
+        otherOptions: otherOptionsAvailableArr,
+    };
     for (let options of Object.keys(allOptions)) {
         const newOptions = allOptions[options].map((filter) => {
             return { value: filter, label: filter, type: options };
         });
 
+        //add options into single array
         filterOptions = filterOptions.concat(newOptions);
     }
     console.log("filterOptions", filterOptions);
 
+    ///change the filter
+    //todo implement a creatable select for filter
+    function handleFilter(filterArr) {
+        let diets = [];
+        let others = [];
+
+        filterArr.forEach((event) => {
+            //if filter is of dietOptionsarr type
+            if (event.type === "dietOptions") {
+                diets.push(event.value);
+            }
+            if (event.type === "otherOptions") {
+                others.push(event.value);
+            }
+        });
+        console.log("diets : ", diets);
+        setDietFilter(diets);
+    }
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
         setDietFilter((state) => {
@@ -99,15 +121,11 @@ export function FilterList({
             return state.filter((category) => category !== str);
         });
     }
-    //todo implement a creatable select for filter
-
-    function handleFilter(event) {
-        console.log("event from change on creatable select", event);
-    }
 
     return (
         <Filter className="main-filter-container">
             <CreatableSelect
+                closeMenuOnSelect={false}
                 isMulti
                 options={filterOptions}
                 onChange={handleFilter}
