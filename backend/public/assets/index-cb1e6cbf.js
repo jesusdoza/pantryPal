@@ -105,6 +105,7 @@ Error generating stack: `+a.message+`
     }
 
     .logo {
+        width: 7em;
     }
 
     a {
@@ -237,10 +238,19 @@ Error generating stack: `+a.message+`
         }
     }
 
+    @media screen and (max-width: 319px) {
+            padding: 0;
+
+        .logo {
+            width: 3em;
+        }
+    }
+
     @media ${Ve.mobileS} {
         min-width: 200px;
         font-size: 0.9rem;
         .logo {
+                width: 7em;
         }
     }
 
