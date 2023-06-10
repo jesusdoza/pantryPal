@@ -60,6 +60,8 @@ export function FilterList({
     //
     //todo load option into select
     // iterate through extracted options and add options to multiselect
+
+    //createSelectOptions()
     let allOptions = {
         dietOptions: dietOptionsArr,
         otherOptions: otherOptionsAvailableArr,
@@ -74,24 +76,6 @@ export function FilterList({
     }
     console.log("filterOptions", filterOptions);
 
-    ///change the filter
-    //todo implement a creatable select for filter
-    function handleFilter(filterArr) {
-        let diets = [];
-        let others = [];
-
-        filterArr.forEach((event) => {
-            //if filter is of dietOptionsarr type
-            if (event.type === "dietOptions") {
-                diets.push(event.value);
-            }
-            if (event.type === "otherOptions") {
-                others.push(event.value);
-            }
-        });
-        console.log("diets : ", diets);
-        setDietFilter(diets);
-    }
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
         setDietFilter((state) => {
@@ -128,7 +112,12 @@ export function FilterList({
                 closeMenuOnSelect={false}
                 isMulti
                 options={filterOptions}
-                onChange={handleFilter}
+                onChange={(filters) => {
+                    handleFilter(filters, {
+                        diets: setDietFilter,
+                        categories: setCategoryFilter,
+                    });
+                }}
             />
             {dietFilter.length > 0 ? (
                 <section>
@@ -214,4 +203,23 @@ export function FilterList({
             </section>
         </Filter>
     );
+}
+
+///change the filter
+//todo implement a creatable select for filter
+function handleFilter(filterArr, setters) {
+    let diets = [];
+    let categories = [];
+
+    filterArr.forEach((event) => {
+        //if filter is of dietOptionsarr type
+        if (event.type === "dietOptions") {
+            diets.push(event.value);
+        }
+        if (event.type === "otherOptions") {
+            categories.push(event.value);
+        }
+    });
+    console.log("diets : ", diets);
+    setters.diets(diets);
 }
