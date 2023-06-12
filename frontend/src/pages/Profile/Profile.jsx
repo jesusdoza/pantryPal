@@ -3,12 +3,15 @@ import { Dashboard } from "./Profile.styles";
 import Cookies from "js-cookie";
 import { Modal } from "./Modal";
 import { ProfileUpdateService } from "./services/ProfileUpdateService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import SucessCard from "./components/SuccessCard/SuccessCard";
 import ErrorCard from "./ErrorCard";
 import PasswordUpdateForm from "./components/PasswordUpdateForm/PasswordUpdateForm";
 import EmailUpdateForm from "./components/EmailUpdateForm/EmailUpdateForm";
 import CaloricUpdateForm from "./components/CaloricForm/CaloricUpdateForm";
+import CreatableSelect from "./components/DietaryFilter/DietaryFilter"
 
 function ProfilePage() {
     //have the updatemodal component held in variable and change the
@@ -48,7 +51,10 @@ function ProfilePage() {
                     <picture>
                         {/* <source srcset="https://cdn.discordapp.com/attachments/1076184648599744674/1091575853470732288/PantryPal_Logo_TPB.png"></source> */}
                         <source srcSet="https://media.discordapp.net/attachments/1076184648599744674/1091475961280741426/EggMoonSnap.png?width=493&height=487"></source>
-                        <img src="/src/assets/spoon.png" alt="user avatar" />
+                        <FontAwesomeIcon 
+                            icon={faUser}
+                            className="userIcon"
+                        />
                     </picture>
                     <h3>Hi! Bob</h3>
                     <h3>Email@email.com</h3>
@@ -56,26 +62,7 @@ function ProfilePage() {
                 <section className="container app-config">
                     <section>
                         <h4>Your Dietary Preferences</h4>
-                        <ul className="app-pref">
-                            <li>
-                                <div>
-                                    <span>Gluten Free</span>
-                                </div>
-                            </li>
-                            <li>Ketogenic</li>
-                            <li>Vegetarian</li>
-                            <li>Lacto-Vegetarian</li>
-                            <li>Ovo-Vegetarian</li>
-                            <li>Vegan</li>
-                            <li>Pescetarian</li>
-                            <li>Paleo</li>
-                            <li>Primal</li>
-                        </ul>
-                        <div className="controls">
-                            <span className="btn">
-                                Update Dietary Preferences
-                            </span>
-                        </div>
+                        <CreatableSelect />
                     </section>
                     <ul className="options">
                         <li

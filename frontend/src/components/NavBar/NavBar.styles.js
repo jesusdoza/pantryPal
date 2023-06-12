@@ -35,6 +35,7 @@ export const Nav = styled.nav`
     }
 
     .logo {
+        width: 7em;
     }
 
     a {
@@ -167,10 +168,19 @@ export const Nav = styled.nav`
         }
     }
 
+    @media screen and (max-width: 319px) {
+            padding: 0;
+
+        .logo {
+            width: 3em;
+        }
+    }
+
     @media ${device.mobileS} {
         min-width: 200px;
         font-size: 0.9rem;
         .logo {
+                width: 7em;
         }
     }
 
