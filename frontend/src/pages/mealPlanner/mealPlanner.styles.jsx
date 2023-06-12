@@ -1,13 +1,35 @@
 // styles.js
 import styled from 'styled-components';
+import { device } from '../../components/mediaQ/device';
+
+// Green
+let primary = "#2C4001";
+// Light Green
+let secondary = "#dae082";
+// Cream
+let lightCream = "#F2E7AE";
+// Dark Brown
+let darkBrown = "#59320F";
+// light white
+let highlight = "#F2F2F2";
 
 export const StyledMealPlanner = styled.section`
-  width: max(50%, 800px);
-  padding: 2%;
-  border-radius: 20px;
-  margin: 2% auto;
+  background: ${highlight};
+  padding: 1em;
+  border-radius: 5px;
+  margin: 2em;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: ${primary};
+  border: 1px solid ${primary};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
+  h1 {
+
+    color: ${primary};
+  }
   & h2 {
     color: black;
     width: 90%;
@@ -15,11 +37,26 @@ export const StyledMealPlanner = styled.section`
     text-align: center;
   }
 
+  .instructionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .instructionContainer h1 {
+    font-size: 2em;
+    text-align: center;
+  }
+
+  form label{
+    color: ${primary};
+  }
   & form {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 2%;
+    width: 100%;
   }
 
   & form input {
@@ -41,17 +78,26 @@ export const StyledMealPlanner = styled.section`
   }
 
   & form button {
-    background-color: #646cff;
-    color: white;
-    margin: 1% auto;
-    font-size: 1rem;
-    text-align: center;
-    padding: 0.5%;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+    outline: none;
+    display: flex;
+    align-items: center;
+    background-color: ${primary};
+    color: #fff;
+    padding: .8rem 1.2rem;
+    text-transform: uppercase;
+    border-radius: .5em;
     cursor: pointer;
+    border: 1px solid ${lightCream};
+    margin: .5em;
   }
 
   & form button:hover {
-    background-color: #4c52f7;
+    background: ${lightCream};
+    color: ${primary};
+    border: 1px solid ${primary};
   }
 
   & table {
@@ -76,5 +122,12 @@ export const StyledMealPlanner = styled.section`
 
   & tbody tr:nth-child(even) {
     background-color: #f2f2f2;
+  }
+
+  @media ${device.laptop}{
+    margin: 2em auto;
+    width: 100%;
+    max-width: 900px;
+
   }
 `;
