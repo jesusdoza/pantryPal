@@ -1,5 +1,7 @@
 import { Filter } from "./FilterList.styles";
 
+import CreatableSelect from "react-select/creatable";
+
 export function FilterList({
     recipeListArr,
     setDietFilter,
@@ -13,7 +15,9 @@ export function FilterList({
     }
     let dietOptions = new Set();
     let categoryOptionsAvailable = new Set();
-
+    let filterOptions = [
+        { value: "options", label: "label", otherthing: "otherthing" },
+    ];
     let categoryOptions = [
         "cheap",
         "veryPopular",
@@ -50,6 +54,12 @@ export function FilterList({
         categoryOptionsAvailable.values()
     );
 
+    //todo create options function to clean up
+    filterOptions = createSelectOptions({
+        dietOptions: dietOptionsArr,
+        otherOptions: otherOptionsAvailableArr,
+    });
+
     ///REMOVE OR ADD DIET FILTER
     function addDietFilter(str) {
         setDietFilter((state) => {
@@ -82,92 +92,54 @@ export function FilterList({
 
     return (
         <Filter className="main-filter-container">
-            {dietFilter.length > 0 ? (
-                <section>
-                    <h2>Selected filters: </h2>
-                    
-                    <ul>
-                        {dietFilter.map((item, index) => {
-                            return (
-                                <li
-                                    key={index + item}
-                                    onClick={() => {
-                                        removeDietFilter(item);
-                                    }}
-                                    className="btn-filter">
-                                    {item}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </section>
-            ) : (
-                <section></section>
-            )}
-
-            {categoryFilter.length > 0 ? (
-                <section>
-                    <h2>Category filters</h2>
-                    <ul>
-                        {categoryFilter.map((category, index) => {
-                            return (
-                                <li
-                                    key={index + category}
-                                    onClick={() => {
-                                        removeCategoryFilter(category);
-                                    }}
-                                    className="btn-filter">
-                                    {category}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </section>
-            ) : (
-                <section></section>
-            )}
-            <section className="filter-row">
-                <h2>Dietary options:</h2>
-                
-                <ul className="filter-options">
-                    {dietOptionsArr.length > 0 ? (
-                        dietOptionsArr.map((item, index) => {
-                            return (
-                                
-                                <li
-                                    onClick={() => {
-                                        addDietFilter(item);
-                                    }}
-                                    className="btn"
-                                    key={index + item + 1}>
-                                            <span>{item}</span>
-
-                                    
-                                </li>
-                            );
-                        })
-                    ) : (
-                        <></>
-                    )}
-                </ul>
-            </section>
-            <section className="filter-row">
-                <h2>Categories:</h2>
-                <ul className="filter-options">
-                    {otherOptionsAvailableArr.map((option, index) => {
-                        return (
-                            <li
-                                onClick={() => {
-                                    addCategoryFilter(option);
-                                }}
-                                key={option + index + 2}
-                                className="btn">
-                                <span>{option}</span>
-                            </li>
-                        );
-                    })}
-                </ul>
+            <section className="filter-container">
+                <h2>Filter Results</h2>
+                <CreatableSelect
+                    closeMenuOnSelect={false}
+                    isMulti
+                    options={filterOptions}
+                    onChange={(filters) => {
+                        handleFilter(filters, {
+                            diets: setDietFilter,
+                            other: setCategoryFilter,
+                        });
+                    }}
+                />
             </section>
         </Filter>
     );
+}
+
+//build options for react-select component to use
+function createSelectOptions(allOptions) {
+    let filterOptions = [];
+    for (let options of Object.keys(allOptions)) {
+        const newOptions = allOptions[options].map((filter) => {
+            return { value: filter, label: filter, type: options };
+        });
+
+        //add options into single array
+        filterOptions = filterOptions.concat(newOptions);
+    }
+    // console.log("filterOptions create options", filterOptions);
+    return filterOptions;
+}
+
+///change the filter
+// function handleFilter(filterArr:[], setters:{diets:setDiets, other: setOtheroptions}) {
+function handleFilter(filterArr, setters) {
+    let diets = [];
+    let other = [];
+
+    filterArr.forEach((event) => {
+        //if filter is of dietOptionsarr type
+        if (event.type === "dietOptions") {
+            diets.push(event.value);
+        }
+        if (event.type === "otherOptions") {
+            other.push(event.value);
+        }
+    });
+    setters.diets(diets);
+    setters.other(other);
 }

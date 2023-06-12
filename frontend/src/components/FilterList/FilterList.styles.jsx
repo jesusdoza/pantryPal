@@ -1,27 +1,29 @@
 import styled from "styled-components";
 
 // Green
-let primary = '#2C4001';
+let primary = "#2C4001";
 // Light Green
-let secondary = '#D6D979';
+let secondary = "#D6D979";
 // Cream
-let lightCream = '#F2E7AE';
+let lightCream = "#F2E7AE";
 // Dark Brown
-let darkBrown = '#59320F';
+let darkBrown = "#59320F";
 // light white
-let highlight = '#F2F2F2';
+let highlight = "#F2F2F2";
 
 export const Filter = styled.section`
-   
     color: ${primary};
-
-
+    background-color: ${lightCream};
     width: 100%;
+    display: flex;
+    flex-direction: column;
 
     //FILTER SECTION
-
+    h2 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
     li {
-       
     }
 
     ul {
@@ -37,15 +39,14 @@ export const Filter = styled.section`
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        padding: .2em .4em;
-        border-radius: .5em;
+        padding: 0.2em 0.4em;
+        border-radius: 0.5em;
         text-align: center;
         background-color: ${primary};
         color: ${highlight};
         border: 1px solid ${primary};
     }
     & .btn-filter {
-
         padding: 5px 0;
         border-radius: 10px;
         text-align: center;
@@ -55,7 +56,6 @@ export const Filter = styled.section`
     }
     & .btn-filter:hover {
         cursor: pointer;
-   
     }
     & .btn:hover {
         cursor: pointer;
@@ -64,11 +64,11 @@ export const Filter = styled.section`
         border: 1px solid ${primary};
     }
     .filter-container {
-        padding: 0;
+        padding: 3%;
+        font-size: 1.2rem;
     }
     .filter-row h2 {
-        margin: .3em;
-        
+        margin: 0.3em;
     }
     .filter-row {
         display: flex;
@@ -84,19 +84,15 @@ export const Filter = styled.section`
         flex-wrap: wrap;
     }
     .filter-options li {
-        margin: .3em;
+        margin: 0.3em;
     }
 
     @media (min-width: 768px) {
-
     }
     @media (min-width: 900px) {
-
     }
     @media (min-width: 1200px) {
-
     }
     @media (min-width: 1600px) {
-
     }
 `;
