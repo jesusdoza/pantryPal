@@ -106,92 +106,11 @@ export function FilterList({
                     }}
                 />
             </section>
-            {/* {dietFilter.length > 0 ? (
-                <section>
-                    <h2>Selected filters: </h2>
-
-                    <ul>
-                        {dietFilter.map((item, index) => {
-                            return (
-                                <li
-                                    key={index + item}
-                                    onClick={() => {
-                                        removeDietFilter(item);
-                                    }}
-                                    className="btn-filter">
-                                    {item}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </section>
-            ) : (
-                <section></section>
-            )}
-            {categoryFilter.length > 0 ? (
-                <section>
-                    <h2>Category filters</h2>
-                    <ul>
-                        {categoryFilter.map((category, index) => {
-                            return (
-                                <li
-                                    key={index + category}
-                                    onClick={() => {
-                                        removeCategoryFilter(category);
-                                    }}
-                                    className="btn-filter">
-                                    {category}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </section>
-            ) : (
-                <section></section>
-            )} */}
-            {/* <section className="filter-row">
-                <h2>Dietary options:</h2>
-
-                <ul className="filter-options">
-                    {dietOptionsArr.length > 0 ? (
-                        dietOptionsArr.map((item, index) => {
-                            return (
-                                <li
-                                    onClick={() => {
-                                        addDietFilter(item);
-                                    }}
-                                    className="btn"
-                                    key={index + item + 1}>
-                                    <span>{item}</span>
-                                </li>
-                            );
-                        })
-                    ) : (
-                        <></>
-                    )}
-                </ul>
-            </section>
-            <section className="filter-row">
-                <h2>Categories:</h2>
-                <ul className="filter-options">
-                    {otherOptionsAvailableArr.map((option, index) => {
-                        return (
-                            <li
-                                onClick={() => {
-                                    addCategoryFilter(option);
-                                }}
-                                key={option + index + 2}
-                                className="btn">
-                                <span>{option}</span>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </section> */}
         </Filter>
     );
 }
 
+//build options for react-select component to use
 function createSelectOptions(allOptions) {
     let filterOptions = [];
     for (let options of Object.keys(allOptions)) {
@@ -202,11 +121,12 @@ function createSelectOptions(allOptions) {
         //add options into single array
         filterOptions = filterOptions.concat(newOptions);
     }
-    console.log("filterOptions create options", filterOptions);
+    // console.log("filterOptions create options", filterOptions);
     return filterOptions;
 }
 
 ///change the filter
+// function handleFilter(filterArr:[], setters:{diets:setDiets, other: setOtheroptions}) {
 function handleFilter(filterArr, setters) {
     let diets = [];
     let other = [];

@@ -13,13 +13,16 @@ let highlight = "#F2F2F2";
 
 export const Filter = styled.section`
     color: ${primary};
-
+    background-color: ${lightCream};
     width: 100%;
     display: flex;
     flex-direction: column;
 
     //FILTER SECTION
-
+    h2 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
     li {
     }
 
@@ -61,7 +64,8 @@ export const Filter = styled.section`
         border: 1px solid ${primary};
     }
     .filter-container {
-        padding: 20px;
+        padding: 3%;
+        font-size: 1.2rem;
     }
     .filter-row h2 {
         margin: 0.3em;
