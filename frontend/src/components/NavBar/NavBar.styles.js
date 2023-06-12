@@ -181,7 +181,7 @@ export const Nav = styled.nav`
         font-size: 0.9rem;
         .logo {
                 width: 7em;
-        }
+p        }
     }
 
     @media ${device.mobileM} {

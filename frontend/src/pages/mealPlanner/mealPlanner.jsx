@@ -34,7 +34,15 @@ function MealPlannerComponent() {
 
     return (
         <StyledMealPlanner>
+            <section className="instructionContainer">
+                <h1>Welcome to the Pantry Pal Meal Planner</h1>
+                <p>
+                Using the SmartMeal Planner is a breeze. Start by entering the number of days you'd like to plan for, ranging from a single day to an entire week. Next, select your desired diet type from a variety of options such as vegetarian, vegan, or keto. To ensure your nutritional needs are met, specify your desired daily calorie intake.
+                </p>
+
+            </section>
             <form onSubmit={handleSubmit}>
+                <h1>Meal Planner</h1>
                 <label htmlFor="numberOfDays">Number of days:</label>
                 <select
                     id="numberOfDays"
