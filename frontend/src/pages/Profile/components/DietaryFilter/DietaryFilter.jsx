@@ -22,5 +22,6 @@ export default () => (
       options={options}
       className="basic-multi-select"
       classNamePrefix="select"
+
     />
   );
