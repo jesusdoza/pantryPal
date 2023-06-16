@@ -25,6 +25,7 @@ export const ModalStyles = styled.section`
     left: 0;
     right: 0;
     /* scale: 0; */
+    z-index: 999;
 
     .container {
         display: flex;
@@ -54,7 +55,6 @@ export const ModalStyles = styled.section`
         width: 100%;
         height: 100vh;
         gap: 1rem;
-
         /* border: green solid 40px; */
 
         & h1 {
@@ -79,14 +79,14 @@ export const ModalStyles = styled.section`
         }
 
         #modal {
-            z-index: 3;
+            z-index: 2;
             background-color: ${main_bg};
             padding: 1rem;
             border-radius: 2rem;
             width: 80%;
             max-width: 300px;
             min-height: 300px;
-
+            
             .btn {
                 padding: 0 0.4rem;
             }

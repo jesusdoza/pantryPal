@@ -78,6 +78,10 @@ export const Dashboard = styled.section`
         margin: 0;
         padding: 0;
     }
+
+    .select {
+        
+    }
     .btn {
 
         padding: 1.3rem;

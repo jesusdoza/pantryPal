@@ -62,7 +62,7 @@ function ProfilePage() {
                 <section className="container app-config">
                     <section>
                         <h4>Your Dietary Preferences</h4>
-                        <CreatableSelect />
+                        <CreatableSelect className="select"/>
                     </section>
                     <ul className="options">
                         <li
