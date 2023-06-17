@@ -1,5 +1,5 @@
 {
-  "name": "Pantry Pal",
+  "name": "2023-pantry-pal",
   "version": "1.0.0",
   "description": "Backend - \r 1. Fork this repo, open in VSCode and in the terminal `cd backend` and do an `npm install` command\r 2. Create a .env file in the root of the backend file and get the necessary variables from the docs\r 3. The run command is `npm run dev` which will run nodemon to listen for any backend changes\r 4. If the server runs successfully, there will be a \"connected to DB & server ready at http://localhost:PORT\" message displayed in the console",
   "main": "index.js",
