@@ -52,7 +52,6 @@ function LoginScreen() {
 
     return (
         <StyledSignup>
-            <h1>test new build on deploy render</h1>
             <section className="login-container">
                 <div>
                     <img
