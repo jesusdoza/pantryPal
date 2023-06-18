@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../../context/userContext.jsx";
 import { NavLink } from "react-router-dom";
-import PantryPalLogo from "../../assets/PantryPalAvo.png"
+import PantryPalLogo from "../../assets/PantryPalAvo.png";
 
 function LoginScreen() {
     const usernameRef = useRef(null);
@@ -53,72 +53,75 @@ function LoginScreen() {
     return (
         <StyledSignup>
             <section className="login-container">
-            <div>
-            <img src={PantryPalLogo} alt="Pantry Pal Logo" className="logo"/>
-            
-            </div>
-            <section className="form-sect">
-                <form onSubmit={handleSubmit}>
-                    <div className="title">
-                        <div>{isLoggedIn && "logged in"}</div>
-                        <h2>Welcome Back!</h2>
-                    </div>
-
-                    {error && (
-                        <div className="error-container">
-                            <div className="error-desc">
-                                <span className="error-marker">&#x26A0;</span>{" "}
-                                {error}
-                            </div>
+                <div>
+                    <img
+                        src={PantryPalLogo}
+                        alt="Pantry Pal Logo"
+                        className="logo"
+                    />
+                </div>
+                <section className="form-sect">
+                    <form onSubmit={handleSubmit}>
+                        <div className="title">
+                            <div>{isLoggedIn && "logged in"}</div>
+                            <h2>Welcome Back!</h2>
                         </div>
-                    )}
-                    <div className="input-container">
-                        <label className="input-tag" htmlFor="username">
-                           
-                        </label>
-                        <input
-                            id="username"
-                            type="text"
-                            placeholder="Username"
-                            ref={usernameRef}
-                            value={username}
-                            onChange={(event) =>
-                                setUsername(event.target.value)
-                            }
-                            required
-                        />
-                    </div>
-                    <div className="input-container">
-                        <label className="input-tag" htmlFor="password">
-                            
-                        </label>
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="Password"
-                            ref={passwordRef}
-                            value={password}
-                            onChange={(event) =>
-                                setPassword(event.target.value)
-                            }
-                            required
-                        />
-                    </div>
-                    <div className="submit-btn">
-                        <button type="submit" className="btn">
-                            Sign In
-                        </button>
-                    </div>
 
-                    <span>Don't have an account?</span>
-                    <NavLink className="page" to="/signup">
-                        Sign up
-                    </NavLink>
-                </form>
-            </section>
-            </section>
-            
+                        {error && (
+                            <div className="error-container">
+                                <div className="error-desc">
+                                    <span className="error-marker">
+                                        &#x26A0;
+                                    </span>{" "}
+                                    {error}
+                                </div>
+                            </div>
+                        )}
+                        <div className="input-container">
+                            <label
+                                className="input-tag"
+                                htmlFor="username"></label>
+                            <input
+                                id="username"
+                                type="text"
+                                placeholder="Username"
+                                ref={usernameRef}
+                                value={username}
+                                onChange={(event) =>
+                                    setUsername(event.target.value)
+                                }
+                                required
+                            />
+                        </div>
+                        <div className="input-container">
+                            <label
+                                className="input-tag"
+                                htmlFor="password"></label>
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Password"
+                                ref={passwordRef}
+                                value={password}
+                                onChange={(event) =>
+                                    setPassword(event.target.value)
+                                }
+                                required
+                            />
+                        </div>
+                        <div className="submit-btn">
+                            <button type="submit" className="btn">
+                                Sign In
+                            </button>
+                        </div>
 
+                        <span>Don't have an account?</span>
+                        <NavLink className="page" to="/signup">
+                            Sign up
+                        </NavLink>
+                    </form>
+                </section>
+            </section>
         </StyledSignup>
     );
 }
