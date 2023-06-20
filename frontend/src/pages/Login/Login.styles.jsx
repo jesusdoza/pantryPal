@@ -26,10 +26,10 @@ export const StyledSignup = styled.section`
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: #1e3d21ed;
+        background-color: ${primary};
         section {
             h2 {
-                color: white;
+                color: ${lightCream};
                 text-align: center;
             }
         }
