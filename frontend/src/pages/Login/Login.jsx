@@ -27,6 +27,7 @@ function LoginScreen() {
         event.preventDefault();
 
         try {
+            setError("");
             const axiosResponse = await axios.post(
                 `${import.meta.env.VITE_API_IP}/api/login`,
                 { username, password },
@@ -46,6 +47,7 @@ function LoginScreen() {
             navigate("/search");
         } catch (error) {
             setIsLoggedIn(false);
+            setError(error.response.data.message);
             console.log(error);
         }
     };
