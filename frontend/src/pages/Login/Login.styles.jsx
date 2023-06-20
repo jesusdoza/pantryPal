@@ -17,6 +17,7 @@ export const StyledSignup = styled.section`
 
     & .login-container {
         position: relative;
+        overflow: hidden;
     }
     & .loading {
         z-index: 10;
