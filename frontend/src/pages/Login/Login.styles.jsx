@@ -15,6 +15,25 @@ let highlight = "#F2F2F2";
 export const StyledSignup = styled.section`
     height: 100%;
 
+    & .login-container {
+        position: relative;
+        background-color: green;
+    }
+    & .loading {
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        section {
+            background-color: #1e3d218b;
+            h2 {
+                text-align: center;
+            }
+        }
+    }
     & a {
         text-decoration: none;
         color: inherit;
@@ -40,26 +59,19 @@ export const StyledSignup = styled.section`
         align-items: center;
         color: ${highlight};
         background: ${primary};
-        border-radius: 0  0 20px 20px;
-        
-
+        border-radius: 0 0 20px 20px;
     }
     & .about li {
         list-style: none;
-
     }
 
     & .about ul {
         padding: 0;
-
     }
     & .about p {
         padding: 1.5em;
     }
     & .form-sect {
-  
-
-
     }
     & form {
         display: flex;
@@ -67,7 +79,6 @@ export const StyledSignup = styled.section`
         align-items: center;
         flex-direction: column;
         padding: 1em;
-        
     }
 
     & form div {
@@ -88,7 +99,7 @@ export const StyledSignup = styled.section`
         font-size: 1.5rem;
         border: none;
         width: 100%;
-        padding: .5em;
+        padding: 0.5em;
         background-color: ${highlight};
         border-radius: 5px;
         color: #3c3b3b;
@@ -99,12 +110,11 @@ export const StyledSignup = styled.section`
     }
     & .input-tag {
         color: ${highlight};
-        
     }
 
     & form div.title {
         text-align: center;
-        
+
         padding: 1%;
     }
 
@@ -112,7 +122,7 @@ export const StyledSignup = styled.section`
         color: #000000;
         width: 100%;
         border-radius: 5px;
-        padding: .5em;
+        padding: 0.5em;
         background: ${secondary};
         color: #000000;
         font-size: 1.5em;
@@ -127,7 +137,7 @@ export const StyledSignup = styled.section`
     }
 
     & .submit-btn button {
-        margin: .4em 0;
+        margin: 0.4em 0;
         display: flex;
         justify-content: center;
         background: ${primary};
@@ -163,16 +173,15 @@ export const StyledSignup = styled.section`
     }
 
     @media ${device.tablet} {
-        .logo{
+        .logo {
             width: 50%;
         }
-        form{
+        form {
             margin: 0 auto;
             width: 60%;
         }
     }
     @media ${device.laptop} {
-        
         display: flex;
         justify-content: center;
         align-items: center;
@@ -186,29 +195,24 @@ export const StyledSignup = styled.section`
             display: flex;
             flex-direction: column;
         }
-        
-        .logo{
+
+        .logo {
             width: 60%;
         }
         form {
             width: 100%;
-            
         }
         & form input {
             background: white;
         }
-        
     }
 
     @media ${device.laptopL} {
-        .logo{
-           
+        .logo {
         }
-        form{
-            
+        form {
         }
     }
     @media ${device.desktop} {
-
     }
 `;
