@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Login.styles.jsx";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../../context/userContext.jsx";
 import { NavLink } from "react-router-dom";
 import PantryPalLogo from "../../assets/PantryPalAvo.png";
+import SearchSpinner from "../../components/SearchSpinner/SearchSpinner.jsx";
 
 function LoginScreen() {
     const usernameRef = useRef(null);
@@ -14,6 +14,7 @@ function LoginScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const { userProfile, isLoggedIn, setIsLoggedIn, setUserProfile } =
@@ -25,8 +26,9 @@ function LoginScreen() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setLoading(true);
         try {
+            setError("");
             const axiosResponse = await axios.post(
                 `${import.meta.env.VITE_API_IP}/api/login`,
                 { username, password },
@@ -45,7 +47,9 @@ function LoginScreen() {
 
             navigate("/search");
         } catch (error) {
+            setLoading(false);
             setIsLoggedIn(false);
+            setError(error.response.data.message);
             console.log(error);
         }
     };
@@ -53,6 +57,16 @@ function LoginScreen() {
     return (
         <StyledSignup>
             <section className="login-container">
+                {loading ? (
+                    <div className="loading">
+                        <section>
+                            <h2>Loggin in</h2>
+                            <SearchSpinner />
+                        </section>
+                    </div>
+                ) : (
+                    <></>
+                )}
                 <div>
                     <img
                         src={PantryPalLogo}
