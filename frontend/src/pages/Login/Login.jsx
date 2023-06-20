@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyledSignup } from "./Login.styles.jsx";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
