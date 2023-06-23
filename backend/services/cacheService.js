@@ -28,13 +28,14 @@ class CacheService {
 
         // check database for cache
         result = await this.getFromDataBase(key);
+        //todo check date on cache
         if (!result) {
             //no cache found in database
             return false;
         }
 
-        //database returned key set in memory cache aswell
-        this.set(key, result);
+        //database returned key also set in memory cache aswell
+        // this.set(key, result);//! move to getFromDataBase
         return result;
     }
 
@@ -58,6 +59,7 @@ class CacheService {
             const foundItem = await this.model.findOne({ key });
 
             if (foundItem !== null) {
+                this.set(key, foundItem);
                 return foundItem.data;
             }
 

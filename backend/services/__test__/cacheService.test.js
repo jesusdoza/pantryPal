@@ -1,12 +1,26 @@
 const cache = require("../cacheService");
 
+let oldDate = new Date();
+let goodDate = new Date();
+oldDate.setDate(5);
+
 const mockModel = {
     create: jest.fn((obj) => obj),
     findOne: jest.fn((obj) => {
         if (obj.key == "getFail") {
             return null;
+        } else if (obj.key == "oldData") {
+            return {
+                key: "oldData",
+                data: [{ recipe: "oldData" }, { recipe: "oldData" }],
+                createdAt: oldDate,
+            };
         } else {
-            return { data: [{ recipe: "data" }, { recipe: "data" }] };
+            return {
+                key: "goodData",
+                data: [{ recipe: "data" }, { recipe: "data" }],
+                createdAt: goodDate,
+            };
         }
     }),
 };
@@ -18,6 +32,11 @@ beforeEach(() => {
 });
 
 describe("test cacheService", () => {
+    it("should not return old cache", async () => {
+        const result = await cacheInstance.get("oldData");
+        expect(result[0].recipe).not.toBe("oldData");
+    });
+
     it("should not save if value is empty arr", async () => {
         const result = await cacheInstance.set("bob", []);
         expect(result).toBe(false);
