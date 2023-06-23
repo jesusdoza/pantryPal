@@ -1,7 +1,7 @@
 const API = require("../services/spoonacular");
 const CacheService = require("../services/cacheService");
-const recipeCache = require("../models/recipeCacheModel");
-const recipeByIngredientCache = new CacheService(recipeCache);
+const recipeCacheModel = require("../models/recipeCacheModel");
+const recipeByIngredientCache = new CacheService(recipeCacheModel);
 const combineRecipeData = require("../utilities/combinedRecipeData");
 
 const getRecipesByIngredient = async (req, res) => {
@@ -73,7 +73,6 @@ const getRelatedRecipe = async (req, res) => {
     }
 };
 
-//todo the combined data
 const getRecipesByIngredientCombinedData = async (req, res) => {
     const ingredientsList = req.query.ingredients;
 
@@ -88,7 +87,7 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
         ingredientsList.replace(/,/g, ",+")
     );
 
-    //!check recipeByIngredientCache
+    //check Cache
     let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
     //cache had values return
