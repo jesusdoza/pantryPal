@@ -25,7 +25,7 @@ module.exports = {
     searchRecipeByIngredients: async (ingredientsListApi) => {
         try {
             const results = await axios.get(
-                `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsListApi}&apiKey=${process.env.API_KEY}`
+                `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsListApi}&number=100&apiKey=${process.env.API_KEY}`
             );
             return results.data;
         } catch (error) {
