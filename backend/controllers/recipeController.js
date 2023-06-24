@@ -19,7 +19,10 @@ const getRecipesByIngredient = async (req, res) => {
     );
 
     //check recipeByIngredientCache
-    let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
+    let recipes = await recipeByIngredientCache.get(
+        ingredientsListApiFormat,
+        5
+    );
 
     if (recipes) {
         res.status(200).json(recipes);

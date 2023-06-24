@@ -16,9 +16,15 @@ class CacheService {
         await this.saveToDataBase(key, data);
         return this.cache.set(key, data);
     }
+
+    //get data from memory cache or database cache
     async get(key) {
         //check in memory cache
         let cachedData = this.cache.get(key);
+
+        //get day
+        const cacheExpires = new Date();
+        cacheExpires.setDate(cacheExpires.getDate() - this.daysToInvalid);
 
         //found in local cache
         if (cachedData) {
@@ -27,17 +33,36 @@ class CacheService {
 
         // check database for cache
         cachedData = await this.getFromDataBase(key);
-        console.log("cached data", cachedData);
+
         //todo check date on cache
-        //todo do I want to return old stale data and fetch new?
+        //todo do I want to return old stale data and clear out old data?
+
         if (!cachedData) {
             //no cache found in database
             return false;
         }
 
-        //database returned key also set in memory cache aswell
-        // this.set(key, result);//! move to getFromDataBase
+        const isValid = this.checkDataValid(cachedData, cacheExpires);
+
+        //data is stale and should be deleted but return stale data
+        if (!isValid) {
+            this.deleteEntry(cachedData.key);
+            return cachedData;
+        }
+
+        //set memory cache and return old data
+        this.set(key, cachedData);
         return cachedData;
+    }
+
+    //TODO check data valid
+    checkDataValid(data, cacheExpires) {
+        if (data.createdAt < cacheExpires) {
+            return false;
+            // this.model.deleteOne({ test: "test" });
+            // this.cache.del(data.key)
+        }
+        return true;
     }
 
     async saveToDataBase(key, data) {
@@ -51,7 +76,7 @@ class CacheService {
                 // duplicate key already in database error
                 return true;
             }
-            console.log("cache saveToDataBase error", error);
+            // console.log("cache saveToDataBase error", error);
             return false;
         }
     }
@@ -60,7 +85,7 @@ class CacheService {
             const foundItem = await this.model.findOne({ key });
 
             if (foundItem !== null) {
-                this.set(key, foundItem);
+                // this.set(key, foundItem);
                 // return foundItem.data;
                 return foundItem;
             }
@@ -70,6 +95,10 @@ class CacheService {
             console.log("cache getFromDataBase error", error);
             return false;
         }
+    }
+
+    async deleteEntry(key) {
+        await this.model.deleteOne({ key: key });
     }
 }
 
