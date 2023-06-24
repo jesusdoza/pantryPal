@@ -92,7 +92,7 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
 
     //cache had values return
     if (recipes) {
-        res.status(200).json(recipes);
+        res.status(200).json(recipes.data);
         return;
     }
 

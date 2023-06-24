@@ -62,6 +62,6 @@ describe("test cacheService", () => {
     });
     it("should return array of recipes when in database", async () => {
         const result = await cacheInstance.get("getPass");
-        expect(Array.isArray(result)).toBe(true);
+        expect(Array.isArray(result.data)).toBe(true);
     });
 });

@@ -1,42 +1,43 @@
 const NodeCache = require("node-cache");
 
 class CacheService {
-    constructor(model) {
+    constructor(model, daysToInvalid = 5) {
         this.cache = new NodeCache({ stdTTL: 300, checkperiod: 150 });
         this.model = model;
+        this.daysToInvalid = daysToInvalid;
     }
 
     async set(key, data) {
         //no data
         if (!data) return false;
 
-        //empty data
+        //verify data is in an array and is valid before saving to cache
         if (data instanceof Array && !data.length) return false;
-
         await this.saveToDataBase(key, data);
-
         return this.cache.set(key, data);
     }
     async get(key) {
         //check in memory cache
-        let result = this.cache.get(key);
+        let cachedData = this.cache.get(key);
 
         //found in local cache
-        if (result) {
-            return result;
+        if (cachedData) {
+            return cachedData;
         }
 
         // check database for cache
-        result = await this.getFromDataBase(key);
+        cachedData = await this.getFromDataBase(key);
+        console.log("cached data", cachedData);
         //todo check date on cache
-        if (!result) {
+        //todo do I want to return old stale data and fetch new?
+        if (!cachedData) {
             //no cache found in database
             return false;
         }
 
         //database returned key also set in memory cache aswell
         // this.set(key, result);//! move to getFromDataBase
-        return result;
+        return cachedData;
     }
 
     async saveToDataBase(key, data) {
@@ -60,7 +61,8 @@ class CacheService {
 
             if (foundItem !== null) {
                 this.set(key, foundItem);
-                return foundItem.data;
+                // return foundItem.data;
+                return foundItem;
             }
 
             return false;
