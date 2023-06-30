@@ -6,6 +6,7 @@ const combineRecipeData = require("../utilities/combinedRecipeData");
 
 const getRecipesByIngredient = async (req, res) => {
     const ingredientsList = req.query.ingredients;
+    const numOfResults = 20; //todo allow front end to request certain amount of results
 
     //verify ingredients exist
     if (!ingredientsList) {
@@ -31,7 +32,10 @@ const getRecipesByIngredient = async (req, res) => {
 
     //data not cached query apiService
     try {
-        recipes = await API.searchRecipeByIngredients(ingredientsListApiFormat);
+        recipes = await API.searchRecipeByIngredients(
+            ingredientsListApiFormat,
+            numOfResults
+        );
 
         let recipeIdList = recipes.map((recipe) => recipe.id);
 

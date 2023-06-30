@@ -22,10 +22,13 @@ module.exports = {
             res.status(400).json(error);
         }
     },
-    searchRecipeByIngredients: async (ingredientsListApi) => {
+    searchRecipeByIngredients: async (
+        ingredientsListApi,
+        numOfResults = 100
+    ) => {
         try {
             const results = await axios.get(
-                `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsListApi}&number=100&apiKey=${process.env.API_KEY}`
+                `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsListApi}&number=${numOfResults}&apiKey=${process.env.API_KEY}`
             );
             return results.data;
         } catch (error) {
