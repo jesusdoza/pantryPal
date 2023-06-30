@@ -43,6 +43,7 @@ const getRecipesByIngredient = async (req, res) => {
 
         res.status(200).json(recipes);
     } catch (error) {
+        console.log("getRecipesByIngredient", error);
         res.status(400).json({
             message: "recipe search by ingredient error",
             err: error,
@@ -107,6 +108,10 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
         recipeByIngredientCache.set(ingredientsListApiFormat, recipeData);
         res.status(200).json(recipeData);
     } catch (error) {
+        console.log(
+            "getRecipesByIngredientCombinedData query api service",
+            error
+        );
         res.status(400).json({
             message: "recipe search by ingredient error",
             err: error,
@@ -115,13 +120,23 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
 };
 
 async function getApiData(ingredientsListApiFormat) {
-    //query API for recipes
-    let recipesList = await API.searchRecipeByIngredients(
-        ingredientsListApiFormat
-    );
+    let recipesList = [];
+    let recipeIdList = [];
+
+    try {
+        //query API for recipes
+        const response = await API.searchRecipeByIngredients(
+            ingredientsListApiFormat
+        );
+
+        //todo check if we hit api limit and handle it b/c it wont throw error
+        recipesList = response;
+    } catch (error) {
+        console.log("API search recipe by ingredients error");
+    }
 
     //extract IDs from recipes
-    let recipeIdList = recipesList.map((recipe) => recipe.id);
+    recipeIdList = recipesList.map((recipe) => recipe.id);
 
     //get instructions for all recipe ids
     const recipeInstructList = await API.getRecipeInstructions(recipeIdList);
