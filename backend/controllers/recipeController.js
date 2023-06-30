@@ -1,7 +1,7 @@
 const API = require("../services/spoonacular");
 const CacheService = require("../services/cacheService");
 const recipeCacheModel = require("../models/recipeCacheModel");
-const recipeByIngredientCache = new CacheService(recipeCacheModel);
+const recipeByIngredientCache = new CacheService(recipeCacheModel, 20);
 const combineRecipeData = require("../utilities/combinedRecipeData");
 
 const getRecipesByIngredient = async (req, res) => {

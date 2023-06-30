@@ -2,7 +2,7 @@ const NodeCache = require("node-cache");
 
 class CacheService {
     constructor(model, daysToInvalid = 5) {
-        this.cache = new NodeCache({ stdTTL: 300, checkperiod: 150 });
+        this.memCache = new NodeCache({ stdTTL: 300, checkperiod: 150 });
         this.model = model;
         this.daysToInvalid = daysToInvalid;
     }
@@ -14,19 +14,19 @@ class CacheService {
         //verify data is in an array and is valid before saving to cache
         if (data instanceof Array && !data.length) return false;
         await this.saveToDataBase(key, data);
-        return this.cache.set(key, data);
+        return this.memCache.set(key, data);
     }
 
     //get data from memory cache or database cache
     async get(key) {
         //check in memory cache
-        let cachedData = this.cache.get(key);
+        let cachedData = this.memCache.get(key);
 
-        //get day
+        //get today date
         const cacheExpires = new Date();
         cacheExpires.setDate(cacheExpires.getDate() - this.daysToInvalid);
 
-        //found in local cache
+        //found in local mem cache
         if (cachedData) {
             return cachedData;
         }
@@ -34,19 +34,17 @@ class CacheService {
         // check database for cache
         cachedData = await this.getFromDataBase(key);
 
-        //todo check date on cache
-        //todo do I want to return old stale data and clear out old data?
-
         if (!cachedData) {
             //no cache found in database
             return false;
         }
 
+        //valid data check
         const isValid = this.checkDataValid(cachedData, cacheExpires);
 
         //data is stale and should be deleted but return stale data
         if (!isValid) {
-            this.deleteEntry(cachedData.key);
+            this.deleteEntryFromCache(cachedData.key);
             return cachedData;
         }
 
@@ -59,8 +57,6 @@ class CacheService {
     checkDataValid(data, cacheExpires) {
         if (data.createdAt < cacheExpires) {
             return false;
-            // this.model.deleteOne({ test: "test" });
-            // this.cache.del(data.key)
         }
         return true;
     }
@@ -97,7 +93,10 @@ class CacheService {
         }
     }
 
-    async deleteEntry(key) {
+    //remove entry in mem cache and also database cache
+    async deleteEntryFromCache(key) {
+        console.log("deleting from cache key", key);
+        this.memCache.del(key);
         await this.model.deleteOne({ key: key });
     }
 }
