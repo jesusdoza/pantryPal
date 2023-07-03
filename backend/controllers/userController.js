@@ -43,7 +43,8 @@ async function updateEmail(req, res) {
     }
 }
 
-async function updateDietPref(req, res) {}
+async function updateDietPref(req, res) {
+}
 
 async function updatePassword(req, res) {
     const { oldPassword, newPassword } = req.body;

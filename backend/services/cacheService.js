@@ -1,41 +1,64 @@
 const NodeCache = require("node-cache");
 
 class CacheService {
-    constructor(model) {
-        this.cache = new NodeCache({ stdTTL: 300, checkperiod: 150 });
+    constructor(model, daysToInvalid = 5) {
+        this.memCache = new NodeCache({ stdTTL: 300, checkperiod: 150 });
         this.model = model;
+        this.daysToInvalid = daysToInvalid;
     }
 
     async set(key, data) {
         //no data
         if (!data) return false;
 
-        //empty data
+        //verify data is in an array and is valid before saving to cache
         if (data instanceof Array && !data.length) return false;
-
         await this.saveToDataBase(key, data);
-
-        return this.cache.set(key, data);
+        return this.memCache.set(key, data);
     }
+
+    //get data from memory cache or database cache
     async get(key) {
         //check in memory cache
-        let result = this.cache.get(key);
+        let cachedData = this.memCache.get(key);
 
-        //found in local cache
-        if (result) {
-            return result;
+        //get today date
+        const cacheExpires = new Date();
+        cacheExpires.setDate(cacheExpires.getDate() - this.daysToInvalid);
+
+        //found in local mem cache
+        if (cachedData) {
+            return cachedData;
         }
 
         // check database for cache
-        result = await this.getFromDataBase(key);
-        if (!result) {
+        cachedData = await this.getFromDataBase(key);
+
+        if (!cachedData) {
             //no cache found in database
             return false;
         }
 
-        //database returned key set in memory cache aswell
-        this.set(key, result);
-        return result;
+        //valid data check
+        const isValid = this.checkDataValid(cachedData, cacheExpires);
+
+        //data is stale and should be deleted but return stale data
+        if (!isValid) {
+            this.deleteEntryFromCache(cachedData.key);
+            return cachedData;
+        }
+
+        //set memory cache and return old data
+        this.set(key, cachedData);
+        return cachedData;
+    }
+
+    //TODO check data valid
+    checkDataValid(data, cacheExpires) {
+        if (data.createdAt < cacheExpires) {
+            return false;
+        }
+        return true;
     }
 
     async saveToDataBase(key, data) {
@@ -49,7 +72,7 @@ class CacheService {
                 // duplicate key already in database error
                 return true;
             }
-            console.log("cache saveToDataBase error", error);
+            // console.log("cache saveToDataBase error", error);
             return false;
         }
     }
@@ -58,7 +81,9 @@ class CacheService {
             const foundItem = await this.model.findOne({ key });
 
             if (foundItem !== null) {
-                return foundItem.data;
+                // this.set(key, foundItem);
+                // return foundItem.data;
+                return foundItem;
             }
 
             return false;
@@ -66,6 +91,13 @@ class CacheService {
             console.log("cache getFromDataBase error", error);
             return false;
         }
+    }
+
+    //remove entry in mem cache and also database cache
+    async deleteEntryFromCache(key) {
+        console.log("deleting from cache key", key);
+        this.memCache.del(key);
+        await this.model.deleteOne({ key: key });
     }
 }
 

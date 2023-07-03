@@ -1,11 +1,22 @@
 const API = require("../services/spoonacular");
 const CacheService = require("../services/cacheService");
-const recipeCache = require("../models/recipeCacheModel");
-const recipeByIngredientCache = new CacheService(recipeCache);
+const recipeCacheModel = require("../models/recipeCacheModel");
+
+const validForDays = 20;
+
+const recipeByIngredientCache = new CacheService(
+    recipeCacheModel,
+    validForDays
+);
+
+//utility for combining the recipe data into single object
 const combineRecipeData = require("../utilities/combinedRecipeData");
 
 const getRecipesByIngredient = async (req, res) => {
     const ingredientsList = req.query.ingredients;
+    const numOfResults = req.query.numOfResults
+        ? Number(req.query.numOfResults)
+        : 20;
 
     //verify ingredients exist
     if (!ingredientsList) {
@@ -28,11 +39,14 @@ const getRecipesByIngredient = async (req, res) => {
 
     //data not cached query apiService
     try {
-        recipes = await API.searchRecipeByIngredients(ingredientsListApiFormat);
+        recipes = await API.searchRecipeByIngredients(
+            ingredientsListApiFormat,
+            numOfResults
+        );
 
         let recipeIdList = recipes.map((recipe) => recipe.id);
 
-        //todo get recipe instructions api
+        //get recipe instructions api
         const recipeInstruct = await API.getRecipeInstructions(recipeIdList);
 
         //add to cache
@@ -40,6 +54,7 @@ const getRecipesByIngredient = async (req, res) => {
 
         res.status(200).json(recipes);
     } catch (error) {
+        console.log("getRecipesByIngredient", error);
         res.status(400).json({
             message: "recipe search by ingredient error",
             err: error,
@@ -47,7 +62,6 @@ const getRecipesByIngredient = async (req, res) => {
     }
 };
 
-//todo have single endpoint for recipes
 //! REDUNDANT REMOVE AND COMBINE INTO RECIPES BY INGREDIENT SEARCH
 const getRecipeInformation = async (req, res) => {
     const recipeIdList = req.query.recipeIdList;
@@ -73,7 +87,6 @@ const getRelatedRecipe = async (req, res) => {
     }
 };
 
-//todo the combined data
 const getRecipesByIngredientCombinedData = async (req, res) => {
     const ingredientsList = req.query.ingredients;
 
@@ -88,12 +101,12 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
         ingredientsList.replace(/,/g, ",+")
     );
 
-    //!check recipeByIngredientCache
+    //check Cache
     let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
-    //cache had values return
+    //cache had values return it even if outdated
     if (recipes) {
-        res.status(200).json(recipes);
+        res.status(200).json(recipes.data);
         return;
     }
 
@@ -105,6 +118,10 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
         recipeByIngredientCache.set(ingredientsListApiFormat, recipeData);
         res.status(200).json(recipeData);
     } catch (error) {
+        console.log(
+            "getRecipesByIngredientCombinedData query api service ERROR",
+            error
+        );
         res.status(400).json({
             message: "recipe search by ingredient error",
             err: error,
@@ -113,13 +130,23 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
 };
 
 async function getApiData(ingredientsListApiFormat) {
-    //query API for recipes
-    let recipesList = await API.searchRecipeByIngredients(
-        ingredientsListApiFormat
-    );
+    let recipesList = [];
+    let recipeIdList = [];
+
+    try {
+        //query API for recipes
+        const response = await API.searchRecipeByIngredients(
+            ingredientsListApiFormat
+        );
+
+        //todo check if we hit api limit and handle it b/c it wont throw error
+        recipesList = response;
+    } catch (error) {
+        console.log("API search recipe by ingredients error");
+    }
 
     //extract IDs from recipes
-    let recipeIdList = recipesList.map((recipe) => recipe.id);
+    recipeIdList = recipesList.map((recipe) => recipe.id);
 
     //get instructions for all recipe ids
     const recipeInstructList = await API.getRecipeInstructions(recipeIdList);
