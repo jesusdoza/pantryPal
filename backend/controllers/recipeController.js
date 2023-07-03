@@ -1,12 +1,22 @@
 const API = require("../services/spoonacular");
 const CacheService = require("../services/cacheService");
 const recipeCacheModel = require("../models/recipeCacheModel");
-const recipeByIngredientCache = new CacheService(recipeCacheModel, 20);
+
+const validForDays = 20;
+
+const recipeByIngredientCache = new CacheService(
+    recipeCacheModel,
+    validForDays
+);
+
+//utility for combining the recipe data into single object
 const combineRecipeData = require("../utilities/combinedRecipeData");
 
 const getRecipesByIngredient = async (req, res) => {
     const ingredientsList = req.query.ingredients;
-    const numOfResults = 20; //todo allow front end to request certain amount of results
+    const numOfResults = req.query.numOfResults
+        ? Number(req.query.numOfResults)
+        : 20;
 
     //verify ingredients exist
     if (!ingredientsList) {
@@ -20,10 +30,7 @@ const getRecipesByIngredient = async (req, res) => {
     );
 
     //check recipeByIngredientCache
-    let recipes = await recipeByIngredientCache.get(
-        ingredientsListApiFormat,
-        5
-    );
+    let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
     if (recipes) {
         res.status(200).json(recipes);
@@ -39,7 +46,7 @@ const getRecipesByIngredient = async (req, res) => {
 
         let recipeIdList = recipes.map((recipe) => recipe.id);
 
-        //todo get recipe instructions api
+        //get recipe instructions api
         const recipeInstruct = await API.getRecipeInstructions(recipeIdList);
 
         //add to cache
@@ -55,7 +62,6 @@ const getRecipesByIngredient = async (req, res) => {
     }
 };
 
-//todo have single endpoint for recipes
 //! REDUNDANT REMOVE AND COMBINE INTO RECIPES BY INGREDIENT SEARCH
 const getRecipeInformation = async (req, res) => {
     const recipeIdList = req.query.recipeIdList;
@@ -98,7 +104,7 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
     //check Cache
     let recipes = await recipeByIngredientCache.get(ingredientsListApiFormat);
 
-    //cache had values return
+    //cache had values return it even if outdated
     if (recipes) {
         res.status(200).json(recipes.data);
         return;
