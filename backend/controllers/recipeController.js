@@ -119,7 +119,7 @@ const getRecipesByIngredientCombinedData = async (req, res) => {
         res.status(200).json(recipeData);
     } catch (error) {
         console.log(
-            "getRecipesByIngredientCombinedData query api service",
+            "getRecipesByIngredientCombinedData query api service ERROR",
             error
         );
         res.status(400).json({
